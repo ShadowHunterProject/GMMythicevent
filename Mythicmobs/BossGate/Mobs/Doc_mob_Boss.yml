@@ -1,0 +1,47 @@
+######## created by samus2002 #########
+
+# Scorpion King #  
+Poison_Puddle:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Options:
+    Marker: false
+    Small: false
+    Invisible: true
+    Interactable: false
+    Collidable: false
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - model{mid=poison_puddle;n=false;step=1;scale=1.3;sync=true} @self ~onSpawn
+  #- potion{type=POISON;duration=80;level=1;hasParticles=false} @PIR{r=4} ~onTimer:20
+  - skill{s=Poison_Puddle_LOOP} ~onTimer:40
+  - effect:sound{s=scorpion_sounds:samus.scorpion_poison;volume=0.9;pitch=1} @self ~onTimer:40
+  - remove{delay=160} @self ~onSpawn
+
+abyssal_puddle:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Options:
+    Marker: false
+    Small: false
+    Invisible: true
+    Interactable: false
+    Collidable: false
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - model{mid=abyssal_puddle;n=false;step=1;usm=true;scale=3.0;sync=true} @self ~onSpawn
+  - delay 4 ~onSpawn
+  - lockmodel @self ~onSpawn
+  - effect:sound{s=scorpion_sounds:samus.scorpion_poison;volume=0.9;pitch=1} @self ~onSpawn
+  - remove{delay=160} @self ~onSpawn
+

@@ -1,0 +1,107 @@
+crowaxe_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: 'crowaxe_Pet'
+  Health: 1000
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=crowaxe;n=false;h=true} @self ~onSpawn
+  - setNoDamageTicks{ticks=500} @self ~onSpawn
+  - lockmodel{l=true} @self ~onSpawn
+  - skill{s=axeactivate_Pet;sync=true} @self ~onSpawn
+
+  Options:
+    Marker: true
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    Silent: true   
+    KnockbackResistance: 1
+    
+crowswarm_Pet:
+  Tags:
+  - skill_model
+  Type: chicken
+  Display: 'crowswarm_Pet'
+  Health: 1000
+  AiTargetSelectors:
+  - lookatplayers{r=12}
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=crowswarm;n=false;h=true} @self ~onSpawn
+  - look{immediately=true} @NearestPlayer{r=10} ~onSpawn
+  - setNoDamageTicks{ticks=500} @self ~onSpawn
+  - skill{s=crowswarmaction_Pet;sync=true} @self ~onSpawn
+
+  Options:
+    MovementSpeed: 0.05
+    MaxCombatDistance: 20 
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    PreventVanillaDamage: true
+    Silent: true   
+
+crowdummy_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: 'crowdummy_Pet'
+  Options:
+    Marker: true
+    Invisible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+    Invincible: true
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - skill{s=dummyspan_Pet} @self ~onSpawn   
+  
+  
+reaperspikes_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: 'reaperspikes_Pet'
+  Health: 1000
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=reaperspikes;n=false;h=true} @self ~onSpawn
+  - setNoDamageTicks{ticks=500} @self ~onSpawn
+  - partvis{m=reaperspikes;p=spikes;child=true;v=false} @self ~onSpawn 
+  - lockmodel{l=true} @self ~onSpawn
+  - damage{a=0}
+  - skill{s=reaperspike_Pet;sync=true} @self ~onSpawn
+
+  Options:
+    Marker: true
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    Silent: true   
+    KnockbackResistance: 1
+
+
+
+

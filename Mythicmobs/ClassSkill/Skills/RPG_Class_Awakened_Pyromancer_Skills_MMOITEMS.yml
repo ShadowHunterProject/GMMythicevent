@@ -1,0 +1,354 @@
+Pyro_Combo:
+  Conditions:
+  - hasAura{aura=CASTING} false
+  Skills:
+  - aura{auraName=CASTING;duration=40} @self
+  - Aura{auraName=HEAT;duration=600;maxStacks=3;delay=1} @self
+  - skill{s=Pyro_Combo_SEQUENCE}
+
+Pyro_Combo_SEQUENCE:
+  Skills:
+  - skill{s=Pyro_Combo_SHOOT}
+  - sound{s=entity.ghast.shoot;volume=1;pitch=<random.float.0.6to0.7>;delay=1} @self
+  - delay 20
+  - skill{s=Pyro_Combo_SHOOT}
+  - sound{s=entity.ghast.shoot;volume=1;pitch=<random.float.0.6to0.7>} @self
+  - delay 10
+  - skill{s=Pyro_Combo_SHOOT}
+  - sound{s=entity.ghast.shoot;volume=1;pitch=<random.float.0.6to0.7>} @self
+
+Pyro_Combo_SHOOT:
+  Skills:
+  - skill{s=Pyro_Combo_SHOOT_PRO;origin=@SelfEyeLocation{fo=-0.5;yo=-0.2}} @forward{f=11;y=-4;uel=true;lockpitch=true}
+
+Pyro_Combo_SHOOT_PRO:
+  Skills:
+  - projectile{bmd=true;bulletType=MOB;mob=VFX_PYRO_METEOR;ohb=Pyro_Combo_DAMAGE_D;oS=Pyro_Combo_SHOOT_PRO_VEL;v=2;i=1;hR=2;vR=2;mr=15;hnp=true;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=4;tyo=0;sso=0;fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+
+Pyro_Combo_SHOOT_PRO_VEL:
+  Skills:
+  - delay 9
+  - modifyProjectile{trait=VELOCITY;action=SET;value=28}
+
+Pyro_Combo_DAMAGE_D:
+  Cooldown: 0.001
+  Skills:
+  - summon{type=VFX_PYRO_METEOR_RUBBLES;amount=1;radius=0;yRadius=0;onSurface=true} @origin{y=0.27}
+  - summon{type=VFX_LAVA_RUPTURE;amount=1;radius=0;yRadius=0;onSurface=true} @origin{y=0.27}
+  - particles{p=Campfire_Cosy_Smoke;amount=7;hS=0.8;vS=0.1;y=0;size=1;speed=0} @origin{y=0.27}
+  - sound{s=entity.dragon_fireball.explode;volume=2;pitch=<random.float.0.9to1>} @self
+  - skill{s=Pyro_Combo_DAMAGE} @EntitiesNearOrigin{r=7;sort=NEAREST}
+
+Pyro_Combo_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  - isLiving true
+  - hasaura{aura=immunedelay} false
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?isplayer
+  - ignite{ticks=60}
+  - projectile{targetisorigin=true;bulletType=MOB;mob=VFX_SAMUS_Impact;v=0;i=1;hR=0;vR=0;mr=2;hnp=false;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=1.2;tyo=1.2;sso=0;fo=true;byo=0;ham=true}
+  - sound{s=entity.generic.explode;volume=0.8;pitch=<random.float.1.1to1.2>} @self
+
+
+Hellfire_Overblast:
+  Skills:
+  - skill{s=Hellfire_Overblast_CAST}
+Hellfire_Overblast_CAST:
+  Cooldown: 10
+  Conditions:
+  - hasAura{aura=CASTING} false
+  Skills:
+  - skill{s=Hellfire_Overblast_ST}
+  - skill{s=Hellfire_Overblast_ST-IGNITION}
+
+
+Hellfire_Overblast_ST:
+  Conditions:
+  - hasaurastacks{auraName=HEAT;stacks=3} false
+  Skills:
+  - aura{auraName=CASTING;duration=10} @self
+
+  - summon{type=VFX_HELLFIRE_OVERBLAST;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=0.5;y=1.1}
+  - sound{s=entity.ender_dragon.flap;volume=1.5;pitch=<random.float.0.9to1.1>} @self
+
+  - delay 40
+
+  - skill{s=Hellfire_Overblast_ST_SHOOT_PRO;repeat=15;repeati=5} @forward{f=12;uel=true}
+  - sound{s=entity.ghast.shoot;volume=1;pitch=<random.float.0.9to1.1>} @self
+Hellfire_Overblast_ST_SHOOT_PRO:
+  Skills:
+  - projectile{onHit=Hellfire_Overblast_DAMAGE_D;v=50;i=1;hR=1;vR=1;mr=14;hnp=true;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=0;tyo=0;sso=0;origin=@SelfEyeLocation{fo=-0.5;yo=-0.2};fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+  - effect:sound{s=awakened_pyromancer_sounds:samus.awakened_pyromancer.fire_beam;volume=0.5;pitch=<random.float.0.9to1.1>} @self
+
+Hellfire_Overblast_DAMAGE_D:
+  Cooldown: 0.001
+  Skills:
+  - skill{s=Hellfire_Overblast_DAMAGE} @EntitiesNearOrigin{r=3;sort=NEAREST}
+Hellfire_Overblast_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  - isLiving true
+  - hasaura{aura=immunedelay} false
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?isplayer
+  - ignite{ticks=60}
+  - projectile{targetisorigin=true;bulletType=MOB;mob=VFX_SAMUS_Impact;v=0;i=1;hR=0;vR=0;mr=2;hnp=false;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=1.2;tyo=1.2;sso=0;fo=true;byo=0;ham=true}
+  - sound{s=entity.generic.explode;volume=0.8;pitch=<random.float.1.1to1.2>} @self
+
+
+
+Hellfire_Overblast_ST-IGNITION:
+  Conditions:
+  - hasaurastacks{auraName=HEAT;stacks=3} true
+  Skills:
+  - aura{auraName=CASTING;duration=10} @self
+
+  - summon{type=VFX_HELLFIRE_OVERBLAST-ENHANCED;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=0.5;y=1.1}
+  - sound{s=entity.ender_dragon.flap;volume=1.5;pitch=<random.float.0.9to1.1>} @self
+
+  - delay 40
+
+  - skill{s=Hellfire_Overblast_ST_SHOOT_PRO-IGNITION;repeat=15;repeati=5} @forward{f=12;uel=true}
+  - sound{s=entity.ghast.shoot;volume=1;pitch=<random.float.0.9to1.1>} @self
+Hellfire_Overblast_ST_SHOOT_PRO-IGNITION:
+  Skills:
+  - projectile{onHit=Hellfire_Overblast_DAMAGE_D-IGNITION;v=50;i=1;hR=1;vR=1;mr=19;hnp=true;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=0;tyo=0;sso=0;origin=@SelfEyeLocation{fo=-0.5;yo=-0.2};fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+  - effect:sound{s=awakened_pyromancer_sounds:samus.awakened_pyromancer.fire_beam;volume=0.5;pitch=<random.float.1.2to1.3>} @self
+Hellfire_Overblast_DAMAGE_D-IGNITION:
+  Cooldown: 0.001
+  Skills:
+  - skill{s=Hellfire_Overblast_DAMAGE-IGNITION} @EntitiesNearOrigin{r=3;sort=NEAREST}
+Hellfire_Overblast_DAMAGE-IGNITION:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  - isLiving true
+  - hasaura{aura=immunedelay} false
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?isplayer
+  - ignite{ticks=60}
+  - projectile{targetisorigin=true;bulletType=MOB;mob=VFX_SAMUS_Impact;v=0;i=1;hR=0;vR=0;mr=2;hnp=false;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=1.2;tyo=1.2;sso=0;fo=true;byo=0;ham=true}
+  - sound{s=entity.generic.explode;volume=0.8;pitch=<random.float.1.1to1.2>} @self
+  - directionalvelocity{yaw=<caster.l.yaw>;v=0.2;mode=MINIMUM}
+
+
+Infernal_Judgement:
+  Conditions:
+  - hasAura{aura=CASTING} false
+  Skills:
+  - skill{s=Infernal_Judgement_CAST}
+  - skill{s=Pyro_Combo_SEQUENCE}
+
+Infernal_Judgement_CAST:
+  Skills:
+  - aura{auraName=CASTING;duration=30} @self
+
+  - potion{type=SLOW;duration=28;level=50;hasParticles=false} @self
+  - summon{type=VFX_INFERNAL_JUDGEMENT_JUMP;amount=1;radius=0;yRadius=0;onSurface=true} @self
+  - sound{s=entity.ender_dragon.flap;volume=1.5;pitch=<random.float.0.9to1.1>} @self
+
+  - delay 29
+
+  - lunge{velocity=-0.1;velocityY=0.9} @Forward{f=-1;y=6;lockpitch=true;sideOffset=0}
+  - sound{s=entity.bat.takeoff;volume=1;pitch=<random.float.0.7to0.8>} @self
+  - sound{s=entity.player.attack.sweep;volume=1;pitch=0.5} @self
+  - lunge{velocity=0.01;velocityY=0.01;repeat=65;repeatinterval=1;delay=8} @forward{f=0;y=5;lockpitch=true}
+
+  - delay 10
+
+  - skill{s=Infernal_Judgement_SUMMON_SPEAR}
+
+  - delay 20
+
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_SPEAR-FINAL;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_SPEAR-FINAL;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=53;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - effect:sound{s=awakened_pyromancer_sounds:samus.awakened_pyromancer.blazing_spear_form;volume=1;pitch=<random.float.0.9to1.1>;delay=8} @self
+
+  - delay 45
+
+  - lunge{velocity=6;velocityY=-4} @Forward{f=10;y=-10;lockpitch=true;sideOffset=0}
+  - sound{s=entity.bat.takeoff;volume=1;pitch=<random.float.0.9to1.1>} @self
+  - onDamaged{auraName=NOFALLDAMAEG;d=10;cE=true;deflectProjectiles=false} @self
+  - effect:sound{s=awakened_pyromancer_sounds:samus.awakened_pyromancer.ultimate_spear_smash;volume=1;pitch=<random.float.0.9to1.1>} @self
+
+  - delay 5
+
+  - skill{s=Infernal_Judgement_DAMAGE_FINAL_PROXY} @self
+  
+Infernal_Judgement_SUMMON_SPEAR:
+  Skills:
+  - sound{s=block.fire.extinguish;volume=0.5;pitch=0.5} @self
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle1;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle1;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+
+  - delay 3
+  
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle2;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle2;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO1;origin=@SelfEyeLocation{fo=-0.5;yo=-0.65}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+  
+  - sound{s=block.fire.extinguish;volume=0.5;pitch=0.5} @self
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle3;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle3;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO2;origin=@SelfEyeLocation{fo=-0.5;yo=-0.65}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+  
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle4;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle4;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO4;origin=@SelfEyeLocation{fo=-0.5;yo=-0.65}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+  
+  - sound{s=block.fire.extinguish;volume=0.5;pitch=0.5} @self
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle5;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle5;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=3.5;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO5;origin=@SelfEyeLocation{fo=-0.5;yo=0.55}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle6;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle6;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=3.5;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO6;origin=@SelfEyeLocation{fo=-0.5;yo=0.55}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+
+  - sound{s=block.fire.extinguish;volume=0.5;pitch=0.5} @self
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle12;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle1;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+
+  - delay 3
+  
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle22;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle2;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO1;origin=@SelfEyeLocation{fo=-0.5;yo=-0.65}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+  
+  - sound{s=block.fire.extinguish;volume=0.5;pitch=0.5} @self
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle32;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle3;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO2;origin=@SelfEyeLocation{fo=-0.5;yo=-0.65}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+  
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle42;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle4;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=2.4;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO4;origin=@SelfEyeLocation{fo=-0.5;yo=-0.65}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+  
+  - sound{s=block.fire.extinguish;volume=0.5;pitch=0.5} @self
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle52;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle5;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=3.5;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO5;origin=@SelfEyeLocation{fo=-0.5;yo=0.55}} @forward{f=12;uel=true;lockpitch=false}
+
+  - delay 3
+
+  - orbital{auraName=VFX_INFERNAL_JUDGEMENT_FireCircle62;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_FireCircle6;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=28;oy=3.5;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=item.trident.throw;volume=1;pitch=1.2} @self
+  
+  - delay 1
+
+  - skill{s=Infernal_Judgement_SHOOT_PRO6;origin=@SelfEyeLocation{fo=-0.5;yo=0.55}} @forward{f=12;uel=true;lockpitch=false}
+
+
+Infernal_Judgement_SHOOT_PRO1:
+  Skills:
+  - projectile{oT=Infernal_Judgement_TICK;bmd=true;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_SPEAR;oH=Infernal_Judgement_DAMAGE_D;ohb=Infernal_Judgement_DAMAGE_D;v=5;i=1;hR=1;vR=1;mr=30;hnp=true;hO=-2;sE=true;sB=true;hs=false;hfs=0;sfo=-0.4;syo=0;tyo=0;sso=-1.05;fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+Infernal_Judgement_SHOOT_PRO2:
+  Skills:
+  - projectile{oT=Infernal_Judgement_TICK;bmd=true;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_SPEAR;oH=Infernal_Judgement_DAMAGE_D;ohb=Infernal_Judgement_DAMAGE_D;v=5;i=1;hR=1;vR=1;mr=30;hnp=true;hO=2;sE=true;sB=true;hs=false;hfs=0;sfo=-0.4;syo=0;tyo=0;sso=1.05;fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+Infernal_Judgement_SHOOT_PRO3:
+  Skills:
+  - projectile{oT=Infernal_Judgement_TICK;bmd=true;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_SPEAR;oH=Infernal_Judgement_DAMAGE_D;ohb=Infernal_Judgement_DAMAGE_D;v=5;i=1;hR=1;vR=1;mr=30;hnp=true;hO=-2;sE=true;sB=true;hs=false;hfs=0;sfo=-0.4;syo=0;tyo=0;sso=-3.15;fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+Infernal_Judgement_SHOOT_PRO4:
+  Skills:
+  - projectile{oT=Infernal_Judgement_TICK;bmd=true;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_SPEAR;oH=Infernal_Judgement_DAMAGE_D;ohb=Infernal_Judgement_DAMAGE_D;v=5;i=1;hR=1;vR=1;mr=30;hnp=true;hO=2;sE=true;sB=true;hs=false;hfs=0;sfo=-0.4;syo=0;tyo=0;sso=3.15;fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+Infernal_Judgement_SHOOT_PRO5:
+  Skills:
+  - projectile{oT=Infernal_Judgement_TICK;bmd=true;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_SPEAR;oH=Infernal_Judgement_DAMAGE_D;ohb=Infernal_Judgement_DAMAGE_D;v=5;i=1;hR=1;vR=1;mr=30;hnp=true;hO=-2;sE=true;sB=true;hs=false;hfs=0;sfo=-0.4;syo=0;tyo=0;sso=-1.55;fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+Infernal_Judgement_SHOOT_PRO6:
+  Skills:
+  - projectile{oT=Infernal_Judgement_TICK;bmd=true;bulletType=MOB;mob=VFX_INFERNAL_JUDGEMENT_SPEAR;oH=Infernal_Judgement_DAMAGE_D;ohb=Infernal_Judgement_DAMAGE_D;v=5;i=1;hR=1;vR=1;mr=30;hnp=true;hO=2;sE=true;sB=true;hs=false;hfs=0;sfo=-0.4;syo=0;tyo=0;sso=1.55;fo=true;hitConditions=[- isLiving true];byo=0;drawhitbox=false;ham=true}
+
+Infernal_Judgement_TICK:
+  Skills:
+  - modifyProjectile{trait=VELOCITY;action=MULTIPLY;value=1.3}
+
+Infernal_Judgement_DAMAGE_D:
+  Cooldown: 0.001
+  Skills:
+  - skill{s=Infernal_Judgement_DAMAGE} @EntitiesNearOrigin{r=3;sort=NEAREST}
+Infernal_Judgement_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  - isLiving true
+  - hasaura{aura=immunedelay} false
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?isplayer
+  - ignite{ticks=60}
+  - projectile{targetisorigin=true;bulletType=MOB;mob=VFX_SAMUS_Impact;v=0;i=1;hR=0;vR=0;mr=2;hnp=false;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=1.2;tyo=1.2;sso=0;fo=true;byo=0;ham=true}
+  - sound{s=entity.generic.explode;volume=0.8;pitch=<random.float.1.1to1.2>} @self
+
+
+
+Infernal_Judgement_DAMAGE_FINAL_PROXY:
+  Skills:
+  - summon{type=VFX_INFERNAL_JUDGEMENT_MAGMA_OBSIDIAN_RUPTURE;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=0;y=0.1;sideOffset=0;lockpitch=true}
+  - skill{s=Infernal_Judgement_DAMAGE_FINAL} @EntitiesNearOrigin{r=10;sort=NEAREST;conditions=[ - isLiving true - hasaura{aura=immunedelay} false  ]}
+
+Infernal_Judgement_DAMAGE_FINAL:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @Targeted ?isplayer
+  - ignite{ticks=60}
+  - projectile{targetisorigin=true;bulletType=MOB;mob=VFX_SAMUS_Impact;v=0;i=1;hR=0;vR=0;mr=2;hnp=false;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=1.2;tyo=1.2;sso=0;fo=true;byo=0;ham=true}
+  - sound{s=entity.generic.explode;volume=0.8;pitch=<random.float.1.1to1.2>} @self
+  - solo_throw{velocity=0;velocityY=9}
+
+

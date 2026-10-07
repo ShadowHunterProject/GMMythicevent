@@ -1,0 +1,294 @@
+bl_dark_knight_spawn_Pet:
+  Skills:
+    - defaultstate{t=idle;s=idle} @self
+    - addtag{t=bl_dark_knight_active_Pet} @self
+
+bl_dark_knight_death_Pet:
+  Skills:
+    - sound{s=entity.zombie.step;v=3;p=0.8;delay=20} @self
+    - sound{s=entity.wither_skeleton.hurt;v=3;p=0.8;delay=30} @self
+    - sound{s=entity.phantom.flap;v=3;p=0.6;delay=38} @self
+    - sound{s=entity.ender_dragon.flap;v=3;p=0.6;delay=42} @self
+    - sound{s=entity.zombie.step;v=3;p=0.6;delay=48} @self
+
+bl_dark_knight_active_Pet:
+  Cooldown: 10
+  Conditions:
+    - incombat true
+    - targetwithin{d=20} true
+    - hastag{t=bl_dark_knight_active_Pet} false
+  Skills:
+    - gcd{ticks=39} @self
+    - setspeed{s=0} @self
+    - state{s=active} @self
+    - sound{s=entity.zombie.step;v=3;p=0.7;delay=4} @self
+    - sound{s=entity.ender_dragon.flap;v=3;p=0.7;delay=6} @self
+    - lockmodel{l=false;delay=30} @self
+    - defaultstate{t=idle;s=idle} @self
+
+bl_dark_knight_skills_Pet:
+  Skills:
+    - randomskill{skills=bl_dark_knight_sweep_Pet,bl_dark_knight_chop_Pet,bl_dark_knight_pierce_Pet,bl_dark_knight_spin_Pet,bl_dark_knight_u-turn_Pet} @target
+
+bl_dark_knight_step_Pet:
+  Conditions:
+    - chance{c=0.5} true
+    - moving true
+    - inblock{b=WATER,LAVA} false
+    - offgcd true
+  Skills:
+    - sound{s=entity.zombie.step;v=3;p="<random.float.0.9to1>"} @self
+
+bl_dark_knight_hurt_Pet:
+  Conditions:
+    - chance{c=0.5} true
+    - offgcd true
+  Skills:
+    - sound{s=entity.wither_skeleton.hurt;v=3;p="<random.float.0.9to1>"} @self
+
+bl_dark_knight_sweep_Pet:
+  Cooldown: 10
+  Conditions:
+    - incombat true
+    - targetwithin{d=5} true
+    - offgcd true
+    - hastag{t=heavy_cd} false
+  Skills:
+    - addtag{t=heavy_cd} @self
+    - removetag{t=heavy_cd;delay=120} @self
+    - gcd{ticks=58} @self
+    - state{s=sweep} @self
+    - sound{s=entity.player.attack.sweep;v=3;p=1.2;delay=20} @self
+    - aura{auraName=bl_dark_knight_sweep_totem_Pet;oT=bl_dark_knight_sweep_totem_tick_Pet;interval=1;duration=6;delay=22} @self
+    - setspeed{s=0} @self
+    - delay 20
+    - lockmodel{l=true} @self
+    - setspeed{s=1.8} @self
+    - delay 6
+    - setspeed{s=0} @self
+    - delay 14
+    - lockmodel{l=false} @self
+    - delay 10
+    - setspeed{s=1} @self
+
+bl_dark_knight_sweep_totem_tick_Pet:
+  Skills:
+    - totem{md=1;oH=bl_dark_knight_sweep_damage_Pet;hr=4;vr=4;hnp=true;hp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;y=-2;z=-1}
+
+bl_dark_knight_sweep_damage_Pet:
+  Skills:
+    - damage{a=86;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?isplayer{}
+    - damage{a=87;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?!isplayer{}
+    - solo_throw{v=8;vy=4} @target{ignore=owner}
+    - shieldbreak{duration=80} @target{ignore=owner}
+
+bl_dark_knight_chop_Pet:
+  Cooldown: 10
+  TargetConditions:
+    - distance{d=>2} true
+  Conditions:
+    - incombat true
+    - targetwithin{d=6} true
+    - offgcd true
+    - hastag{t=heavy_cd} false
+  Skills:
+    - addtag{t=heavy_cd} @self
+    - removetag{t=heavy_cd;delay=120} @self
+    - gcd{ticks=87} @self
+    - state{s=chop} @self
+    - sound{s=entity.player.attack.sweep;v=3;p=0.8;delay=20} @self
+    - sound{s=entity.player.attack.sweep;v=3;p=1.2;delay=46} @self
+    - aura{auraName=bl_dark_knight_chop_totem_Pet;oT=bl_dark_knight_chop_totem_tick_Pet;interval=1;duration=13;delay=20} @self
+    - setspeed{s=0} @self
+    - delay 20
+    - lockmodel{l=true} @self
+    - setspeed{s=1.8} @self
+    - delay 8
+    - setspeed{s=0} @self
+    - delay 18
+    - summon{m=bl_dark_knight_stones_Pet;a=1;r=0;yr=0;os=true} @modelpart{pid=stones_modelpart;o=model;z=0;y=0}
+    - delay 31
+    - lockmodel{l=false} @self
+    - delay 10
+    - setspeed{s=1} @self
+
+bl_dark_knight_chop_totem_tick_Pet:
+  Skills:
+    - totem{md=1;oH=bl_dark_knight_chop_damage_Pet;hr=4;vr=4;hnp=true;hp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;z=-1;y=-1}
+
+bl_dark_knight_chop_damage_Pet:
+  Skills:
+    - damage{a=86;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?isplayer{}
+    - damage{a=87;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?!isplayer{}
+    - solo_throw{v=3;vy=1} @target{ignore=owner}
+    - potion{type=SLOW;duration=40;level=3} @target{ignore=owner}
+    - shieldbreak{duration=80} @target{ignore=owner}
+
+bl_dark_knight_pierce_Pet:
+  Cooldown: 8
+  Conditions:
+    - incombat true
+    - targetwithin{d=5} true
+    - offgcd true
+    - hastag{t=heavy_cd} false
+  Skills:
+    - addtag{t=heavy_cd} @self
+    - removetag{t=heavy_cd;delay=120} @self
+    - gcd{ticks=59} @self
+    - state{s=pierce} @self
+    - sound{s=entity.player.attack.sweep;v=3;p=1.2;delay=20} @self
+    - aura{auraName=bl_dark_knight_pierce_totem_Pet;oT=bl_dark_knight_pierce_totem_tick_Pet;interval=1;duration=6;delay=24} @self
+    - setspeed{s=0} @self
+    - delay 20
+    - lockmodel{l=true} @self
+    - delay 2
+    - setspeed{s=1.8} @self
+    - delay 6
+    - setspeed{s=0} @self
+    - delay 21
+    - lockmodel{l=false} @self
+    - delay 10
+    - setspeed{s=1} @self
+
+bl_dark_knight_pierce_totem_tick_Pet:
+  Skills:
+    - totem{md=1;oH=bl_dark_knight_pierce_damage_Pet;hr=4;vr=4;hnp=true;hp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;y=-1.5;z=-2}
+
+bl_dark_knight_pierce_damage_Pet:
+  Skills:
+    - damage{a=86;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?isplayer{}
+    - damage{a=87;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?!isplayer{}
+    - solo_throw{v=5;vy=1} @target{ignore=owner}
+    - shieldbreak{duration=80} @target{ignore=owner}
+
+bl_dark_knight_spin_Pet:
+  Cooldown: 10
+  TargetConditions:
+    - distance{d=>4} true
+  Conditions:
+    - incombat true
+    - targetwithin{d=7} true
+    - offgcd true
+    - hastag{t=heavy_cd} false
+  Skills:
+    - addtag{t=heavy_cd} @self
+    - removetag{t=heavy_cd;delay=120} @self
+    - gcd{ticks=86} @self
+    - state{s=spin} @self
+    - sound{s=entity.phantom.flap;v=3;p=1;delay=12} @self
+    - sound{s=entity.ender_dragon.flap;v=3;p=1;delay=16} @self
+    - sound{s=entity.player.attack.sweep;v=3;p=1;delay=18} @self
+    - sound{s=entity.player.attack.sweep;v=3;p=1.2;delay=44} @self
+    - aura{auraName=bl_dark_knight_spin_totem_Pet;oT=bl_dark_knight_spin_totem_tick_Pet;interval=1;duration=18;delay=12} @self
+    - setspeed{s=0} @self
+    - delay 10
+    - lockmodel{l=true} @self
+    - delay 4
+    - setspeed{s=2.2} @self
+    - delay 12
+    - setspeed{s=0} @self
+    - delay 20
+    - summon{m=bl_dark_knight_stones_Pet;a=1;r=0;yr=0;os=true} @modelpart{pid=stones_modelpart;o=model;z=0;y=0}
+    - delay 32
+    - lockmodel{l=false} @self
+    - delay 10
+    - setspeed{s=1} @self
+
+bl_dark_knight_spin_totem_tick_Pet:
+  Skills:
+    - totem{md=1;oH=bl_dark_knight_spin_damage_Pet;hr=4;vr=4;hnp=true;hp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;z=-1.2;y=-2}
+
+bl_dark_knight_spin_damage_Pet:
+  Skills:
+    - damage{a=86;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?isplayer{}
+    - damage{a=87;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?!isplayer{}
+    - solo_throw{v=2.5;vy=1} @target{ignore=owner}
+    - potion{type=SLOW;duration=40;level=3} @target{ignore=owner}
+    - shieldbreak{duration=80} @target{ignore=owner}
+
+bl_dark_knight_u-turn_Pet:
+  Cooldown: 8
+  Conditions:
+    - incombat true
+    - targetwithin{d=5} true
+    - offgcd true
+    - hastag{t=heavy_cd} false
+  Skills:
+    - addtag{t=heavy_cd} @self
+    - removetag{t=heavy_cd;delay=120} @self
+    - gcd{ticks=57} @self
+    - state{s=u-turn} @self
+    - sound{s=entity.ender_dragon.flap;v=3;p=1;delay=12} @self
+    - sound{s=entity.player.attack.sweep;v=3;p=1.2;delay=20} @self
+    - aura{auraName=bl_dark_knight_u-turn_totem_Pet;oT=bl_dark_knight_u-turn_totem_tick_Pet;interval=1;duration=6;delay=22} @self
+    - setspeed{s=0} @self
+    - delay 20
+    - lockmodel{l=true} @self
+    - setspeed{s=1.8} @self
+    - delay 6
+    - setspeed{s=0} @self
+    - delay 21
+    - lockmodel{l=false} @self
+    - delay 10
+    - setspeed{s=1} @self
+
+bl_dark_knight_u-turn_totem_tick_Pet:
+  Skills:
+    - totem{md=1;oH=bl_dark_knight_u-turn_damage_Pet;hr=4;vr=4;hnp=true;hp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;y=-2;z=-1}
+
+bl_dark_knight_u-turn_damage_Pet:
+  Skills:
+    - damage{a=86;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?isplayer{}
+    - damage{a=87;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?!isplayer{}
+    - solo_throw{v=8;vy=4} @target{ignore=owner}
+    - shieldbreak{duration=80} @target{ignore=owner}
+
+bl_dark_knight_stones_totem_tick_Pet:
+  Skills:
+    - totem{md=1;oH=bl_dark_knight_stones_damage_Pet;hr=4;vr=4;hnp=true;hp=true;drawhitbox=false;ti=25} @modelpart{pid=bigstones;o=model;z=-0.5;y=0}
+
+bl_dark_knight_stones_damage_Pet:
+  Skills:
+    - damage{a=140;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?isplayer{}
+    - damage{a=144;cause=ENTITY_ATTACK;pkb=false;ia=true} @target{ignore=owner} ?!isplayer{}
+    - solo_throw{v=0;vy=0} @target{ignore=owner}
+    - shieldbreak{duration=80} @target{ignore=owner}
+
+bl_dark_knight_jump_back_Pet:
+  Cooldown: 8
+  Conditions:
+    - chance{c=0.3} true
+    - offgcd true
+  Skills:
+    - gcd{ticks=57} @self
+    - state{s=jump_back} @self
+    - sound{s=entity.phantom.flap;v=3;p=0.8;delay=8} @self
+    - sound{s=entity.ender_dragon.flap;v=3;p=0.8;delay=18} @self
+    - setspeed{s=0} @self
+    - delay 15
+    - lockmodel{l=true} @self
+    - propel{v=1.5} @forward{f=-8;yo=-1;lockpitch=true;uel=true}
+    - delay 32
+    - lockmodel{l=false} @self
+    - delay 10
+    - setspeed{s=1} @self
+
+bl_dark_knight_Basic_Attack_Pet:
+  Conditions:
+    - targetwithin{d=4} true
+    - offgcd true
+  Skills:
+    - randomskill{skills=bl_dk_anim_sweep,bl_dk_anim_chop,bl_dk_anim_pierce} @self
+    - damage{amount=30;cause=ENTITY_ATTACK} @EIR{r=4;ignore=owner}
+
+bl_dk_anim_sweep:
+  Skills:
+    - state{s=sweep} @self
+
+bl_dk_anim_chop:
+  Skills:
+    - state{s=chop} @self
+
+bl_dk_anim_pierce:
+  Skills:
+    - state{s=pierce} @self

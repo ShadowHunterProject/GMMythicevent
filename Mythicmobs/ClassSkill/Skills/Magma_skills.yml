@@ -1,0 +1,82 @@
+skill_magma1:
+  Skills:
+  - sound{s=block.fire.ambient;v=2;p=0.5} @self
+  - effect:blockmask{m=magma_block;r=5;ry=1;d=100} @self{y=0}
+  - totem{ch=1;i=5;md=100;onTick=skill_magma1_dmg} @RandomLocationsNearCaster{a=1;r=0}
+
+skill_magma1_dmg:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - sound{s=block.fire.extinguish;v=1;p=1.2} @ENO{r=5}
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=5} ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=5} ?isplayer
+
+#magma 2
+LRD_PIGLINKING_throneless_bounce_ground:
+  Skills:
+  - sound{s=entity.generic.explode;v=2;p=<random.float.0.8to1.2>} @self
+  - sound{s=entity.blaze.shoot;v=2;p=0.6} @self
+  - sound{s=littleroom_piglinking:impact;v=5;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  - totem{md=2;drawhitbox=false;oH=LRD_PIGLINKING_throneless_bounce_damage;hr=4;vr=2;hp=true;hnp=true} @self
+  - projectile{v=20;i=2;oT=LRD_PIGLINKING_throneless_bounce_ground_tick;oH=LRD_PIGLINKING_throneless_bounce_ground_damage;sso=0;sfo=0;hs=true;hfs=0;se=false;drawhitbox=false;hr=1;vr=2;hp=true;hnp=true} @ring{r=12;p=8}
+  
+LRD_PIGLINKING_throneless_bounce_ground_tick:
+  Skills:
+  - summon{t=LRD_PIGLINKING_slash_fx}
+  
+LRD_PIGLINKING_throneless_bounce_ground_damage:
+  Skills:
+  - sound{s=block.fire.extinguish;v=2;p=0.5} @target
+  - solo_damage{a="<skill.var.damage>";pkb=true} @target ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @target ?isplayer
+  - solo_throw{v=2;vy=10}
+  
+LRD_PIGLINKING_throneless_bounce_damage:
+  Skills:
+  - sound{s=entity.blaze.hurt;v=2;p=0.5} @target
+  - solo_damage{a="<skill.var.damage>";pkb=true} @target ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @target ?isplayer
+  - solo_throw{v=12;vy=6}
+
+#3
+LRD_PIGLINKING_spell_AOE:
+  Skills:
+  - skill{s=[
+      - sound{s=entity.piglin_brute.angry;v=2;p=<random.float.0.8to1.2>} @self
+      - sound{s=entity.ender_dragon.growl;v=2;p=1.5} @self
+      - sound{s=littleroom_piglinking:grunt;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+      - delay 20
+      - skill{s=LRD_PIGLINKING_spell_AOE_Mechanic;repeat=5;repeatinterval=4} @RandomLocationsNearCaster{a=1;r=6;min=1}
+    ];repeat=1;repeatinterval=50} @self
+  
+LRD_PIGLINKING_spell_AOE_Mechanic:
+  Skills: 
+  - sound{s=entity.ghast.shoot;v=2;p=<random.float.0.8to1.2>} @self
+  - sound{s=littleroom_piglinking:meteor;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  #- summon{t=LRD_PIGLINKING_TELEGRAPH_METEOR}
+  - projectile{interpolation=2;bulletType=DISPLAY;mat=MAGMA_BLOCK;rots=0.1,0,0.1;scale=1.5,1.5,1.5;v=25;bulletbrightness=15;oE=LRD_PIGLINKING_meteor_impact;ot=LRD_PIGLINKING_meteor_tick;syo=15;sfo=<random.float.-15to15>;sso=<random.float.-15to15>;sE=false}
+  
+LRD_PIGLINKING_meteor_tick:
+  Skills:
+  - sound{s=entity.blaze.shoot;v=1;p=1.5} @origin
+  - e:p{p=large_smoke;a=1;hs=.5;vs=.5} @origin
+  
+LRD_PIGLINKING_meteor_impact:
+  Skills:
+  - sound{s=entity.generic.explode;v=2;p=<random.float.0.8to1.2>} @origin
+  - sound{s=entity.dragon_fireball.explode;v=2;p=<random.float.0.8to1.2>} @origin
+  - sound{s=littleroom_piglinking:impact;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  - totem{md=2;oH=LRD_PIGLINKING_meteor_impact_damage;hr=6;vr=6;drawhitbox=false;hp=true;hnp=true}
+  - summon{t=LRD_PIGLINKING_GROUND_FX} @origin
+  - e:p{p=lava;a=25;hs=.5;vs=.5} @origin
+  - partvis{pid=hexadecagon} @self
+  - remove{delay=2} @self
+  
+LRD_PIGLINKING_meteor_impact_damage:
+  Skills:
+  - sound{s=entity.blaze.hurt;v=2;p=0.8} @target
+  - solo_damage{a="<skill.var.damage>";pkb=true} @target ?!isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @target ?isplayer

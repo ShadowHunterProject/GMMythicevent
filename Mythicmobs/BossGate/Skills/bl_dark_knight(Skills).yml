@@ -1,0 +1,284 @@
+
+
+bl_dark_knight_spawn:
+  Skills:
+  - defaultstate{t=idle;s=not_active} @self 
+  - lockmodel{l=true;delay=2} @self
+  - setspeed{s=0} @self 
+  - addtag{t=bl_dark_knight_not_active} @self
+  - BodyClamp{mh=25;rde=0;rdu=0} @self
+
+bl_dark_knight_death:
+  Skills:
+  - sound{s=bl_dark_knight.step;v=3;p=0.8;delay=20} @self
+  - sound{s=bl_dark_knight.hurt_first;v=3;p=0.8;delay=30} @self
+  - sound{s=bl_dark_knight.wind_first;v=3;p=0.6;delay=38} @self
+  - sound{s=bl_dark_knight.wind_second;v=3;p=0.6;delay=42} @self
+  - sound{s=bl_dark_knight.step;v=3;p=0.6;delay=48} @self
+
+
+bl_dark_knight_active:
+  Cooldown: 10
+  Conditions:
+  - targetwithin{d=20} true
+  - hastag{t=bl_dark_knight_active} false
+  Skills:
+  - gcd{ticks=39} @self
+  - setspeed{s=0} @self
+  - state{s=active} @self
+  - sound{s=bl_dark_knight.step;v=3;p=0.7;delay=4} @self
+  - sound{s=bl_dark_knight.wind_second;v=3;p=0.7;delay=6} @self
+  - lockmodel{l=false;delay=30} @self 
+  - defaultstate{t=idle;s=idle} @self
+  - addtag{t=bl_dark_knight_active} @self
+  - delay 39
+  - removetag{t=bl_dark_knight_not_active} @self
+  - setspeed{s=1} @self
+
+
+bl_dark_knight_skills:
+  Skills:
+  - randomskill{s=bl_dark_knight_sweep,bl_dark_knight_chop,bl_dark_knight_pierce,bl_dark_knight_spin,bl_dark_knight_u-turn} @target
+
+bl_dark_knight_step:
+  Conditions:
+  - chance{c=0.5}
+  - moving true
+  - inblock{b=WATER,LAVA} false
+  - offgcd
+  Skills:
+  - randomskill{s=bl_dark_knight_step1,bl_dark_knight_step2}
+  - sound{s=bl_dark_knight.step;v=3;p=1} @self
+
+bl_dark_knight_step1:
+  Skills:
+  - sound{s=bl_dark_knight.step;v=3;p=1} @self
+
+bl_dark_knight_step2:
+  Skills:
+  - sound{s=bl_dark_knight.step;v=3;p=0.9} @self
+
+bl_dark_knight_hurt:
+  Conditions:
+  - chance{c=0.5}
+  - offgcd
+  Skills:
+  - randomskill{s=bl_dark_knight_hurt1,bl_dark_knight_hurt2}
+
+bl_dark_knight_hurt1:
+  Skills:
+  - sound{s=bl_dark_knight.hurt_first;v=3;p=1} @self
+  
+bl_dark_knight_hurt2:
+  Skills:
+  - sound{s=bl_dark_knight.hurt_second;v=3;p=0.9} @self
+
+
+
+bl_dark_knight_sweep:
+  Cooldown: 10
+  Conditions:
+  - targetwithin{d=4} true
+  - offgcd
+  Skills:
+  - gcd{ticks=58} @self
+  - state{s=sweep} @self
+  - sound{s=bl_dark_knight.swing_sword;v=3;p=1.2;delay=20} @self
+  - aura{auraName=bl_dark_knight_sweep_totem;oT=bl_dark_knight_sweep_totem_tick;interval=1;duration=6;delay=22} @self
+  - setspeed{s=0} @self
+  - delay 20
+  - lockmodel{l=true} @self
+  - setspeed{s=1.8} @self
+  - delay 6
+  - setspeed{s=0} @self
+  - delay 14
+  - lockmodel{l=false} @self
+  - delay 10
+  - setspeed{s=1} @self
+
+bl_dark_knight_sweep_totem_tick:
+  Skills:
+  - totem{md=1;oH=bl_dark_knight_sweep_damage;hr=1.5;vr=1.5;hnp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;y=-2;z=-1}
+  
+bl_dark_knight_sweep_damage:
+  Skills:
+  - damage{a=30}
+  - solo_throw{v=8;vy=4}
+  - shieldbreak{duration=80}
+
+
+bl_dark_knight_chop:
+  Cooldown: 10
+  TargetConditions:
+  - distance{d=>2} true
+  Conditions:
+  - targetwithin{d=5} true
+  - offgcd
+  Skills:
+  - gcd{ticks=87} @self
+  - state{s=chop} @self
+  - sound{s=bl_dark_knight.swing_sword;v=3;p=0.8;delay=20} @self
+  - sound{s=bl_dark_knight.swing_sword;v=3;p=1.2;delay=46} @self
+  - aura{auraName=bl_dark_knight_chop_totem;oT=bl_dark_knight_chop_totem_tick;interval=1;duration=13;delay=20} @self
+  - setspeed{s=0} @self
+  - delay 20
+  - lockmodel{l=true} @self
+  - setspeed{s=1.8} @self
+  - delay 8
+  - setspeed{s=0} @self
+  - delay 18
+  - summon{m=bl_dark_knight_stones;a=1;r=0;yr=0;os=true} @modelpart{pid=stones_modelpart;o=model;z=0;y=0}
+  - delay 31
+  - lockmodel{l=false} @self
+  - delay 10
+  - setspeed{s=1} @self
+
+bl_dark_knight_chop_totem_tick:
+  Skills:
+  - totem{md=1;oH=bl_dark_knight_chop_damage;hr=1.8;vr=1.8;hnp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;z=-1;y=-1}
+  
+bl_dark_knight_chop_damage:
+  Skills:
+  - damage{a=20}
+  - solo_throw{v=3;vy=1}
+  - potion{type=SLOW;duration=40;level=3}
+  - shieldbreak{duration=80}
+
+
+bl_dark_knight_pierce:
+  Cooldown: 8
+  Conditions:
+  - targetwithin{d=4} true
+  - offgcd
+  Skills:
+  - gcd{ticks=59} @self
+  - state{s=pierce} @self
+  - sound{s=bl_dark_knight.swing_sword;v=3;p=1.2;delay=20} @self
+  - aura{auraName=bl_dark_knight_pierce_totem;oT=bl_dark_knight_pierce_totem_tick;interval=1;duration=6;delay=24} @self
+  - setspeed{s=0} @self
+  - delay 20
+  - lockmodel{l=true} @self
+  - delay 2
+  - setspeed{s=1.8} @self
+  - delay 6
+  - setspeed{s=0} @self
+  - delay 21
+  - lockmodel{l=false} @self
+  - delay 10
+  - setspeed{s=1} @self
+
+bl_dark_knight_pierce_totem_tick:
+  Skills:
+  - totem{md=1;oH=bl_dark_knight_pierce_damage;hr=1.5;vr=1.5;hnp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;y=-1.5;z=-2}
+  
+bl_dark_knight_pierce_damage:
+  Skills:
+  - damage{a=20}
+  - solo_throw{v=5;vy=1}
+  - shieldbreak{duration=80}
+
+
+bl_dark_knight_spin:
+  Cooldown: 10
+  TargetConditions:
+  - distance{d=>4} true
+  Conditions:
+  - targetwithin{d=7} true
+  - offgcd
+  Skills:
+  - gcd{ticks=86} @self
+  - state{s=spin} @self
+  - sound{s=bl_dark_knight.wind_first;v=3;p=1;delay=12} @self
+  - sound{s=bl_dark_knight.wind_second;v=3;p=1;delay=16} @self
+  - sound{s=bl_dark_knight.swing_sword;v=3;p=1;delay=18} @self
+  - sound{s=bl_dark_knight.swing_sword;v=3;p=1.2;delay=44} @self
+  - aura{auraName=bl_dark_knight_spin_totem;oT=bl_dark_knight_spin_totem_tick;interval=1;duration=18;delay=12} @self
+  - setspeed{s=0} @self
+  - delay 10
+  - lockmodel{l=true} @self
+  - delay 4
+  - setspeed{s=2.2} @self
+  - delay 12
+  - setspeed{s=0} @self
+  - delay 20
+  - summon{m=bl_dark_knight_stones;a=1;r=0;yr=0;os=true} @modelpart{pid=stones_modelpart;o=model;z=0;y=0}
+  - delay 32
+  - lockmodel{l=false} @self
+  - delay 10
+  - setspeed{s=1} @self
+
+bl_dark_knight_spin_totem_tick:
+  Skills:
+  - totem{md=1;oH=bl_dark_knight_spin_damage;hr=1.5;vr=1.5;hnp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;z=-1.2;y=-2}
+  
+bl_dark_knight_spin_damage:
+  Skills:
+  - damage{a=20}
+  - solo_throw{v=2.5;vy=1}
+  - potion{type=SLOW;duration=40;level=3}
+  - shieldbreak{duration=80}
+
+
+bl_dark_knight_u-turn:
+  Cooldown: 8
+  Conditions:
+  - targetwithin{d=4} true
+  - offgcd
+  Skills:
+  - gcd{ticks=57} @self
+  - state{s=u-turn} @self
+  - sound{s=bl_dark_knight.wind_second;v=3;p=1;delay=12} @self
+  - sound{s=bl_dark_knight.swing_sword;v=3;p=1.2;delay=20} @self
+  - aura{auraName=bl_dark_knight_u-turn_totem;oT=bl_dark_knight_u-turn_totem_tick;interval=1;duration=6;delay=22} @self
+  - setspeed{s=0} @self
+  - delay 20
+  - lockmodel{l=true} @self
+  - setspeed{s=1.8} @self
+  - delay 6
+  - setspeed{s=0} @self
+  - delay 21
+  - lockmodel{l=false} @self
+  - delay 10
+  - setspeed{s=1} @self
+
+bl_dark_knight_u-turn_totem_tick:
+  Skills:
+  - totem{md=1;oH=bl_dark_knight_u-turn_damage;hr=1.5;vr=1.5;hnp=true;drawhitbox=false;ti=25} @modelpart{pid=edge4;o=model;y=-2;z=-1}
+  
+bl_dark_knight_u-turn_damage:
+  Skills:
+  - damage{a=20}
+  - solo_throw{v=8;vy=4}
+  - shieldbreak{duration=80}
+
+
+bl_dark_knight_stones_totem_tick:
+  Skills:
+  - totem{md=1;oH=bl_dark_knight_stones_damage;hr=1.2;vr=1.2;hnp=true;drawhitbox=false;ti=25} @modelpart{pid=bigstones;o=model;z=-0.5;y=0}
+  
+bl_dark_knight_stones_damage:
+  Skills:
+  - damage{a=20}
+  - solo_throw{v=0;vy=0}
+  - potion{type=SLOW;duration=10;level=5}
+  - shieldbreak{duration=80}
+
+
+bl_dark_knight_jump_back:
+  Cooldown: 8
+  Conditions:
+  - chance{c=0.3}
+  - offgcd
+  Skills:
+  - gcd{ticks=57} @self
+  - state{s=jump_back} @self
+  - sound{s=bl_dark_knight.wind_first;v=3;p=0.8;delay=8} @self
+  - sound{s=bl_dark_knight.wind_second;v=3;p=0.8;delay=18} @self
+  - setspeed{s=0} @self
+  - delay 15
+  - lockmodel{l=true} @self
+  - propel{v=1.5} @forward{f=-8;yo=-1;lockpitch=true;uel=true}
+  - delay 32
+  - lockmodel{l=false} @self
+  - delay 10
+  - setspeed{s=1} @self

@@ -1,0 +1,369 @@
+attacksreaper_Pet:
+  Cooldown: 0
+  Conditions:
+  - incombat true
+  - targetwithin{d=3.5} true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - CancelEvent
+    - look{headOnly=false;immediately=true} @target
+    - skill{s=basicattack_Pet}
+
+
+
+crowskill_Pet:
+  Conditions:
+    - incombat true
+    - targetwithin{d=10} true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - randomskill{s=chargedattack_Pet,fogcombo_Pet,spikesattack_Pet}
+
+
+
+summonaxe_Pet:
+  Conditions:
+    - offgcd true
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+    - incombat true
+    - playernotwithin{d=3} true
+    - playerwithin{d=20} true
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - gcd{ticks=30}
+    - setspeed{t=walk;s=0} @self
+    - lockmodel @self
+    - partvis{m=crowreaper;p=dustparticles;child=true;v=true} @self
+    - state{s=summonaxe} @self
+    - delay 20
+    - damage{a=146;type=ATTACK} @EIR{ignore=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;type=ATTACK} @EIR{target=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 2
+    - summon{type=crowaxe_Pet;sio=true;amount=1;radius=1;os=true} @EIR{r=20;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 6
+    - setspeed{t=walk;s=1.25} @self
+    - lockmodel{l=false} @self 
+
+
+
+summonswarm_Pet:
+  Conditions:
+    - offgcd true
+    - incombat true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - summon{type=crowswarm_Pet;sio=true;amount=1;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=5;minr=4;s=7}
+    - delay 6 
+    - summon{type=crowswarm_Pet;sio=true;amount=1;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=5;minr=4;s=7}
+    - delay 6 
+
+
+
+basicattack_Pet:
+  Cooldown: 1.85
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel @self
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=crowreaper;p=swing;child=true;v=true} @self
+    - state{s=basicattack} @self
+    - delay 22
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=12} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=12} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=12} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=12} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=12} @self
+    - damage{a=146;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 10
+    - partvis{m=crowreaper;p=swing;child=true} @self
+    - delay 4
+    - setspeed{t=walk;s=1.25} @self
+    - lockmodel{l=false} @self  
+
+
+
+chargedattack_Pet:
+  Conditions:
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel @self
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=crowreaper;p=swing;child=true;v=true} @self
+    - partvis{m=crowreaper;p=dustparticles;child=true;v=true} @self
+    - partvis{m=crowreaper;p=allexplosioneffectall;child=true;v=true} @self
+    - state{s=chargeattack} @self
+    - delay 28
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=16} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=16} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=16} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=16} @self
+    - sound{s=entity.generic.explode;p=1.5;v=1.0;r=16} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=16} @self
+    - damage{a=146;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - solo_throw{v=12;vy=5} @EIR{r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - potion{type=WITHER;duration=140;level=0} @EIC{r=5;a=180;ignore=owner;conditions=[ - isPlayer{} true, - isowner false ]}
+    - delay 35
+    - partvis{m=crowreaper;p=dustparticles;child=true} @self
+    - partvis{m=crowreaper;p=allexplosioneffectall;child=true} @self
+    - partvis{m=crowreaper;p=swing;child=true} @self
+    - delay 2
+    - setspeed{t=walk;s=1.25} @self
+    - lockmodel{l=false} @self     
+
+
+
+fogcombo_Pet:
+  Conditions:
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel @self
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=crowreaper;p=swing;child=true;v=true} @self
+    - state{s=fogcombo} @self
+    - delay 21
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=12} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=12} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=12} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=12} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=12} @self
+    - damage{a=146;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - summon{type=crowfog_Pet;sio=true;amount=1;radius=1;os=true} @Ring{r=4;p=8;ignore=owner}
+    - delay 28
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=12} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=12} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=12} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=12} @self
+    - sound{s=entity.generic.explode;p=1.5;v=1.0;r=12} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=12} @self
+    - damage{a=146;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - solo_throw{v=12;vy=5} @EIR{r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 22
+    - partvis{m=crowreaper;p=dustparticles;child=true} @self
+    - delay 2
+    - setspeed{t=walk;s=1.25} @self
+    - lockmodel{l=false} @self      
+
+
+
+spikesattack_Pet:
+  Conditions:
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel @self
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=crowreaper;p=spikes;child=true;v=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=dustparticles;child=true;v=true} @self
+    - partvis{m=crowreaper;p=allexplosioneffectall;child=true;v=true} @self
+    - state{s=spikesattack} @self
+    - summon{type=reaperspikes_Pet;sio=true;amount=1;radius=1;os=true} @self
+    - delay 34
+    - damage{a=146;type=ATTACK} @EIR{ignore=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;type=ATTACK} @EIR{target=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - sound{s=entity.generic.explode;p=1.5;v=1.2;r=12} @self
+    - sound{s=entity.zombie.attack_iron_door;p=1.0;v=1.0;r=12} @self
+    - sound{s=block.stone.break;p=0.8;v=1.0;r=12} @self
+    - sound{s=entity.generic.explode;p=1.8;v=1.2;r=12} @self
+    - solo_throw{v=16;vy=8} @EIR{r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 28
+    - partvis{m=crowreaper;p=dustparticles;child=true} @self
+    - partvis{m=crowreaper;p=allexplosioneffectall;child=true} @self
+    - partvis{m=crowreaper;p=spikes;child=true} @self ~onSpawn
+    - delay 2
+    - setspeed{t=walk;s=1.25} @self
+    - lockmodel{l=false} @self           
+
+
+
+death_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - look{immediately=true} @Forward
+    - lockmodel{l=true} @self
+    - setAi{ai=false} @self
+    - delay 210
+    - sound{s=block.lava.extinguish} @self
+    - effect:particles{particle=poof;amount=30;hS=1;vS=1;speed=.01} @self
+    - delay 5
+    - remove @self     
+
+
+#crowaxe    
+
+
+axeactivate_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - CancelEvent
+    - randomskill{s=axeattack1_Pet,axeattack2_Pet}
+
+
+
+axeattack1_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - state{s=updown} @self
+    - delay 20
+    - sound{s=block.stone.break;p=1.0;v=0.8} @self
+    - sound{s=block.stone.hit;p=1.0;v=1.0} @Self
+    - sound{s=entity.zombie.attack_wooden_door;p=0.8;v=1.0} @Self
+    - sound{s=block.anvil.land;p=1.2;v=0.6} @Self
+    - sound{s=entity.generic.explode;p=0.5;v=0.4} @Self
+    - sound{s=block.stone.break;p=1.0;v=0.7} @Self
+    - sound{s=entity.ender_dragon.flap;p=0.7;v=0.5} @Self
+    - damage{a=146;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - potion{type=WITHER;duration=80;level=0} @EIR{r=2;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 28
+    - remove @self
+
+
+
+axeattack2_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - delay 1
+    - state{s=sideattack} @self
+    - delay 22
+    - sound{s=entity.player.attack.sweep;p=1.5;v=0.7} @Self
+    - sound{s=item.trident.throw;p=0.4;v=0.6} @Self
+    - sound{s=block.wood.hit;p=0.8;v=0.5} @Self
+    - sound{s=entity.ender_dragon.flap;p=1.6;v=0.3} @Self
+    - sound{s=entity.arrow.shoot;p=1.8;v=0.4} @Self
+    - damage{a=146;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=156;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - potion{type=WITHER;duration=80;level=0} @EIR{r=2;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 38
+    - sound{s=entity.player.attack.sweep;p=1.5;v=0.7} @Self
+    - sound{s=item.trident.throw;p=0.4;v=0.6} @Self
+    - sound{s=block.wood.hit;p=0.8;v=0.5} @Self
+    - sound{s=entity.ender_dragon.flap;p=1.6;v=0.3} @Self
+    - sound{s=entity.arrow.shoot;p=1.8;v=0.4} @Self
+    - damage{a=146;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}    
+    - damage{a=156;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}    
+    - potion{type=WITHER;duration=80;level=0} @EIR{r=2;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 10
+    - remove @self
+    
+
+#crowwarm
+
+
+crowswarmaction_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel{l=true} @self
+    - skill{s=swarmdamage_Pet;repeat=30;repeatInterval=3} 
+    - summon{type=crowdummy_Pet;sio=true;repeat=30;repeatInterval=1} @modelpart{mid=crowswarm;pid=crow4}
+    - totem{ch=1;md=2;oT=debug2;hS=3;vS=3;hnp=true;repeat=50;repeatInterval=1;hnp=true} @modelpart{mid=crowswarm;pid=crow4}
+    - lunge{v=.9;vy=.01;repeat=30;repeatInterval=1} @children{target=armorstands}
+    - summon{type=crowdummy_Pet;sio=true;repeat=30;repeatInterval=1} @modelpart{mid=crowswarm;pid=crow4}
+    - totem{ch=1;md=2;oT=debug2;hS=3;vS=3;hnp=true;repeat=50;repeatInterval=1;hnp=true} @modelpart{mid=crowswarm;pid=crow4}
+    - lunge{v=.9;vy=.01;repeat=30;repeatInterval=1} @children{target=armorstands}
+    - summon{type=crowdummy_Pet;sio=true;repeat=30;repeatInterval=1} @modelpart{mid=crowswarm;pid=crow4}
+    - totem{ch=1;md=2;oT=debug2;hS=3;vS=3;hnp=true;repeat=50;repeatInterval=1;hnp=true} @modelpart{mid=crowswarm;pid=crow4}
+    - lunge{v=.9;vy=.01;repeat=30;repeatInterval=1} @children{target=armorstands}
+    - summon{type=crowdummy_Pet;sio=true;repeat=30;repeatInterval=1} @modelpart{mid=crowswarm;pid=crow4}
+    - totem{ch=1;md=2;oT=debug2;hS=3;vS=3;hnp=true;repeat=50;repeatInterval=1;hnp=true} @modelpart{mid=crowswarm;pid=crow4}
+    - lunge{v=.9;vy=.01;repeat=30;repeatInterval=1} @children{target=armorstands}
+    - sound{s=entity.parrot.imitate.ghast;p=2;v=1;r=16} @self
+    - sound{s=entity.bat.takeoff;p=1;v=0.5;r=16} @self
+    - sound{s=entity.wither.shoot;p=2;v=0.2;r=16} @self
+    - sound{s=entity.parrot.imitate.ghast;p=2;v=1;r=16} @self
+    - delay 5
+    - sound{s=entity.parrot.imitate.vex;p=2;v=1;r=16} @self
+    - sound{s=entity.bat.loop;p=1;v=0.3;r=16} @self
+    - sound{s=entity.shulker_bullet.hit;p=1;v=0.7;r=16} @self
+    - lunge{v=.9;vy=.01;repeat=30;repeatInterval=1} @children{target=armorstands}
+    - summon{type=crowdummy_Pet;sio=true;repeat=30;repeatInterval=1} @modelpart{mid=crowswarm;pid=crow4}
+    - totem{ch=1;md=2;oT=debug2;hS=3;vS=3;hnp=true;repeat=50;repeatInterval=1;hnp=true} @modelpart{mid=crowswarm;pid=crow4}
+    - lunge{v=.9;vy=.01;repeat=30;repeatInterval=1} @children{target=armorstands}
+    - delay 2
+    - state{s=death} @self
+    - summon{type=crowdummy_Pet;sio=true;repeat=30;repeatInterval=1} @modelpart{mid=crowswarm;pid=crow4}
+    - totem{ch=1;md=2;oT=debug2;hS=3;vS=3;hnp=true;repeat=50;repeatInterval=1;hnp=true} @modelpart{mid=crowswarm;pid=crow4}
+    - lunge{v=.9;vy=.01;repeat=30;repeatInterval=1} @children{target=armorstands}
+    - delay 40
+    - remove @self
+
+
+
+dummyspan_Pet:
+  TargetConditions:
+  - isplayer false
+  Skills:
+  - delay 1
+  - pull{velocity=10;repeat=2;repeatInterval=1}
+  - delay 2
+  - remove @self
+
+
+
+swarmdamage_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+  - damage{a=22;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{ignore=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  - damage{a=25;t=SKILL;pkb=false;hnp=true;hp=true} @EIR{target=players;r=5.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  - pull{v=10} @EIR{ignore=players;r=2;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  
+  
+
+
+reaperspike_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - delay 30
+    - partvis{m=reaperspikes;p=spikes;child=true;v=true} @self
+    - sound{s=block.stone.break;p=1.0;v=0.8} @self
+    - sound{s=block.stone.hit;p=1.0;v=1.0} @Self
+    - sound{s=entity.zombie.attack_iron_door;p=0.7;v=0.4} @Self
+    - sound{s=block.metal.hit;p=1.2;v=1.0} @self
+    - delay 38
+    - remove @self
+
+
+# FORCED_SYNC_UPDATE639172407144738877
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,676 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+
+
+
+LR_HYDRA_spot_player_Pet:
+  Cooldown: 10
+  Skills:
+  - state{s=spot_player;p=2;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.spotted_roar;v=10;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  - setvar{var=caster.roar;val=true;type=STRING;duration=100} @self
+  - gcd{ticks=80} @self
+
+
+
+
+LR_HYDRA_blood_fx_melee_Pet:
+  Skills:
+  - e:p{p=block;m=magenta_concrete;a=10;hs=.075;vs=.075} @forward{f=0.625;y=0.8}
+
+
+
+LR_HYDRA_blood_fx_projectile_Pet:
+  Skills:
+  - raytrace{
+      entitySkill=[
+  - e:p{p=block;m=magenta_concrete;a=10;hs=.075;vs=.075}
+      ]} @targetlocation
+  
+
+### RECOIL ###
+
+
+
+LR_HYDRA_recoil_step_Pet:
+  Skills:
+  - recoil{r=10;pitch=-.4} @eir{r=16}
+  - delay 1
+  - recoil{r=10;pitch=.3} @eir{r=16}
+  - delay 1
+  - recoil{r=10;pitch=-.2} @eir{r=16}
+  - delay 1
+  - recoil{r=10;pitch=.1} @eir{r=16}
+  
+
+
+LR_HYDRA_recoil_Pet:
+  Skills:
+  - recoil{r=10;pitch=-.4}
+  - delay 1
+  - recoil{r=10;pitch=.3}
+  - delay 1
+  - recoil{r=10;pitch=-.2}
+  - delay 1
+  - recoil{r=10;pitch=.1}
+
+
+
+LR_HYDRA_recoil_big_PIR_Pet:
+  Skills:
+  - recoil{r=20;pitch=-.8} @pir{r=16}
+  - delay 1
+  - recoil{r=20;pitch=.6} @pir{r=16}
+  - delay 1
+  - recoil{r=20;pitch=-.4} @pir{r=16}
+  - delay 1
+  - recoil{r=20;pitch=.2} @pir{r=16}
+
+
+
+LR_HYDRA_recoil_big_Pet:
+  Skills:
+  - recoil{r=20;pitch=-.8}
+  - delay 1
+  - recoil{r=20;pitch=.6}
+  - delay 1
+  - recoil{r=20;pitch=-.4}
+  - delay 1
+  - recoil{r=20;pitch=.2}
+
+
+### SPAWN ###
+
+
+
+LR_HYDRA_spawn_Pet:
+  Skills:
+  - gcd{ticks=80}
+  - setspeed{s=1} @self
+  - bodyrotation{rde=0;rdu=200} @self
+  - skill{s=LR_HYDRA_bossbar_set_Pet} @self
+  - partvis{mid=piglin_mech;pid=fire;v=false} @self
+  - brightness{b=15;s=15;pid=fire} @self
+
+## BOSSBAR ##
+
+
+
+LR_HYDRA_bossbar_set_Pet:
+  Skills:
+  - barCreate{
+    name="LR_HYDRA";
+    display="<caster.name>";
+    value=1.0;color=PURPLE;
+    style=SEGMENTED_6
+    } @self
+
+
+
+LR_HYDRA_bossbar_damage_Pet:
+  Conditions:
+  - damagecause{c=FIRE_TICK} false
+  Skills:
+  - brightness{b=15;s=15} @self
+  - barSet{name="LR_HYDRA";display="<caster.name>";value=<caster.hp>/<caster.mhp>;color=WHITE;style=SOLID} @self
+  - delay 2
+  - brightness{b=-1;s=-1} @self
+  - barSet{name="LR_HYDRA";display="<caster.name>";value=<caster.hp>/<caster.mhp>;color=PURPLE;style=SOLID} @self
+  - delay 2
+  - barSet{name="LR_HYDRA";display="<caster.name>";value=<caster.hp>/<caster.mhp>;color=WHITE;style=SOLID} @self
+  - delay 2
+  - barSet{name="LR_HYDRA";display="<caster.name>";value=<caster.hp>/<caster.mhp>;color=PURPLE;style=SOLID} @self
+
+
+### SLOW ROTATION ###
+
+
+
+LR_HYDRA_stop_turn_Pet:
+  Conditions:
+  - varequals{var=caster.turning;v=true} false
+  TargetConditions:
+  - owner false
+  - fieldofview{angle=90} true
+  Skills:
+  - state{s=turn_right;p=7;r=true} @self
+  - state{s=turn_left;p=7;r=true} @self
+  
+
+
+
+LR_HYDRA_turn_right_Pet:
+  Conditions: 
+  - varequals{var=caster.leap;val=true} false
+  - offgcd true
+  TargetConditions:
+  - owner false
+  - fieldofview{angle=140;r=270} true
+  Skills:
+  - state{s=turn_right;cd=3;p=7;li=5;lo=5} @self
+  - setvar{var=caster.turning;val=true;type=STRING;d=20} @self
+  - setrotation{relative=true;yaw=1} @self
+
+
+
+LR_HYDRA_turn_left_Pet:
+  Conditions: 
+  - varequals{var=caster.leap;val=true} false
+  - offgcd true
+  TargetConditions:
+  - owner false
+  - fieldofview{angle=140;r=90} true
+  Skills:
+  - state{s=turn_left;cd=3;p=7;li=5;lo=5} @self
+  - setvar{var=caster.turning;val=true;type=STRING;d=20} @self
+  - setrotation{relative=true;yaw=-1} @self
+
+
+### RANDOM BITES ###
+
+
+
+LR_HYDRA_detect_bite_locations_Pet:
+  Skills:
+  - totem{md=2;oH=LR_HYDRA_detect_bite_left;hR=2;vR=3;drawhitbox=false} @modelpart{pid=bite_left}
+  - totem{md=2;oH=LR_HYDRA_detect_bite_right;hR=2;vR=3;drawhitbox=false} @modelpart{pid=bite_right}
+  - totem{md=2;oH=LR_HYDRA_detect_bite_center;hR=2;vR=3;drawhitbox=false} @modelpart{pid=bite_center}
+
+
+
+LR_HYDRA_detect_bite_left_Pet:
+  Skills:
+  - signal{s=BITE_LEFT} @self
+
+
+
+LR_HYDRA_detect_bite_right_Pet:
+  Skills:
+  - signal{s=BITE_RIGHT} @self
+  
+
+
+LR_HYDRA_detect_bite_center_Pet:
+  Skills:
+  - signal{s=BITE_CENTER} @self
+  
+  
+
+
+LR_HYDRA_bite_1_Pet:
+  Cooldown: 5
+  Conditions:
+  - varequals{var=caster.flamethrower;val=true} false
+  - varequals{var=caster.head_1;val=missing} false
+  - varequals{var=caster.bite_center;v=true} false
+  Skills:
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.bite;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=15} @self
+  - totem{md=2;oH=LR_HYDRA_bite_damage;hR=2;vR=3;drawhitbox=false;delay=20;repeat=6;repeati=1} @modelpart{pid=jaw_head_1}
+  - setvar{var=caster.bite_center;val=true;type=STRING;d=40} @self
+  - state{s=head_1_bite;p=2;li=4;lo=4} @self
+  
+
+
+LR_HYDRA_bite_2_Pet:
+  Cooldown: 5
+  Conditions:
+  - varequals{var=caster.bite_center;v=true} false
+  Skills:
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.bite;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=15} @self
+  - totem{md=2;oH=LR_HYDRA_bite_damage;hR=2;vR=3;drawhitbox=false;delay=20;repeat=6;repeati=1} @modelpart{pid=jaw_head_2}
+  - setvar{var=caster.bite_center;val=true;type=STRING;d=40} @self
+  - state{s=head_2_bite;p=3;li=4;lo=4} @self
+  
+
+
+LR_HYDRA_bite_3_Pet:
+  Cooldown: 3
+  Conditions:
+  - varequals{var=caster.head_3;val=missing} false
+  - varequals{var=caster.bite_left;v=true} false
+  Skills:
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.bite;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=15} @self
+  - totem{md=2;oH=LR_HYDRA_bite_damage;hR=2;vR=3;drawhitbox=false;delay=20;repeat=6;repeati=1} @modelpart{pid=jaw_head_3}
+  - setvar{var=caster.bite_left;val=true;type=STRING;d=40} @self
+  - state{s=head_3_bite;p=4;li=4;lo=4} @self
+  
+
+
+LR_HYDRA_bite_4_Pet:
+  Cooldown: 5
+  Conditions:
+  - varequals{var=caster.flamethrower;val=true} false
+  - varequals{var=caster.bite_center;v=true} false
+  Skills:
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.bite;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=15} @self
+  - totem{md=2;oH=LR_HYDRA_bite_damage;hR=2;vR=3;drawhitbox=false;delay=20;repeat=6;repeati=1} @modelpart{pid=jaw_head_4}
+  - setvar{var=caster.bite_center;val=true;type=STRING;d=40} @self
+  - state{s=head_4_bite;p=5;li=4;lo=4} @self
+  
+
+
+LR_HYDRA_bite_5_Pet:
+  Cooldown: 3
+  Conditions:
+  - varequals{var=caster.head_5;val=missing} false
+  - varequals{var=caster.bite_right;v=true} false
+  Skills:
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.bite;v=2;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=15} @self
+  - totem{md=2;oH=LR_HYDRA_bite_damage;hR=2;vR=3;drawhitbox=false;delay=20;repeat=6;repeati=1} @modelpart{pid=jaw_head_5}
+  - setvar{var=caster.bite_right;val=true;type=STRING;d=40} @self
+  - state{s=head_5_bite;p=6;li=4;lo=4} @self
+
+
+
+
+LR_HYDRA_bite_damage_Pet:
+  TargetConditions:
+  - owner false
+
+  Skills:
+  - basedamage{m=1}
+  - solo_throw{v=0.5;vy=3.5} @target{ignore=owner}
+  
+
+
+LR_HYDRA_stomp_damage_Pet:
+  TargetConditions:
+  - owner false
+
+  Skills:
+  - basedamage{m=1}
+  - solo_throw{v=1.5;vy=1.8} @target{ignore=owner}
+  
+  
+#### STOMPS ####
+
+
+
+LR_HYDRA_right_stomp_Pet:
+  Cooldown: 10
+  TargetConditions:
+  - owner false
+  - distance{d=<16} true
+  - fieldofview{angle=130;r=315} true
+  Conditions:
+  - offgcd true
+  Skills:
+  - gcd{ticks=60}
+  - setSkillCooldown{skill=LR_HYDRA_left_stomp;seconds=15} @self
+  - setrotation{relative=true;yaw=1;repeat=20;repeati=1} @self
+  - skill{s=LR_HYDRA_recoil_big_Pet;delay=35} @pir{r=12}
+  - projectile{v=6;i=7;oT=[ - summon{t=LR_HYDRA_ground_crack_fx}];hs=true;mr=16;delay=35;sE=false;origin=@modelpart{pid=right_front_finger_2};fo=true} @target
+  - totem{md=2;oS=[ - summon{t=LR_HYDRA_ground_crack_fx}];oH=LR_HYDRA_stomp_damage;hr=3;vr=2;drawhitbox=false;delay=35;yo=-1} @modelpart{pid=right_front_finger_2;em=false}
+  - state{s=stomp_right;p=7} @self
+
+
+
+LR_HYDRA_left_stomp_Pet:
+  Cooldown: 10
+  TargetConditions:
+  - owner false
+  - distance{d=<16} true
+  - fieldofview{angle=130;r=45} true
+  Conditions:
+  - offgcd true
+  Skills:
+  - gcd{ticks=60}
+  - setSkillCooldown{skill=LR_HYDRA_right_stomp;seconds=15} @self
+  - setrotation{relative=true;yaw=-1;repeat=20;repeati=1} @self
+  - skill{s=LR_HYDRA_recoil_big_Pet;delay=35} @pir{r=12}
+  - projectile{v=6;i=7;oT=[ - summon{t=LR_HYDRA_ground_crack_fx}];hs=true;mr=16;delay=35;sE=false;origin=@modelpart{pid=left_front_finger_2};fo=true} @target
+  - totem{md=2;oS=[ - summon{t=LR_HYDRA_ground_crack_fx}];oH=LR_HYDRA_stomp_damage;hr=3;vr=2;drawhitbox=false;delay=35;yo=-1} @modelpart{pid=left_front_finger_2;em=false}
+  - state{s=stomp_left;p=7} @self
+  
+  
+### TAIL SWIPE ###
+
+
+
+LR_HYDRA_tail_swipe_right_Pet:
+  Cooldown: 10
+  TargetConditions:
+  - owner false
+  - distance{d=<8} true
+  - fieldofview{angle=90;r=200} true
+  Conditions:
+  - varequals{var=caster.leap;val=true} false
+  - varequals{var=caster.tailswipe;val=true} false
+  Skills:
+  - setvar{var=caster.tailswipe;val=true;type=STRING;duration=60} @self
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=20} @self
+  - state{s=tail_swipe_right;lo=10;p=8} @self
+  - totem{md=2;oH=LR_HYDRA_tail_damage;drawhitbox=false;delay=20;repeat=10;repeati=1;yo=-1} @modelpart{pid=tail;em=false}
+
+
+
+LR_HYDRA_tail_swipe_left_Pet:
+  Cooldown: 10
+  TargetConditions:
+  - owner false
+  - distance{d=<8} true
+  - fieldofview{angle=90;r=145} true
+  Conditions:
+  - varequals{var=caster.leap;val=true} false
+  - varequals{var=caster.tailswipe;val=true} false
+  Skills:
+  - setvar{var=caster.tailswipe;val=true;type=STRING;duration=60} @self
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=20} @self
+  - state{s=tail_swipe_left;lo=10;p=8} @self
+  - totem{md=2;oH=LR_HYDRA_tail_damage;drawhitbox=false;delay=20;repeat=10;repeati=1;yo=-1} @modelpart{pid=tail;em=false}
+  
+
+
+LR_HYDRA_tail_damage_Pet:
+  TargetConditions:
+  - owner false
+
+  Skills:
+  - basedamage{m=1}
+  - solo_throw{v=5;vy=2.5} @target{ignore=owner}
+  
+### LEAP TURN ###
+
+
+
+LR_HYDRA_leap_turn_right_Pet:
+  Cooldown: 5
+  TargetConditions:
+  - owner false
+  - fieldofview{angle=90;r=190} true
+  Conditions:
+  - varequals{var=caster.tailswipe;val=true} false
+  - offgcd true
+  Skills:
+  - gcd{ticks=60}
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=15} @self
+  - sound{s=littleroom_hydra:hydra.leap;v=5;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=20} @self
+  - sound{s=littleroom_hydra:hydra.land;v=5;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=40} @self
+  - skill{s=LR_HYDRA_recoil_Pet;delay=25} @pir{r=16}
+  - skill{s=LR_HYDRA_recoil_big_Pet;delay=45} @pir{r=16}
+  - setvar{var=caster.leap;val=true;type=STRING;duration=80} @self
+  - state{s=leap_turn_right;p=9;li=5;lo=5} @self
+  - setrotation{relative=true;yaw=8;repeat=20;repeati=1;delay=25} @self
+
+
+
+LR_HYDRA_leap_turn_left_Pet:
+  Cooldown: 5
+  TargetConditions:
+  - owner false
+  - fieldofview{angle=90;r=170} true
+  Conditions:
+  - varequals{var=caster.tailswipe;val=true} false
+  - offgcd true
+  Skills:
+  - gcd{ticks=60}
+  - sound{s=littleroom_hydra:hydra.grunt;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=15} @self
+  - sound{s=littleroom_hydra:hydra.leap;v=5;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=20} @self
+  - sound{s=littleroom_hydra:hydra.land;v=5;sc=HOSTILE;pitch=<random.float.0.9to1.1>;delay=40} @self
+  - skill{s=LR_HYDRA_recoil_Pet;delay=25} @pir{r=16}
+  - skill{s=LR_HYDRA_recoil_big_Pet;delay=45} @pir{r=16}
+  - setvar{var=caster.leap;val=true;type=STRING;duration=60} @self
+  - state{s=leap_turn_left;p=9;li=5;lo=5} @self
+  - setrotation{relative=true;yaw=-8;repeat=20;repeati=1;delay=25} @self
+  
+  
+### BREAK HEAD ###
+
+
+
+LR_HYDRA_random_head_break_Pet:
+  Cooldown: 20
+  Conditions:
+  - offgcd true
+  Skills:
+  - randomskill{s=LR_HYDRA_break_head_1,LR_HYDRA_break_head_5,LR_HYDRA_break_head_3} @self
+
+
+
+LR_HYDRA_break_head_1_Pet:
+  Conditions:
+  - varequals{var=caster.head_1;val=missing} false
+  Skills:
+  - gcd{ticks=80} @self
+  - sound{s=littleroom_hydra:hydra.dismember_head;v=5;sc=HOSTILE;cd=1;pitch=<random.float.1.0to1.1>} @self
+  - skill{s=LR_HYDRA_recoil_Pet} @pir{r=8}
+  - state{s=head_break;p=7} @self
+  - summon{t=LR_HYDRA_dismembered_head} @modelpart{pid=neck_4_head_1}
+  - solo_throw{v=2;vy=2} @children{target=armorstands}
+  - e:p{p=reddust;color=#e44ffd;a=75;hs=.5;vs=.5} @modelpart{pid=neck_4_head_1}
+  - e:p{p=falling_obsidian_tear;a=1;hs=.25;vs=.25;repeat=120;repeati=5} @modelpart{pid=neck_4_head_1}
+  - changepart{mid=lr_hydra;pid=neck_5_head_1;nmid=lr_hydra_parts;npid=neck_end} @self
+  - setvar{var=caster.head_1;val=missing;type=STRING} @self
+  - partvis{m=lr_hydra;p=neck_4_head_1;child=true} @self
+
+
+
+LR_HYDRA_break_head_5_Pet:
+  Conditions:
+  - varequals{var=caster.head_5;val=missing} false
+  Skills:
+  - gcd{ticks=80} @self
+  - sound{s=littleroom_hydra:hydra.dismember_head;v=5;sc=HOSTILE;cd=1;pitch=<random.float.1.0to1.1>} @self
+  - state{s=head_break;p=7} @self
+  - summon{t=LR_HYDRA_dismembered_head} @modelpart{pid=neck_5_head_5}
+  - solo_throw{v=2;vy=2} @children{target=armorstands}
+  - skill{s=LR_HYDRA_recoil_Pet} @pir{r=8}
+  - e:p{p=reddust;color=#e44ffd;a=75;hs=.5;vs=.5} @modelpart{pid=neck_5_head_5}
+  - e:p{p=falling_obsidian_tear;a=1;hs=.25;vs=.25;repeat=120;repeati=5} @modelpart{pid=neck_5_head_5}
+  - changepart{mid=lr_hydra;pid=neck_6_head_5;nmid=lr_hydra_parts;npid=neck_end} @self
+  - setvar{var=caster.head_5;val=missing;type=STRING} @self
+  - partvis{m=lr_hydra;p=neck_5_head_5;child=true} @self
+
+
+
+LR_HYDRA_break_head_3_Pet:
+  Conditions:
+  - varequals{var=caster.head_3;val=missing} false
+  Skills:
+  - gcd{ticks=80} @self
+  - sound{s=littleroom_hydra:hydra.dismember_head;v=5;sc=HOSTILE;cd=1;pitch=<random.float.1.0to1.1>} @self
+  - state{s=head_break;p=7} @self
+  - summon{t=LR_HYDRA_dismembered_head} @modelpart{pid=neck_6_head_3}
+  - solo_throw{v=2;vy=2} @children{target=armorstands}
+  - e:p{p=reddust;color=#e44ffd;a=75;hs=.5;vs=.5} @modelpart{pid=neck_6_head_3}
+  - skill{s=LR_HYDRA_recoil_Pet} @pir{r=8}
+  - e:p{p=reddust;color=#e44ffd;a=75;hs=.5;vs=.5} @modelpart{pid=neck_6_head_3}
+  - e:p{p=falling_obsidian_tear;a=1;hs=.25;vs=.25;repeat=120;repeati=5} @modelpart{pid=neck_6_head_3}
+  - changepart{mid=lr_hydra;pid=neck_7_head_3;nmid=lr_hydra_parts;npid=neck_end} @self
+  - setvar{var=caster.head_3;val=missing;type=STRING} @self
+  - partvis{m=lr_hydra;p=neck_6_head_3;child=true} @self
+  
+  
+  
+### DEATH ###
+
+
+
+LR_HYDRA_death_Pet:
+  Skills:
+  - sound{s=littleroom_hydra:hydra.death;v=5;sc=HOSTILE;cd=1;pitch=<random.float.1.0to1.1>} @self
+  - sound{s=littleroom_hydra:hydra.land;v=5;sc=HOSTILE;cd=1;pitch=<random.float.1.0to1.1>;delay=50} @self
+  - skill{s=LR_HYDRA_recoil_Pet} @pir{r=16}
+  - brightness{b=-1;s=-1;delay=2} @self
+  - skill{s=LR_HYDRA_recoil_big_Pet;delay=50} @pir{r=16}
+  - skill{s=LR_HYDRA_recoil_Pet;delay=60} @pir{r=16}
+  - skill{s=LR_HYDRA_recoil_Pet;delay=70} @pir{r=16}
+  - e:p{p=poof;a=15;hs=.5;vs=.5;delay=100} @modelpart{pid=left;em=false}
+  - e:p{p=poof;a=15;hs=.5;vs=.5;delay=100} @modelpart{pid=right;em=false}
+  - e:p{p=poof;a=15;hs=.5;vs=.5;delay=100} @modelpart{pid=neck;em=false}
+
+
+
+LR_HYDRA_magma_meteor_Pet:
+  Cooldown: 18
+  Conditions:
+  - incombat true
+  - offgcd true
+  - varequals{var=caster.leap;val=true} false
+  - varequals{var=caster.roar;val=true} false
+  TargetConditions:
+  - owner false
+  - distance{d=<16} true
+  Skills:
+  - state{s=spot_player;p=2;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.spotted_roar;v=10;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  - setvar{var=caster.roar;val=true;type=STRING;duration=100} @self
+  - gcd{ticks=80} @self
+  - delay 20
+
+
+
+LR_HYDRA_Poison_Path_Pet:
+  Cooldown: 15
+  Conditions:
+  - incombat true
+  - offgcd true
+  - varequals{var=caster.leap;val=true} false
+  - varequals{var=caster.roar;val=true} false
+  Skills:
+  - state{s=spot_player;p=2;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.spotted_roar;v=10;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  - setvar{var=caster.roar;val=true;type=STRING;duration=100} @self
+  - gcd{ticks=80} @self
+  - effect:sound{s=scorpion_sounds:samus.scorpion_attack;volume=1;pitch=1;delay=5} @self
+  - effect:sound{s=scorpion_sounds:samus.spit_venom;volume=1.5;pitch=1} @self
+  - projectile{onTick=LR_HYDRA_Poison_Path_SUMMON;v=20;i=6;hR=1;vR=1;mr=20;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=true;hfs=0.1;delay=20} @Forward{f=5;y=0}
+
+
+
+LR_HYDRA_Poison_Path_SUMMON_Pet:
+  TargetConditions:
+  - owner false
+  - entitytype{t=ARMOR_STAND} false
+  - hastag{t=skill_model} false
+  Skills:
+  - summon{type=LR_HYDRA_Poison_Puddle_Mob_Pet;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - damage{a=35;repeat=9;repeatinterval=16;pkb=true} @ENO{ignore=samefaction;r=3.9;conditions=[ - hastag{t=skill_model;ignore=owner} false ];ignore=players}
+  - damage{a=20;repeat=9;repeatinterval=16;pkb=true} @ENO{ignore=samefaction;r=3.9;conditions=[ - hastag{t=skill_model;ignore=owner} false ];target=players}
+
+
+
+LR_HYDRA_Poison_Puddle_LOOP_Pet:
+  Skills:
+  - state{s=bubble} @self
+  - partvisibility{p=bubble1;v=false;delay=21} @self
+  - partvisibility{p=bubble2;v=false;delay=25} @self
+  - partvisibility{p=bubble3;v=false;delay=35} @self
+  - effect:particles{delay=22;particle=slime;amount=3;hS=0;vS=0;y=0.5;speed=0;forwardOffset=0;sideOffset=0;delay=21} @modelpart{p=bubble1}
+  - effect:particles{delay=22;particle=slime;amount=3;hS=0;vS=0;y=0.5;speed=0;forwardOffset=0;sideOffset=0;delay=25} @modelpart{p=bubble2}
+  - effect:particles{delay=22;particle=slime;amount=3;hS=0;vS=0;y=0.5;speed=0;forwardOffset=0;sideOffset=0;delay=35} @modelpart{p=bubble3}
+  - delay 40
+  - partvisibility{p=bubble1;v=true} @self
+  - partvisibility{p=bubble2;v=true} @self
+  - partvisibility{p=bubble3;v=true} @self
+
+
+
+LR_HYDRA_Poison_Puddle_Pet:
+  Cooldown: 15
+  Conditions:
+  - incombat true
+  - offgcd true
+  - varequals{var=caster.leap;val=true} false
+  - varequals{var=caster.roar;val=true} false
+  Skills:
+  - state{s=spot_player;p=2;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.spotted_roar;v=10;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  - setvar{var=caster.roar;val=true;type=STRING;duration=100} @self
+  - gcd{ticks=80} @self
+  - effect:sound{s=scorpion_sounds:samus.scorpion_attack;volume=1;pitch=1;delay=5} @self
+  - effect:sound{s=scorpion_sounds:samus.spit_venom;volume=1.5;pitch=1} @self
+  - delay 20
+  - projectile{onTick=LR_HYDRA_Poison_Puddle_TICK;onEnd=LR_HYDRA_Poison_Puddle_DAMAGE;v=16;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.6;delay=1} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_Poison_Puddle_TICK;onEnd=LR_HYDRA_Poison_Puddle_DAMAGE;v=13;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=40;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.4;delay=3} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_Poison_Puddle_TICK;onEnd=LR_HYDRA_Poison_Puddle_DAMAGE;v=14;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-15;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=7;g=0.6;delay=4} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_Poison_Puddle_TICK;onEnd=LR_HYDRA_Poison_Puddle_DAMAGE;v=9;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=25;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.7;delay=6} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_Poison_Puddle_TICK;onEnd=LR_HYDRA_Poison_Puddle_DAMAGE;v=17;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-35;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.5;delay=7} @Forward{f=5;y=0}
+
+
+
+LR_HYDRA_Poison_Puddle_DAMAGE_Pet:
+  TargetConditions:
+  - owner false
+  - entitytype{t=ARMOR_STAND} false
+  - hastag{t=skill_model} false
+  Skills:
+  - summon{type=LR_HYDRA_Poison_Puddle_Mob_Pet;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - damage{a=12;repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{ignore=samefaction;r=3.9;conditions=[ - hastag{t=skill_model;ignore=owner} false ];ignore=players}
+  - damage{a=7;repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{ignore=samefaction;r=3.9;conditions=[ - hastag{t=skill_model;ignore=owner} false ];target=players}
+  - damage{a=350} @ENO{ignore=samefaction;ignore=players;r=7.8;conditions=[ - hastag{t=skill_model;ignore=owner} false ]}
+  - damage{a=380} @ENO{ignore=samefaction;target=players;r=7.8;conditions=[ - hastag{t=skill_model;ignore=owner} false ]}
+  - potion{type=slow;duration=30;level=3} @ENO{ignore=samefaction;r=7.8;conditions=[ - hastag{t=skill_model} false ]}
+
+
+
+LR_HYDRA_Poison_Puddle_TICK_Pet:
+  Skills:
+  - effect:particlesphere{particle=redstone;color=#24d91a;radius=0.6;amount=7}
+  - effect:particlesphere{particle=redstone;color=#033d0e;radius=0.6;amount=7}
+
+
+
+LR_HYDRA_skill3_Puddle_Pet:
+  Cooldown: 25
+  Conditions:
+  - incombat true
+  - offgcd true
+  - varequals{var=caster.leap;val=true} false
+  - varequals{var=caster.roar;val=true} false
+  Skills:
+  - state{s=spot_player;p=2;delay=10} @self
+  - sound{s=littleroom_hydra:hydra.spotted_roar;v=10;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self
+  - setvar{var=caster.roar;val=true;type=STRING;duration=100} @self
+  - gcd{ticks=80} @self
+  - potion{type=ABSORPTION;duration=200;level=3} @self
+  - potion{type=FAST_DIGGING;duration=200;level=3} @self
+  - potion{type=INCREASE_DAMAGE;duration=200;level=3} @self
+  - potion{type=LUCK;duration=200;level=3} @self
+  - potion{type=SPEED;duration=200;level=3} @self
+  - effect:sound{s=scorpion_sounds:samus.scorpion_attack;volume=1;pitch=1;delay=5} @self
+  - effect:sound{s=scorpion_sounds:samus.spit_venom;volume=1.5;pitch=1} @self
+  - delay 20
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=16;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.6;delay=1} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=13;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=40;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.4;delay=3} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=14;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-15;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=7;g=0.6;delay=4} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=9;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=25;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.7;delay=6} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=17;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-35;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.5;delay=7} @Forward{f=5;y=0}
+  - delay 60
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=15;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.6;delay=1} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=13;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=40;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.4;delay=3} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=12;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-15;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=7;g=0.6;delay=4} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=7;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=25;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.7;delay=6} @Forward{f=5;y=0}
+  - projectile{onTick=LR_HYDRA_skill3_Puddle_TICK;onEnd=LR_HYDRA_skill3_Puddle_DAMAGE;v=18;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-35;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.5;delay=7} @Forward{f=5;y=0}  
+
+
+
+LR_HYDRA_skill3_Puddle_DAMAGE_Pet:
+  TargetConditions:
+  - owner false
+  - entitytype{t=ARMOR_STAND} false
+  - hastag{t=skill_model} false
+  Skills:
+  - summon{type=LR_HYDRA_abyssal_puddle_Mob_Pet;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - damage{a=19;repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{ignore=samefaction;r=5.2;conditions=[ - hastag{t=skill_model;ignore=owner} false ];ignore=players}
+  - damage{a=10;repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{ignore=samefaction;r=5.2;conditions=[ - hastag{t=skill_model;ignore=owner} false ];target=players}
+  - damage{a=350} @ENO{ignore=samefaction;ignore=players;r=5.2;conditions=[ - hastag{t=skill_model;ignore=owner} false ]}
+  - damage{a=380} @ENO{ignore=samefaction;target=players;r=5.2;conditions=[ - hastag{t=skill_model;ignore=owner} false ]}
+  - potion{type=slow;duration=160;level=2} @ENO{ignore=samefaction;r=5.2;conditions=[ - hastag{t=skill_model} false ]}
+  - potion{type=CONFUSION;duration=60;level=0;hasParticles=false} @ENO{ignore=samefaction;r=5.2;conditions=[ - hastag{t=skill_model} false ]}
+
+
+
+LR_HYDRA_skill3_Puddle_TICK_Pet:
+  Skills:
+  - effect:particlesphere{particle=redstone;color=#221C1C;radius=0.6;amount=7}
+  - effect:particlesphere{particle=redstone;color=#221C1C;radius=0.6;amount=7}
+
+

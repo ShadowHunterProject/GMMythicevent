@@ -1,0 +1,217 @@
+#Vfx Solar Explosion
+vfx_solar_explosion:
+  Type: ARMOR_STAND
+  Display: ''
+  Faction: SOLAR ELEMENTALS
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Invisible: true
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 1
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=vfx_solar_explosion;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=vfx_solar_explosion;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=vfx_solar_explosion_summoned} @self ~onSpawn
+
+#Vfx Solar Fire
+vfx_solar_fire:
+  Type: ARMOR_STAND
+  Display: ''
+  Faction: SOLAR ELEMENTALS
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Invisible: true
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 1
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=vfx_solar_fire;n=false;step=1;usm=true;sync=true;scale=2.0} @self ~onSpawn
+  - model{mid=vfx_solar_fire;n=false;step=1;usm=true;sync=true;scale=2.0} @self ~onLoad
+  - skill{s=vfx_solar_fire_summoned} @self ~onSpawn
+
+#Vfx Solar Fire Ball
+vfx_solar_fire_ball:
+  Type: ARMOR_STAND
+  Display: ''
+  Faction: SOLAR ELEMENTALS
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Invisible: true
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 1
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=vfx_solar_fire_ball;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=vfx_solar_fire_ball;n=false;step=1;usm=true;sync=true} @self ~onLoad
+
+#Vfx Solar Mine
+vfx_solar_mine:
+  Type: ARMOR_STAND
+  Display: ''
+  Faction: SOLAR ELEMENTALS
+  Health: 2000
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Invisible: true
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: false
+    Collidable: true
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 50
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=vfx_solar_mine;tint=false;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=vfx_solar_mine;tint=false;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=vfx_solar_mine_summoned} @self ~onSpawn
+  - skill{s=vfx_solar_mine_damaged} @self ~onDamaged
+  - skill{s=vfx_solar_mine_explode} @self ~onTimer:5
+
+#Vfx Solar Snare
+vfx_solar_snare:
+  Type: ARMOR_STAND
+  Display: ''
+  Faction: SOLAR ELEMENTALS
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Invisible: true
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 1
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=vfx_solar_snare;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=vfx_solar_snare;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=vfx_solar_snare_summoned} @self ~onSpawn
+
+#Vfx Solar Strike
+vfx_solar_strike:
+  Type: ARMOR_STAND
+  Display: ''
+  Faction: SOLAR ELEMENTALS
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Invisible: true
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 1
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=vfx_solar_strike;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=vfx_solar_strike;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=vfx_solar_strike_summoned} @self ~onSpawn
+

@@ -1,0 +1,25 @@
+VFX_SAMUS_Impact:
+  Type: text_display
+  DisplayOptions:
+    Text: ""
+    BlockLight: 15
+    SkyLight: 15
+    Scale: 1,1,1
+    Billboard: CENTER
+    BackgroundColor: 0,0,0,0
+    Translation: 0,0,0
+    ViewRange: 5
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - settextdisplay{text="";delay=0} @self ~onSpawn
+  - settextdisplay{text="";delay=1} @self ~onSpawn
+  - settextdisplay{text="";delay=2} @self ~onSpawn
+  - settextdisplay{text="";delay=3} @self ~onSpawn
+  - settextdisplay{text="";delay=4} @self ~onSpawn
+  - settextdisplay{text="";delay=5} @self ~onSpawn
+  - settextdisplay{text="";delay=6} @self ~onSpawn
+  - remove{delay=7} @self ~onSpawn
+

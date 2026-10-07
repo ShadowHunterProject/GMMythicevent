@@ -1,0 +1,867 @@
+
+#ice bruiser spikes skill 
+
+ice_bruiser_spikes_Pet:
+  Cooldown: 6.5
+  Conditions:
+  - incombat true
+  - targetnotwithin{d=5} true
+  - incombat true
+  - targetwithin{d=10} true
+  - hasaura{n=rscratching} false
+  - hasaura{n=lscratching} false
+  - hasaura{n=headbutting} false
+  - hasaura{n=mbreathing} false
+  - hasaura{n=spikes} false
+  - hasaura{n=leaping} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=spikes;duration=40} @self
+  - lockmodel @self
+  - state{model=ice_golem;state=smash} @self
+  - summon{type=ice_elemental_spikes_Pet;sio=true;amount=1} @self
+  - delay 35
+  - lockmodel{l=false} @self
+  - delay 5
+  - setspeed{speed=1;type=WALKING} @self
+
+
+#ice elemental spike  
+
+ice_elemental_spikes_damage_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - state{model=ice_elemental_spikes;state=spikes} @self
+  - delay 9
+  - lockmodel @self
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - skill{s=spikes_damage_Pet} @self
+  - delay 2
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - delay 2
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - delay 52
+  - remove @self
+  
+
+spikes_damage_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - projectile{oH=spikes_damage2_Pet;vR=3.5;hR=3.5;d=10;mr=10;v=20;sE=false;sB=false;hnp=true;syo=2;tyo=2;fo=true} @ModelPart{model=ice_elemental_spikes;part=ice_spike8;ignore=samefaction}
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike1}
+  - delay 2
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike3} 
+  - delay 1
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike2} 
+  - delay 1
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike4}
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike5} 
+  - delay 1
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike6} 
+  - delay 2
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike7}
+  - delay 1
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @ModelPart{model=ice_elemental_spikes;p=ice_spike8} 
+  
+
+spikes_damage2_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - damage{a=345;is=true} @target{ignore=players;ignore=owner}
+  - damage{a=322;is=true} @target{target=players;ignore=owner}
+  - solo_throw{v=5;vy=1} @target{ignore=owner}
+  
+
+#ice golem skill
+
+ice_golem_reset_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - delay 25
+  - setAI{ai=true} @self
+  - lockmodel{l=false} @self
+  - setspeed{speed=1;type=WALKING} @self
+  
+
+
+ice_golem_spawn_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - state{model=ice_golem;state=spawn} @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=spawning;duration=80} @self
+  - lockmodel @self
+  - sound{s=entity.warden.emerge;p=1.5} @self
+  - delay 75
+  - lockmodel{l=false} @self
+  - delay 5
+  - setspeed{speed=1;type=WALKING} @self
+
+
+
+ice_golem_left_backhand_Pet:
+  Cooldown: 3
+  Conditions:
+  - incombat true
+  - targetwithin{d=4} true
+  - hasaura{n=spawning} false
+  - hasaura{n=lbackhand} false
+  - hasaura{n=rbackhand} false
+  - hasaura{n=lpunching} false
+  - hasaura{n=rpunching} false
+  - hasaura{n=catching} false
+  - hasaura{n=crushing} false
+  - hasaura{n=smashing} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=lbackhand;duration=30} @self
+  - state{model=ice_golem;state=left_backhand} @self
+  - delay 13
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - damage{a=345} @LivingInCone{ignore=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - damage{a=322} @LivingInCone{target=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - solo_throw{v=7.5;vy=2.5} @LivingInCone{a=120;r=4;ignore=samefaction;ignore=owner}
+  - delay 17
+  - setspeed{speed=1;type=WALKING} @self
+  
+
+
+ice_golem_right_backhand_Pet:
+  Cooldown: 3
+  Conditions:
+  - incombat true
+  - targetwithin{d=4} true
+  - hasaura{n=spawning} false
+  - hasaura{n=lbackhand} false
+  - hasaura{n=rbackhand} false
+  - hasaura{n=lpunching} false
+  - hasaura{n=rpunching} false
+  - hasaura{n=catching} false
+  - hasaura{n=crushing} false
+  - hasaura{n=smashing} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=rbackhand;duration=30} @self
+  - state{model=ice_golem;state=right_backhand} @self
+  - delay 13
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - damage{a=345} @LivingInCone{ignore=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - damage{a=322} @LivingInCone{target=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - solo_throw{v=7.5;vy=2.5} @LivingInCone{a=120;r=4;ignore=samefaction;ignore=owner}
+  - delay 17
+  - setspeed{speed=1;type=WALKING} @self  
+
+
+
+ice_golem_left_punch_Pet:
+  Cooldown: 4
+  Conditions:
+  - incombat true
+  - targetwithin{d=4} true
+  - hasaura{n=spawning} false
+  - hasaura{n=lbackhand} false
+  - hasaura{n=rbackhand} false
+  - hasaura{n=lpunching} false
+  - hasaura{n=rpunching} false
+  - hasaura{n=catching} false
+  - hasaura{n=crushing} false
+  - hasaura{n=smashing} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=lpunching;duration=40} @self
+  - state{model=ice_golem;state=left_punch} @self
+  - delay 19
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - damage{a=345} @LivingInCone{ignore=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - damage{a=322} @LivingInCone{target=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - delay 21
+  - setspeed{speed=1;type=WALKING} @self
+
+
+
+ice_golem_right_punch_Pet:
+  Cooldown: 4
+  Conditions:
+  - incombat true
+  - targetwithin{d=4} true
+  - hasaura{n=spawning} false
+  - hasaura{n=lbackhand} false
+  - hasaura{n=rbackhand} false
+  - hasaura{n=lpunching} false
+  - hasaura{n=rpunching} false
+  - hasaura{n=catching} false
+  - hasaura{n=crushing} false
+  - hasaura{n=smashing} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=rpunching;duration=40} @self
+  - state{model=ice_golem;state=right_punch} @self
+  - delay 19
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - damage{a=345} @LivingInCone{ignore=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - damage{a=322} @LivingInCone{target=players;a=120;r=4;ignore=samefaction;ignore=owner}
+  - delay 21
+  - setspeed{speed=1;type=WALKING} @self
+
+
+
+ice_golem_catch_Pet:
+  Conditions:
+  - incombat true
+  - onground true
+  - incombat true
+  - targetwithin{d=5} true
+  - hasaura{n=spawning} false
+  - hasaura{n=lbackhand} false
+  - hasaura{n=rbackhand} false
+  - hasaura{n=lpunching} false
+  - hasaura{n=rpunching} false
+  - hasaura{n=catching} false
+  - hasaura{n=crushing} false
+  - hasaura{n=smashing} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - state{model=ice_golem;state=catch} @self
+  - aura{auraName=catching;duration=45} @self
+  - lockmodel @self
+  - setAI{ai=false} @self
+  - delay 15
+  - setAI{ai=true} @self
+  - delay 5
+  - setAI{ai=false} @self
+  - totem{md=10;c=1;oH=ice_golem_catch2_Pet;hnp=true;hp=true;hR=4;vR=3.5;i=1} @target
+  
+
+
+ice_golem_catch2_Pet:
+  TargetConditions:
+  - owner false
+  - isblocking false
+  Skills:
+  - skill{s=ice_golem_catch3_Pet}
+  
+
+
+ice_golem_catch3_Pet:
+  Conditions:
+  - ModelHasPassenger{p=catch} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - mountmodel{mid=ice_golem;driver=false;mode=force_walking;pbone=catch;dmg=false} @EntitiesInRadius{limit=1;sort=NEAREST;r=5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  - skill{s=ice_golem_crush_Pet} @self
+
+
+
+ice_golem_crush_Pet:
+  Conditions:
+  - ModelHasPassenger{p=catch} orElseCast ice_golem_reset_Pet
+  - hasaura{n=crushing} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - auraremove{aura=catching} @self
+  - aura{auraName=crushing;duration=55} @self
+  - state{model=ice_golem;state=crush} @self
+  - setAI{ai=false} @self
+  - delay 19
+  - sound{s=item.totem.use;p=2} @self
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - damage{a=345;is=true} @ModelPassengers{ignore=players;p=catch;ignore=owner}
+  - damage{a=322;is=true} @ModelPassengers{target=players;p=catch;ignore=owner}
+  - delay 3
+  - skill{s=[
+    - effect:particle{p=snowflake;a=100;ys=0;xs=1;zs=1;s=0.01;y=1.5} @ModelPart{mid=ice_golem;pid=catch}
+      ]} @Sphere{r=2;p=10}
+  - delay 12
+  - dismountAllModel{mid=ice_golem;p=catch} @self
+  - delay 16
+  - setAI{ai=true} @self
+  - lockmodel{l=false} @self
+  - delay 5
+  - setspeed{speed=1;type=WALKING} @self
+  
+
+
+ice_golem_smash_Pet:
+  Cooldown: 5.5
+  Conditions:
+  - incombat true
+  - targetwithin{d=5} true
+  - hasaura{n=spawning} false
+  - hasaura{n=lbackhand} false
+  - hasaura{n=rbackhand} false
+  - hasaura{n=lpunching} false
+  - hasaura{n=rpunching} false
+  - hasaura{n=catching} false
+  - hasaura{n=crushing} false
+  - hasaura{n=smashing} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=smashing;duration=60} @self
+  - state{model=ice_golem;state=smash} @self
+  - lockmodel @self
+  - delay 21
+  - sound{s=item.totem.use;p=2} @self
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - damage{a=345;is=true} @LivingInRadius{ignore=players;r=5;ignore=samefaction;ignore=owner}
+  - damage{a=322;is=true} @LivingInRadius{target=players;r=5;ignore=samefaction;ignore=owner}
+  - solo_throw{v=10;vy=5} @LivingInRadius{r=5;ignore=samefaction;ignore=owner}
+  - delay 3
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @Ring{r=2;p=10;ignore=owner}
+  - delay 31
+  - lockmodel{l=false} @self
+  - delay 5
+  - setspeed{speed=1;type=WALKING} @self
+  
+
+
+ice_golem_death_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - state{model=ice_golem;state=death} @self
+  - dismountAllModel{mid=ice_golem;p=catch} @self
+  - delay 21
+  - sound{s=item.totem.use;p=2} @self
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - damage{a=345;is=true} @LivingInRadius{ignore=players;r=5;ignore=samefaction;ignore=owner}
+  - damage{a=322;is=true} @LivingInRadius{target=players;r=5;ignore=samefaction;ignore=owner}
+  - solo_throw{v=10;vy=5} @LivingInRadius{r=5;ignore=samefaction;ignore=owner}
+  - delay 3
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @Ring{r=2;p=10;ignore=owner}
+
+
+#ice mist damage
+
+
+ice_mist_damage_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - state{model=ice_mist;state=mist} @self
+  - lockmodel @self
+  - delay 20
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=4;repeatInterval=5} @LivingInRadius{ignore=players;r=1;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=4;repeatInterval=5} @LivingInRadius{target=players;r=1;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=1;ignore=samefaction;ignore=owner}
+  - delay 20
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=6;repeatInterval=5} @LivingInRadius{ignore=players;r=2;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=6;repeatInterval=5} @LivingInRadius{target=players;r=2;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=2;ignore=samefaction;ignore=owner}
+  - delay 30
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=4;repeatInterval=5} @LivingInRadius{ignore=players;r=3;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=4;repeatInterval=5} @LivingInRadius{target=players;r=3;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=3;ignore=samefaction;ignore=owner}
+  - delay 20
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=4;repeatInterval=5} @LivingInRadius{ignore=players;r=4;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=4;repeatInterval=5} @LivingInRadius{target=players;r=4;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=4;ignore=samefaction;ignore=owner}
+  - delay 20
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{ignore=players;r=5;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{target=players;r=5;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=5;ignore=samefaction;ignore=owner}
+  - delay 25
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=8;repeatInterval=5} @LivingInRadius{ignore=players;r=6;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=8;repeatInterval=5} @LivingInRadius{target=players;r=6;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=6;ignore=samefaction;ignore=owner}
+  - delay 40  
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{ignore=players;r=7;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{target=players;r=7;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=7;ignore=samefaction;ignore=owner}
+  - delay 25  
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{ignore=players;r=8;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{target=players;r=8;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=8;ignore=samefaction;ignore=owner}
+  - delay 25  
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{ignore=players;r=9;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{target=players;r=9;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=9;ignore=samefaction;ignore=owner}
+  - delay 25
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{ignore=players;r=10;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=5;repeatInterval=5} @LivingInRadius{target=players;r=10;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=10;ignore=samefaction;ignore=owner}
+  - delay 25  
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=6;repeatInterval=5} @LivingInRadius{ignore=players;r=11;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=6;repeatInterval=5} @LivingInRadius{target=players;r=11;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=11;ignore=samefaction;ignore=owner}
+  - delay 30  
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=3;repeatInterval=5} @LivingInRadius{ignore=players;r=12;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=3;repeatInterval=5} @LivingInRadius{target=players;r=12;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=12;ignore=samefaction;ignore=owner}
+  - delay 15  
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=3;repeatInterval=5} @LivingInRadius{ignore=players;r=11;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=3;repeatInterval=5} @LivingInRadius{target=players;r=11;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=11;ignore=samefaction;ignore=owner}
+  - delay 15 
+  - damage{a=345;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=6;repeatInterval=5} @LivingInRadius{ignore=players;r=10;ignore=samefaction;ignore=owner}
+  - damage{a=322;pk=true;ie=true;ia=true;is=true;ir=true;ieff=true;pi=true;repeat=6;repeatInterval=5} @LivingInRadius{target=players;r=10;ignore=samefaction;ignore=owner}
+  - freeze{ticks=100} @LivingInRadius{r=10;ignore=samefaction;ignore=owner}
+  - delay 56
+  - remove @self
+  
+
+  
+#ice queen skill
+
+basic_damage_Pet:
+  Conditions:
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - tracklocation @targetlocation
+  - projectile{oH=basic_damage2_Pet;vR=3.5;hR=3;d=10;mr=14;v=20;sE=false;sB=false;hnp=true;tyo=2;fo=true} @trackedlocation
+
+
+basic_damage2_Pet:
+  Conditions:
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - damage{a=345} @target{ignore=players;ignore=owner}
+  - damage{a=322} @target{target=players;ignore=owner}
+
+
+track_target_Pet:
+  Conditions:
+  - hasaura{n=tracker} true
+  TargetConditions:
+  - owner false
+  Skills:
+  - aura{auraName=tracking;oT=ice_beam_damage_Pet;duration=45;interval=4} @self
+  - tracklocation @targetlocation
+
+
+ice_beam_sounds_Pet:
+  Conditions:
+  - hasaura{n=beaming_sounds} true
+  TargetConditions:
+  - owner false
+  Skills:
+  - sound{s=entity.allay.item_thrown;v=15;p=0.1} @self
+  - sound{s=entity.allay.ambient_without_item;v=15;p=1} @self    
+
+
+ice_beam_damage_Pet:
+  Conditions:
+  - hasaura{n=tracking} true
+  TargetConditions:
+  - owner false
+  Skills:
+  - delay 4
+  - skill{s=[
+    - skill{s=ice_beam_damage2_Pet} @forward{f=33;uel=true}
+      ]} @trackedlocation
+
+
+ice_beam_damage2_Pet:
+  Conditions:
+  - incombat true
+  - targetwithin{d=27} true
+  TargetConditions:
+  - owner false
+  Skills:
+  - damage{a=345;pk=true;ie=true;ia=true;ir=true;ieff=true;pi=true} @EntitiesInLine{ignore=players;r=1;ignore=samefaction;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  - damage{a=322;pk=true;ie=true;ia=true;ir=true;ieff=true;pi=true} @EntitiesInLine{target=players;r=1;ignore=samefaction;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  - auraremove{aura=tracker} @self
+
+
+rose_toss_damage_Pet:
+  Conditions:
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - setspeed{speed=0;type=WALKING} @self
+  - tracklocation @targetlocation
+  - projectile{oH=rose_toss_damage2_Pet;vR=3.5;d=15;mr=11;v=20;sE=false;sB=false;hnp=true;tyo=2;fo=true} @trackedlocation
+
+
+rose_toss_damage2_Pet:
+  Conditions:
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - damage{a=345} @target{ignore=players;ignore=owner}
+  - damage{a=322} @target{target=players;ignore=owner}
+
+
+ice_queen_shards_Pet:
+  Cooldown: 4
+  Conditions:
+  - incombat true
+  - targetwithin{d=3} true
+  - hasaura{n=basic} false
+  - hasaura{n=beaming} false
+  - hasaura{n=tossing} false
+  - hasaura{n=shard} false
+  - hasaura{n=wall} false
+  - hasaura{n=mist} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=shard;duration=70} @self
+  - state{model=ice_golem;state=catch} @self
+  - delay 20
+  - lockmodel @self
+  - delay 7
+  - sound{s=item.trident.return;p=2} @self
+  - sound{s=item.trident.return;p=2} @self
+  - sound{s=item.trident.return;p=2} @self
+  - sound{s=item.trident.return;p=2} @self
+  - sound{s=item.trident.return;p=2} @self
+  - sound{s=item.trident.return;p=2} @self
+  - damage{a=345;is=true} @LivingInRadius{ignore=players;r=4;ignore=samefaction;ignore=owner}
+  - damage{a=322;is=true} @LivingInRadius{target=players;r=4;ignore=samefaction;ignore=owner}
+  - delay 38
+  - lockmodel{l=false} @self
+  - delay 5
+  - setspeed{speed=1;type=WALKING} @self
+
+
+
+ice_queen_mist_Pet:
+  Cooldown: 120
+  Conditions:
+  - incombat true
+  - targetwithin{d=3} true
+  - hasaura{n=basic} false
+  - hasaura{n=beaming} false
+  - hasaura{n=tossing} false
+  - hasaura{n=shard} false
+  - hasaura{n=wall} false
+  - hasaura{n=mist} false
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=mist;duration=401} @self
+  - state{model=ice_golem;state=smash} @self
+  - summon{type=ice_mist_Pet;sio=true;amount=1} @self  
+  - lockmodel @self
+  - setcollidable{c=false} @self
+  - setNoDamageTicks{ticks=396;delay=1} @self
+  - delay 396
+  - setcollidable{c=true} @self
+  - lockmodel{l=false} @self
+  - delay 5
+  - setspeed{speed=1;type=WALKING} @self
+
+
+
+ice_sprite_shoot_Pet:
+  Cooldown: 3
+  Conditions:
+  - incombat true
+  - targetwithin{d=15} true
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - setspeed{speed=0;type=FLYING} @self
+  - aura{auraName=shooting;duration=40} @self
+  - state{model=ice_sprite;state=shoot} @self
+  - delay 13
+  - lockmodel @self
+  - skill{s=shoot_damage_Pet} @self
+  - sound{s=entity.illusioner.prepare_mirror;p=2} @self
+  - delay 32
+  - lockmodel{l=false} @self
+  - delay 5
+  - setspeed{speed=1;type=FLYING} @self
+
+
+shoot_damage_Pet:
+  Conditions:
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - tracklocation @targetlocation
+  - projectile{oH=shoot_damage2_Pet;vR=3.5;d=17;mr=17;v=18;sE=false;sB=false;hnp=true;syo=2;tyo=2;fo=true} @trackedlocation{ignore=samefaction}
+
+
+shoot_damage2_Pet:
+  Conditions:
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - damage{a=345;is=true} @target{ignore=players;ignore=owner}
+  - damage{a=322;is=true} @target{target=players;ignore=owner}
+  
+
+ice_sprite_death_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - sound{s=entity.allay.death;p=1} @self
+  
+  
+  
+#ice thorns skill
+
+ice_thorns_root_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - state{model=ice_thorns;state=root} @self
+  - delay 5
+  - sound{s=entity.warden.attack_impact;p=1} @self
+  - delay 5
+  - sound{s=entity.warden.attack_impact;p=1} @self
+  - lockmodel @self
+  - delay 5
+  - sound{s=entity.warden.attack_impact;p=1} @self
+  - delay 5
+  - sound{s=entity.warden.attack_impact;p=1} @self
+  - delay 5
+  - sound{s=entity.warden.attack_impact;p=1} @self
+  - delay 5
+  - sound{s=entity.warden.attack_impact;p=1} @self  
+  - delay 5
+  - aura{auraName=rooting;oT=root_target_Pet;duration=205;interval=5} @self
+  - delay 205
+  - remove @self
+  
+
+root_target_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - damage{a=345;is=true;pk=true;pi=true} @LivingInRadius{ignore=players;r=4;ignore=samefaction;ignore=owner}
+  - damage{a=322;is=true;pk=true;pi=true} @LivingInRadius{target=players;r=4;ignore=samefaction;ignore=owner}
+  - potion{type=SLOW;duration=20;l=2} @LivingInRadius{r=4;ignore=samefaction;ignore=owner}
+  
+  
+
+#ice wall skill
+
+ice_wall_emerge_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - state{model=ice_wall;state=spawn} @self
+  - lockmodel @self
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - effect:particle{p=snowflake;a=250;ys=0;xs=1;zs=1;s=0.01;y=0.5} @Ring{r=14;p=15;ignore=owner}
+  - delay 2
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - delay 2
+  - sound{s=block.glass.break;p=1.5} @self
+  - sound{s=block.glass.break;p=1} @self
+  - sound{s=block.glass.break;p=0.8} @self
+  - sound{s=block.sniffer_egg.hatch;p=1} @self
+  - sound{s=block.sniffer_egg.hatch;p=1.2} @self
+  - sound{s=block.sniffer_egg.hatch;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=2} @self
+  - sound{s=entity.iron_golem.damage;p=1.5} @self
+  - sound{s=entity.warden.attack_impact;p=0.8} @self
+  - sound{s=entity.warden.attack_impact;p=0.1} @self
+  - delay 36
+  - skill{s=ice_wall_idle_Pet} @self
+
+
+ice_wall_idle_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - aura{auraName=emerged;duration=1200} @self
+  - delay 1200
+  - skill{s=ice_wall_remove_Pet} @self
+  
+
+ice_wall_remove_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - state{model=ice_wall;state=death} @self
+  - delay 80
+  - remove @self
+  
+
+BossWall_Pet:
+  Conditions:
+  - hasaura{n=emerged} true
+  TargetConditions:
+  - owner false
+  Skills:
+  - solo_throw{v=-2;vy=-1} @EIRR{min=12;max=14;ignore=owner}
+  - damage{a=345;is=true} @EIRR{ignore=players;min=12;max=14;ignore=owner}
+  - damage{a=322;is=true} @EIRR{target=players;min=12;max=14;ignore=owner}
+  
+
+BossWall2_Pet:
+  Conditions:
+  - hasaura{n=emerged} true
+  TargetConditions:
+  - owner false
+  Skills:
+  - solo_throw{v=2;vy=-1} @EIRR{min=15;max=17;ignore=owner}
+  - damage{a=345;is=true} @EIRR{ignore=players;min=15;max=17;ignore=owner}
+  - damage{a=322;is=true} @EIRR{target=players;min=15;max=17;ignore=owner}
+
+
+ice_bruiser_death_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - CancelEvent @self
+  - state{model=ice_bruiser;state=death} @self
+  - delay 30
+  - effect:particle{p=snowflake;a=150;ys=0;xs=1;zs=1;s=0.01;y=1} @self
+  - sound{s=block.glass.break;p=1.2} @self
+  - sound{s=entity.iron_golem.death;p=1} @self
+
+
+# FORCED_SYNC_UPDATE639172407144818550
+

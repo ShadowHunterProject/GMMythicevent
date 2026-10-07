@@ -1,0 +1,7 @@
+name: GMMythicevent
+version: 1.0.0
+main: com.gmstudio.gmmythicevent.GMMythicEvent
+api-version: 1.21
+author: Gemix
+description: Custom MythicMobs Mechanics
+depend: [MythicMobs]

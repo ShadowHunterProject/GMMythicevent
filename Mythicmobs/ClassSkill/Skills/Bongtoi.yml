@@ -1,0 +1,134 @@
+#===========================================================================skill1==================================================================================#
+skill_bongtoi1:
+  Skills:
+    - projectile{oE=skill_bongtoi1_vfx;v=99;i=1;hR=1;vR=1;mr=15;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1} @Forward{f=20;y=0.4}
+    - sound{s=entity.illusioner.cast_spell;v=1;p=0.5} @self
+    - sound{s=entity.wither.shoot;v=0.5;p=0.5} @self
+
+skill_bongtoi1_vfx:
+  Skills:
+    - summon{type=BONGTOI_PUDDLE;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+    - summon{type=BONGTOI_PUDDLE;amount=4;radius=4;yRadius=0;onSurface=true} @origin
+    - totem{ch=9999;i=5;md=160;onTick=skill_bongtoi_dmg} @origin
+
+skill_bongtoi_dmg:
+  Cooldown: 1.0
+  Skills:
+    - skill{s=skill_bongtoi_dmg_apply} @ENO{r=7}
+
+skill_bongtoi_dmg_apply:
+  TargetConditions:
+    - solo_is_my_summon false
+    - entitytype{t=ARMOR_STAND} false
+    - entitytype{t=ITEM_DISPLAY} false
+    - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+    - sound{s=block.lava.pop;v=0.5;p=0.5}
+    - solo_damage{a="<skill.var.damage>";pkb=true} ?isplayer
+    - solo_damage{a="<skill.var.damage>";pkb=true} ?!isplayer
+    - potion{type=SLOW;duration=40;level=1;hasParticles=false} @Targeted ?!gm_is_immune
+    - potion{type=BLINDNESS;duration=40;level=0;hasParticles=false} @Targeted ?!gm_is_immune
+#===================================================================================================================================================================#
+
+#===========================================================================skill2 (Mirrors Attack Combo)===========================================================#
+skill_bongtoi2:
+  Skills:
+    - potion{type=SLOW;duration=49;level=2;hasParticles=false} @self
+    - delay 1
+    - projectile{oE=skill_bongtoi2_hit;v=99;i=1;hR=1;vR=1;mr=20;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1} @Forward{f=20;y=0.4}
+
+skill_bongtoi2_hit:
+  Skills:
+    - skill{s=skill_bongtoi2_hit_dmg} @ENO{r=7}
+
+    # Initial hit impact effects
+    - sound{s=entity.wither.shoot;p=0.5;v=2} @origin
+    - sound{s=entity.evoker.cast_spell;p=0.8;v=2} @origin
+    - sound{s=entity.illusioner.prepare_mirror;p=0.5;v=2} @origin
+    - effect:particles{p=witch;a=100;vs=1;hs=1;s=0.1;y=1} @origin
+    - effect:particles{p=smoke;a=50;vs=0.5;hs=0.5;s=0.05;y=1} @origin
+    - effect:particlesphere{p=dragonbreath;radius=3;a=100;s=0.05;y=1} @origin
+
+    # Delay slightly before starting the top_ray orbital strikes
+    - delay 5
+    - skill{s=skill_bongtoi2_topray_strike;repeat=9;repeatInterval=20} @origin
+
+skill_bongtoi2_hit_dmg:
+  TargetConditions:
+    - solo_is_my_summon false
+    - entitytype{t=ARMOR_STAND} false
+    - entitytype{t=ITEM_DISPLAY} false
+    - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+    - solo_damage{a="<skill.var.damage>";pkb=true}
+
+skill_bongtoi2_topray_strike:
+  Skills:
+    - sound{s=block.amethyst_block.chime;p=1.2;v=2} @origin
+    - effect:particles{p=portal;a=50;vs=1;hs=1;s=0.5;y=0.5} @origin
+    - skill{s=skill_bongtoi2_topray_apply} @ENO{r=8}
+
+skill_bongtoi2_topray_apply:
+  TargetConditions:
+    - solo_is_my_summon false
+    - entitytype{t=ARMOR_STAND} false
+    - entitytype{t=ITEM_DISPLAY} false
+    - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+    - sudoskill{s=skill_bongtoi2_summon_topray_offset}
+    - solo_damage{a="<skill.var.damage>";pkb=true}
+    - sound{s=minecraft:event.mob_effect.trial_omen;p=1.4;v=5}
+    - effect:particles{p=crit;a=30;vs=0.5;hs=0.5;s=0.1;y=1}
+    - effect:particles{p=largeexplode;a=1;y=1}
+
+skill_bongtoi2_summon_topray_offset:
+  Skills:
+    - summon{type=BONGTOI_MIRROR_ATTACK_1;amount=1;radius=0;yRadius=0;onSurface=false} @Forward{f=0;y=4}
+#===================================================================================================================================================================#
+
+#===========================================================================skill3==================================================================================#
+skill_bongtoi3:
+  Skills:
+    - projectile{oE=skill_bongtoi3_vfx;v=99;i=1;hR=1;vR=1;mr=10;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1} @Forward{f=20;y=0.4;lockpitch=true}
+    - potion{type=INCREASE_DAMAGE;duration=200;level=7} @self
+    - potion{type=LUCK;duration=200;level=4} @self
+    - potion{type=SPEED;duration=200;level=4} @self
+    - delay 10
+
+skill_bongtoi3_vfx:
+  Skills:
+    - projectile{oT=skill_bongtoi3_pull;v=0;i=1;hR=1;vR=1;mr=10;hnp=true;hO=0;sE=false;sB=false;hs=false;hfs=0;syo=13;tyo=1.5;g=0;maxDuration=200}
+    - projectile{oT=skill_bongtoi3_dmg;bulletType=MOB;mob=LRD_WITHERSTORM_PROJECTILE_FX;v=0;i=1;hR=1;vR=1;mr=10;hnp=true;hO=0;sE=false;sB=false;hs=false;hfs=0;syo=10;tyo=1.5;g=0;maxDuration=200}
+
+skill_bongtoi3_pull:
+  cooldown: 0.1
+  Skills:
+    - skill{s=skill_bongtoi3_pull_apply} @ENO{r=22}
+
+skill_bongtoi3_pull_apply:
+  TargetConditions:
+    - entitytype{t=ARMOR_STAND} false
+    - entitytype{t=ITEM_DISPLAY} false
+    - solo_can_target{interaction=OFFENSE_ACTION} true
+    - solo_is_my_summon false
+  Skills:
+    - solo_pull{velocity=1to3;toOrigin=true;repeat=1;repeatinterval=5}
+
+skill_bongtoi3_dmg:
+  Cooldown: 1.0
+  Skills:
+    - skill{s=skill_bongtoi3_dmg_apply} @ENO{r=3}
+
+skill_bongtoi3_dmg_apply:
+  TargetConditions:
+    - solo_is_my_summon false
+    - entitytype{t=ARMOR_STAND} false
+    - entitytype{t=ITEM_DISPLAY} false
+    - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+    - solo_damage{a="<skill.var.damage>";pkb=true} ?isplayer
+    - solo_damage{a="<skill.var.damage>";pkb=true} ?!isplayer
+    - potion{type=SLOW;duration=60;level=1;hasParticles=false} @Targeted ?!gm_is_immune
+    - potion{type=BLINDNESS;duration=60;level=0;hasParticles=false} @Targeted ?!gm_is_immune
+#===================================================================================================================================================================#
+

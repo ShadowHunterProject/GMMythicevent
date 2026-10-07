@@ -1,0 +1,19 @@
+FlameDebuff_BURN:
+  Skills:
+  - delay 1
+FlameDebuff_BURN_DAMAGE:
+  Skills:
+  - skill{s=FlameDebuff_BURN_DAMAGE2} @TargetedTarget{conditions=[ - isLiving true - hasaura{n=BURNED} false ]}
+FlameDebuff_BURN_DAMAGE2:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.player.hurt_on_fire;volume=0.6;pitch=1}
+  - effect:sound{s=entity.generic.burn;volume=0.5;pitch=1.4}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=true} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=true} @target{target=players}
+  - aura{auraName=BURNED;duration=20}
+
+

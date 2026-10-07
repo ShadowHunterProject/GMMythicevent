@@ -1,0 +1,280 @@
+
+
+# ~Written by Gemix~
+
+apocalypse_setAItrue:
+  Conditions:
+  - incombat true
+  Skills:
+  - setAI{ai=true} @self
+
+
+#Basic Attack 1
+apocalypse_basic_attack:
+  Cooldown: 3
+  Conditions:
+  - incombat true
+  - targetwithin{d=4} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackbox} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  Skills:
+  - delay 1
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=basic1;duration=29} @self
+  - state{model=apocalypse_type_a;state=basic_attack} @self
+  - delay 7
+  - lockmodel @self
+  - aura{auraName=basic1D;duration=4;oT=basic1_damage} @self
+  - sound{s=custom.basic_attack1;v=3;p=1} @self
+  - delay 22
+  - lockmodel{l=false;sync=true} @self
+  - setspeed{speed=1;type=WALKING} @self
+
+basic1_damage:
+  Skills:
+  - totem{md=2;oH=[ - damage{a=1397;ia=true} ];hnp=true;hp=true;hR=4.5;vR=4.5;i=1;drawhitbox=false} @ModelPart{mid=apocalypse_type_a;pid=arm_sword}
+
+#Basic Attack 2
+apocalypse_basic_attack2:
+  Cooldown: 3
+  Conditions:
+  - incombat true
+  - targetwithin{d=4} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackbox} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  Skills:
+  - delay 1
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=basic2;duration=36} @self
+  - state{model=apocalypse_type_a;state=basic_attack2} @self
+  - delay 7
+  - lockmodel @self
+  - aura{auraName=basic2D;duration=4;oT=basic2_damage} @self
+  - sound{s=custom.basic_attack1;v=3;p=1} @self
+  - delay 13
+  - aura{auraName=basic2D;duration=4;oT=basic2_damage} @self
+  - sound{s=custom.basic_attack2;v=3;p=1} @self
+  - delay 16
+  - lockmodel{l=false;sync=true} @self
+  - setspeed{speed=1;type=WALKING} @self
+
+basic2_damage:
+  Skills:
+  - totem{md=2;oH=[ - damage{a=1397;ia=true} ];hnp=true;hp=true;hR=4.5;vR=4.5;i=1;drawhitbox=false} @ModelPart{mid=apocalypse_type_a;pid=arm_sword}
+
+
+#Black Hole
+apocalypse_black_hole:
+  Cooldown: 45
+  Conditions:
+  - incombat true
+  #- targetnotwithin{d=5} true
+  - incombat true
+  - targetwithin{d=15} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackbox} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  - hasaura{n=BH_CD} false
+  Skills:
+  - aura{auraName=BH_CD;duration=900} @self
+  - delay 1
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=blackH;duration=260} @self
+  - state{model=apocalypse_type_a;state=black_hole} @self
+  - lockmodel @self
+  - summon{type=black_hole;amount=1;io=true} @ModelPart{mid=apocalypse_type_a;pid=black_hole3}
+  - skill{s=main_BH_totem} @self
+  - delay 260
+  - lockmodel{l=false;sync=true} @self
+  - setspeed{speed=1;type=WALKING} @self
+
+
+black_hole_summoned:
+  Skills:
+  - CancelEvent @self
+  - aura{auraName=blackHDamageBurst;oT=black_hole_damage_burst;duration=260;i=20} @self
+  - state{model=black_hole;state=black_hole} @self
+  - lockmodel @self
+  - sound{s=custom.black_hole;v=3;p=1} @self
+  - delay 20
+  - aura{auraName=blackHD1;oT=black_hole_damage1;duration=20} @self
+  - delay 20
+  - aura{auraName=blackHD2;oT=black_hole_damage2;duration=30} @self
+  - delay 30
+  - aura{auraName=blackHD3;oT=black_hole_damage3;duration=40} @self
+  - delay 40
+  - aura{auraName=blackHD4;oT=black_hole_damage4;duration=20} @self
+  - delay 20
+  - aura{auraName=blackHD5;oT=black_hole_damage5;duration=20} @self
+  - delay 20
+  - aura{auraName=blackHD6;oT=black_hole_damage6;duration=110} @self
+  - delay 110
+  - skill{s=black_hole_damage_burst} @self
+  - remove @self
+
+black_hole_damage1:
+  Skills:
+  - pull{v=3.5} @LivingInRadius{r=6;ignore=samefaction}
+  
+black_hole_damage2:
+  Skills:
+  - pull{v=3.5} @LivingInRadius{r=6;ignore=samefaction}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=samefaction}
+  
+black_hole_damage3:
+  Skills:
+  - pull{v=3.5} @LivingInRadius{r=6;ignore=samefaction}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=samefaction}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=samefaction}
+  
+black_hole_damage4:
+  Skills:
+  - pull{v=3.5} @LivingInRadius{r=6;ignore=samefaction}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=samefaction}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=samefaction}
+  - pull{v=2} @EIRR{min=18;max=24;ignore=samefaction}
+  
+black_hole_damage5:
+  Skills:
+  - pull{v=3.5} @LivingInRadius{r=6;ignore=samefaction}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=samefaction}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=samefaction}
+  - pull{v=2} @EIRR{min=18;max=24;ignore=samefaction}
+  - pull{v=1.5} @EIRR{min=24;max=30;ignore=samefaction}
+  
+black_hole_damage6:
+  Skills:
+  - pull{v=3.5} @LivingInRadius{r=6;ignore=samefaction}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=samefaction}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=samefaction}
+  - pull{v=2} @EIRR{min=18;max=24;ignore=samefaction}
+  - pull{v=1.5} @EIRR{min=24;max=30;ignore=samefaction}
+  - pull{v=1} @EIRR{min=30;max=36;ignore=samefaction}
+  
+
+#Leave Combat
+apocalypse_reset:
+  Conditions:
+  - playersinradius{a=0;r=40} true
+  Skills:
+  - heal{a=1000} @self
+
+# FORCED_SYNC_UPDATE639172407144718779
+
+black_hole_damage_burst:
+  Skills:
+  - damage{a=1092;is=true;pk=true;ie=true;ia=true;ir=true;ieff=true;pi=true} @PlayersInRadius{r=6}
+
+main_BH_totem:
+  Skills:
+  - delay 10
+  - projectile{onTick=apoc_bh_deal_damage;v=0;i=10;duration=250;hitNonPlayers=false;hitPlayers=false;hitBlocks=false} @ModelPart{mid=apocalypse_type_a;pid=black_hole3}
+
+apoc_bh_deal_damage:
+  Skills:
+  - damage{a=350;is=true;pk=true;ie=true;ia=true;ir=true;ieff=true;pi=true} @PlayersInRadius{r=6}
+
+# ==========================================
+# Boss Converted Skills from Bongtoi
+# ==========================================
+apocalypse_bongtoi1:
+  Cooldown: 5
+  Conditions:
+  - incombat true
+  - targetwithin{d=25} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  - hasaura{n=BT1_CD} false
+  Skills:
+  - aura{auraName=BT1_CD;duration=100} @self
+  - projectile{oE=apocalypse_bongtoi1_vfx;v=99;i=1;hR=1;vR=1;mr=15;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1} @target
+  - sound{s=entity.illusioner.cast_spell;v=1;p=0.5} @self
+  - sound{s=entity.wither.shoot;v=0.5;p=0.5} @self
+
+apocalypse_bongtoi1_vfx:
+  Skills:
+  - summon{type=BONGTOI_PUDDLE;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - summon{type=BONGTOI_PUDDLE;amount=4;radius=4;yRadius=0;onSurface=true} @origin
+  - totem{ch=9999;i=5;md=160;onTick=apocalypse_bongtoi_dmg} @origin
+
+apocalypse_bongtoi_dmg:
+  Cooldown: 1.0
+  Skills:
+  - skill{s=apoc_bongtoi_deal_damage} @ENO{r=7}
+
+apoc_bongtoi_deal_damage:
+  TargetConditions:
+  - isplayer true
+  Skills:
+  - sound{s=block.lava.pop;v=0.5;p=0.5}
+  - damage{a=1400;ia=true;pi=true}
+  - potion{type=SLOW;duration=40;level=1;hasParticles=false}
+  - potion{type=BLINDNESS;duration=40;level=0;hasParticles=false}
+
+apocalypse_bongtoi2:
+  Cooldown: 10
+  Conditions:
+  - incombat true
+  - targetwithin{d=25} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  - hasaura{n=BT2_CD} false
+  Skills:
+  - aura{auraName=BT2_CD;duration=200} @self
+  - aura{auraName=bongtoi2;duration=49} @self
+  - potion{type=SLOW;duration=49;level=2;hasParticles=false} @self
+  - delay 1
+  - projectile{oE=apocalypse_bongtoi2_hit;v=99;i=1;hR=1;vR=1;mr=20;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1} @target
+
+apocalypse_bongtoi2_hit:
+  Skills:
+  - skill{s=apoc_bongtoi2_hit_dmg} @ENO{r=7}
+  - sound{s=entity.wither.shoot;p=0.5;v=2} @origin
+  - sound{s=entity.evoker.cast_spell;p=0.8;v=2} @origin
+  - sound{s=entity.illusioner.prepare_mirror;p=0.5;v=2} @origin
+  - effect:particles{p=witch;a=100;vs=1;hs=1;s=0.1;y=1} @origin
+  - effect:particles{p=smoke;a=50;vs=0.5;hs=0.5;s=0.05;y=1} @origin
+  - effect:particlesphere{p=dragonbreath;radius=3;a=100;s=0.05;y=1} @origin
+  - delay 5
+  - skill{s=apocalypse_bongtoi2_topray_strike;repeat=9;repeatInterval=20} @origin
+
+apoc_bongtoi2_hit_dmg:
+  TargetConditions:
+  - isplayer true
+  Skills:
+  - damage{a=1400;ia=true;pi=true}
+
+apocalypse_bongtoi2_topray_strike:
+  Skills:
+  - sound{s=block.amethyst_block.chime;p=1.2;v=2} @origin
+  - effect:particles{p=portal;a=50;vs=1;hs=1;s=0.5;y=0.5} @origin
+  - skill{s=apoc_bongtoi2_topray_apply} @ENO{r=8}
+
+apoc_bongtoi2_topray_apply:
+  TargetConditions:
+  - isplayer true
+  Skills:
+  - sudoskill{s=apocalypse_bongtoi2_summon_topray_offset}
+  - damage{a=1400;ia=true;pi=true}
+  - sound{s=minecraft:event.mob_effect.trial_omen;p=1.4;v=5}
+  - effect:particles{p=crit;a=30;vs=0.5;hs=0.5;s=0.1;y=1}
+  - effect:particles{p=largeexplode;a=1;y=1}
+
+apocalypse_bongtoi2_summon_topray_offset:
+  Skills:
+  - summon{type=BONGTOI_MIRROR_ATTACK_1;amount=1;radius=0;yRadius=0;onSurface=false} @Forward{f=0;y=4}

@@ -1,0 +1,101 @@
+Poison_Path: #skill1
+  Skills:
+  - effect:sound{s=scorpion_sounds:samus.scorpion_attack;volume=1;pitch=1;delay=5} @self
+  - effect:sound{s=scorpion_sounds:samus.spit_venom;volume=1.5;pitch=1} @self
+  - projectile{onTick=Poison_Path_SUMMON;v=20;i=6;hR=1;vR=1;mr=20;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=true;hfs=0.1} @Forward{f=5;y=0}
+  
+Poison_Path_SUMMON:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - summon{type=Poison_Puddle;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - solo_damage{a="(1.5* 150)";repeat=9;repeatinterval=16;pkb=true} @ENO{r=3.9;ignore=players}
+  - solo_damage{a="(1.5* 150)";repeat=9;repeatinterval=16;pkb=true} @ENO{r=3.9;target=players}
+
+Poison_Puddle_LOOP:
+  Skills:
+  - state{s=bubble} @self
+  - partvisibility{p=bubble1;v=false;delay=21} @self
+  - partvisibility{p=bubble2;v=false;delay=25} @self
+  - partvisibility{p=bubble3;v=false;delay=35} @self
+  - effect:particles{delay=22;particle=slime;amount=3;hS=0;vS=0;y=0.5;speed=0;forwardOffset=0;sideOffset=0;delay=21} @modelpart{p=bubble1}
+  - effect:particles{delay=22;particle=slime;amount=3;hS=0;vS=0;y=0.5;speed=0;forwardOffset=0;sideOffset=0;delay=25} @modelpart{p=bubble2}
+  - effect:particles{delay=22;particle=slime;amount=3;hS=0;vS=0;y=0.5;speed=0;forwardOffset=0;sideOffset=0;delay=35} @modelpart{p=bubble3}
+  - delay 40
+  - partvisibility{p=bubble1;v=true} @self
+  - partvisibility{p=bubble2;v=true} @self
+  - partvisibility{p=bubble3;v=true} @self
+  
+Poison_Puddle: #skill 2
+  Skills:
+  - effect:sound{s=scorpion_sounds:samus.scorpion_attack;volume=1;pitch=1;delay=5} @self
+  - effect:sound{s=scorpion_sounds:samus.spit_venom;volume=1.5;pitch=1} @self
+  - projectile{onTick=Poison_Puddle_TICK;onEnd=Poison_Puddle_DAMAGE;v=16;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.6;delay=1} @Forward{f=5;y=0}
+  - projectile{onTick=Poison_Puddle_TICK;onEnd=Poison_Puddle_DAMAGE;v=13;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=40;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.4;delay=3} @Forward{f=5;y=0}
+  - projectile{onTick=Poison_Puddle_TICK;onEnd=Poison_Puddle_DAMAGE;v=14;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-15;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=7;g=0.6;delay=4} @Forward{f=5;y=0}
+  - projectile{onTick=Poison_Puddle_TICK;onEnd=Poison_Puddle_DAMAGE;v=9;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=25;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.7;delay=6} @Forward{f=5;y=0}
+  - projectile{onTick=Poison_Puddle_TICK;onEnd=Poison_Puddle_DAMAGE;v=17;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-35;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.5;delay=7} @Forward{f=5;y=0}
+  
+Poison_Puddle_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - summon{type=Poison_Puddle;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - solo_damage{a="1.5* 50";repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{r=3.9;ignore=players}
+  - solo_damage{a="1.5* 50";repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{r=3.9;target=players}
+  - solo_damage{a="<skill.var.damage>"} @ENO{r=7.8;ignore=players}
+  - solo_damage{a="<skill.var.damage>"} @ENO{r=7.8;target=players}
+  - potion{type=slow;duration=30;level=3} @ENO{r=7.8}
+  
+Poison_Puddle_TICK:
+  Skills:
+  - effect:particlesphere{particle=redstone;color=#24d91a;radius=0.6;amount=7}
+  - effect:particlesphere{particle=redstone;color=#033d0e;radius=0.6;amount=7}
+
+#skill3  
+skill3_Puddle:
+  Skills:
+  - potion{type=ABSORPTION;duration=200;level=3} @self
+  - potion{type=FAST_DIGGING;duration=200;level=3} @self
+  - potion{type=INCREASE_DAMAGE;duration=200;level=3} @self
+  - potion{type=LUCK;duration=200;level=3} @self
+  - potion{type=SPEED;duration=200;level=3} @self
+  - effect:sound{s=scorpion_sounds:samus.scorpion_attack;volume=1;pitch=1;delay=5} @self
+  - effect:sound{s=scorpion_sounds:samus.spit_venom;volume=1.5;pitch=1} @self
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=16;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.6;delay=1} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=13;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=40;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.4;delay=3} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=14;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-15;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=7;g=0.6;delay=4} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=9;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=25;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.7;delay=6} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=17;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-35;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.5;delay=7} @Forward{f=5;y=0}
+  - delay 60
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=15;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.6;delay=1} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=13;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=40;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.4;delay=3} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=12;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-15;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=7;g=0.6;delay=4} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=7;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=25;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=4;g=0.7;delay=6} @Forward{f=5;y=0}
+  - projectile{onTick=skill3_Puddle_TICK;onEnd=skill3_Puddle_DAMAGE;v=18;i=1;hR=1;vR=1;mr=45;hnp=false;hp=false;hO=-35;sE=false;sB=true;hs=false;hfs=0;syo=3;tyo=5;g=0.5;delay=7} @Forward{f=5;y=0}  
+
+  
+skill3_Puddle_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - summon{type=abyssal_puddle;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - solo_damage{a="1.5* 80";repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{r=5.2;ignore=players}
+  - solo_damage{a="1.5* 80";repeat=8;repeatinterval=16;pkb=true;delay=16} @ENO{r=5.2;target=players}
+  - solo_damage{a="<skill.var.damage>"} @ENO{r=5.2;ignore=players}
+  - solo_damage{a="<skill.var.damage>"} @ENO{r=5.2;target=players}
+  - potion{type=slow;duration=160;level=2} @ENO{r=5.2}
+  - potion{type=CONFUSION;duration=60;level=0;hasParticles=false} @ENO{r=5.2}
+  
+skill3_Puddle_TICK:
+  Skills:
+  - effect:particlesphere{particle=redstone;color=#221C1C;radius=0.6;amount=7}
+  - effect:particlesphere{particle=redstone;color=#221C1C;radius=0.6;amount=7}
+
+

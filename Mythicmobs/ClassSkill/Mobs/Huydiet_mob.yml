@@ -1,0 +1,183 @@
+PbWS_Orbit_Entity_Shield_Gear:
+  Type: ARMOR_STAND
+  Pose:
+      Head: 0,0,0
+  Options:
+    Marker: true
+    Invisible: true
+    Collidable: false
+    Interactable: false
+    Invincible: true
+    Gravity: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=pbws_shield_suit;scale=1.5} @self ~onSpawn
+  - partvis{m=pbws_shield_suit;p=energy_shield} @self ~onSpawn
+  - bodyclamp{m=pbws_shield_suit;mh=0;mb=0} @self ~onSpawn
+  
+
+  
+PbWS_VFX_Perihelion:
+  Type: ARMOR_STAND
+  Options:
+    Invisible: true
+    Collidable: false
+    Interactable: false
+    Invincible: true
+    Marker: true
+    Gravity: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=pbws_shield_smash;lockpitch=true;scale=1.5} @self ~onSpawn
+  - changepart{m=pbws_shield_smash;pid=ground;nm=pbws_vfx_shield_smash;npid=ground_f1;delay=96} @self ~onSpawn
+  - changepart{m=pbws_shield_smash;pid=ground;nm=pbws_vfx_shield_smash;npid=ground_f2;delay=100} @self ~onSpawn
+  - changepart{m=pbws_shield_smash;pid=ground;nm=pbws_vfx_shield_smash;npid=ground_f3;delay=104} @self ~onSpawn
+  - changepart{m=pbws_shield_smash;pid=ground;nm=pbws_vfx_shield_smash;npid=ground_f4;delay=108} @self ~onSpawn
+  - changepart{m=pbws_shield_smash;pid=ground;nm=pbws_vfx_shield_smash;npid=ground_f5;delay=112} @self ~onSpawn
+  - changepart{m=pbws_shield_smash;pid=ground;nm=pbws_vfx_shield_smash;npid=ground_f6;delay=116} @self ~onSpawn
+  - summon{t=PbWS_VFX_Shield_Skill_Marker;
+        onSummon=[
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+          
+          - model{usestatemachine=true;mid=pbws_marker;lockpitch=true}
+          - state{s=spawn_10t}
+          - remove{delay=10}
+        ]
+    } @self ~onSpawn
+  
+  - randomskill{delay=10;skills=
+      [  - sound{s=item.mace.smash_ground;p=0.5;v=2.5}  ],
+      [  - sound{s=item.mace.smash_ground;p=0.55;v=2.5}  ],
+      [  - sound{s=item.mace.smash_ground;p=0.6;v=2.5}  ]
+    } @self ~onSpawn
+  
+  - randomskill{delay=80;skills=
+      [  - sound{s=entity.zoglin.step;p=0.5;v=0.75}  ],
+      [  - sound{s=entity.zoglin.step;p=0.55;v=0.75}  ],
+      [  - sound{s=entity.zoglin.step;p=0.6;v=0.75} ]
+    } @self ~onSpawn
+    
+  - randomskill{skills=
+      [  - state{s=spawn1}  ],
+      [  - state{s=spawn2}  ]
+    } @self ~onSpawn
+    
+  - remove{delay=90} @self ~onSpawn
+    
+PbWS_VFX_Singularity:
+  Type: ARMOR_STAND
+  Options:
+    Invincible: true
+    Collidable: false
+    Marker: true
+    Gravity: false
+    KnockbackResistance: 1
+    Invisible: true
+  Skills:
+  - model{usestatemachine=true;mid=pbws_grav;lockpitch=true;scale=1.5} @self ~onSpawn
+  - skill{s=[
+      - summon{t=PbWS_VFX_Shield_Skill_Marker;
+        onSummon=[
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+          
+          - model{usestatemachine=true;mid=pbws_marker;lockpitch=true}
+          - state{s=spawn_20t}
+          - remove{delay=20}
+        ]}
+        
+      - randomskill{delay=15;skills=
+          [  - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.grav;p=0.85;v=2}  ],
+          [  - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.grav;p=0.9;v=2}  ],
+          [  - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.grav;p=0.95;v=2} ]
+        } @self
+        
+      - remove{delay=180} @self
+    ]} @self ~onSpawn
+
+
+
+PbWS_VFX_Gaze_Of_The_Lurker:
+  Type: ARMOR_STAND
+  Options:
+    Invisible: true
+    Collidable: false
+    Interactable: false
+    Invincible: true
+    Marker: true
+    Gravity: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=pbws_blaster;lockpitch=true;scale=1.5} @self ~onSpawn
+  - cullconfig{vc=false;bkc=false;blc=false} @self ~onSpawn
+  
+  - skill{s=[
+      - randomskill{skills=
+          [  - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.cannon;p=0.85;v=3}  ],
+          [  - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.cannon;p=0.9;v=3}  ],
+          [  - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.cannon;p=0.95;v=3} ]
+        } @self
+      - delay 120
+      - remove @self
+    ]} @self ~onSpawn
+
+PbWS_VFX_Shield_Ult_Charging:
+  Type: ARMOR_STAND
+  Options:
+    Invisible: true
+    Collidable: false
+    Interactable: false
+    Invincible: true
+    Marker: true
+    Gravity: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=pbws_vfx_ult_charging;lockpitch=true;scale=1.5} @self ~onSpawn
+  - cullconfig{vc=false;bkc=false;blc=false} @self ~onSpawn
+  
+  - summon{t=PbWS_VFX_Shield_Skill_Marker;
+        onSummon=[
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+          
+          - model{usestatemachine=true;mid=pbws_marker;lockpitch=true}
+          - state{s=spawn_30t}
+          - remove{delay=30}
+        ]
+    } @self ~onSpawn
+  
+  - skill{s=[
+      - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.ult_suck;v=5}
+      - delay 100
+      - remove
+    ]} @self ~onSpawn
+
+PbWS_VFX_Shield_Ult_Unleashed:
+  Type: ARMOR_STAND
+  Options:
+    Invisible: true
+    Collidable: false
+    Interactable: false
+    Invincible: true
+    Marker: true
+    Gravity: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=pbws_vfx_ult_unleashed;lockpitch=true;scale=1.5} @self ~onSpawn
+  - cullconfig{vc=false;bkc=false;blc=false} @self ~onSpawn
+  
+  - skill{s=[
+      - sound{s=watchers_shield_sfx:pixelbarrel.watchers_shield.ultimate;v=5}
+      - sound{s=block.conduit.deactivate;p=0.7;repeat=7;repeatInterval=20;delay=11}
+      - delay 200
+      - remove
+    ]} @self ~onSpawn
+
+PbWS_VFX_Shield_Skill_Marker:
+  Type: ARMOR_STAND
+  Options:
+    Invisible: true
+    Collidable: false
+    Interactable: false
+    Invincible: true
+    Marker: true
+    Gravity: false
+    KnockbackResistance: 1

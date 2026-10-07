@@ -1,0 +1,107 @@
+ice_mist_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: '&bBng Hong Golem'
+  Health: 400
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  Options:
+    Marker: true
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=ice_mist;tint=false;n=false;step=1;usm=true} @self ~onSpawn
+  - model{mid=ice_mist;tint=false;n=false;step=1;usm=true} @self ~onLoad
+  - skill{s=ice_mist_damage_Pet} @self ~onSpawn
+
+
+#
+ice_thorns_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: '&bBng Hong Golem'
+  Health: 400
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  Options:
+    Marker: true
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=ice_thorns;tint=false;n=false;step=1;usm=true} @self ~onSpawn
+  - model{mid=ice_thorns;tint=false;n=false;step=1;usm=true} @self ~onLoad
+  - skill{s=ice_thorns_root_Pet} @self ~onSpawn  
+  
+
+ice_elemental_spikes_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: '&bIce Bruiser'
+  Health: 400
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  Options:
+    Marker: true
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=ice_elemental_spikes;tint=false;n=false;step=1;usm=true} @self ~onSpawn
+  - model{mid=ice_elemental_spikes;tint=false;n=false;step=1;usm=true} @self ~onLoad
+  - skill{s=ice_elemental_spikes_damage_Pet} @self ~onSpawn  
+
+
+

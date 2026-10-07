@@ -1,0 +1,520 @@
+#pet huong dan
+bl_dark_knight_Pet:
+  Type: HUSK
+  Display: "Dark Knight"
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+    - SUFFOCATION 0
+    - FALL 0
+    - PROJECTILE 0.25
+    - FIRE -0.1
+    - FIRE_TICK -0.1
+    - FREEZE -0.1
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Modules:
+    ThreatTable: true
+  Options:
+    MovementSpeed: 0.32
+    FollowRange: 32
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    Collidable: true
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - model{mid=bl_dark_knight;n=false;step=1;usm=true;save=true;d=true} @self ~onSpawn
+    - model{mid=bl_dark_knight;n=false;step=1;usm=true;save=true;d=true} @self ~onLoad
+    - skill{s=bl_dark_knight_active_Pet} @target ~onTimer:20
+    - skill{s=bl_dark_knight_spawn_Pet} ~onSpawn
+    - skill{s=bl_dark_knight_death_Pet} @self ~onDeath
+    - skill{s=bl_dark_knight_jump_back_Pet} @self ~onDamaged
+    - skill{s=bl_dark_knight_step_Pet} @self ~onTimer:30
+    - skill{s=bl_dark_knight_hurt_Pet} @self ~onDamaged
+    - skill{s=bl_dark_knight_skills_Pet} @target ~onTimer:10 ?incombat
+#GATE RANK E-D
+Orc_Giant_Pet:
+  Type: ZOMBIE
+  Display: "&2Yu Tinh Vuong Kragg"
+  Health: 2500
+  Damage: 0
+  LevelModifiers:
+    Health: 100
+    Damage: 0
+  Options:
+    MovementSpeed: 0.3
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+    Collidable: true
+    PreventItemPickup: true
+    PreventMobKillDrops: true
+    PreventJockeyMounts: true
+    PreventConversion: true
+  Modules:
+    ThreatTable: true
+  DamageModifiers:
+    - FALL 0
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - model{mid=orc_giant;n=false;step=1;scale=0.5} @self ~onSpawn
+    - partvisibility{m=orc_giant;p=stone;v=false;delay=1} @self ~onSpawn
+    - effect:sound{s=orc_sounds:samus.orc_giant_idle;volume=2;pitch=1} @self ~onTimer:140 0.35
+    - effect:sound{s=orc_sounds:samus.orc_giant_roar;volume=3;pitch=1} @self ~onDeath
+    - skill{s=Changetarget_Pet} ~onTimer:160 <99%
+    - skill{s=Orc_Roar_Pet} ~onTimer:100
+    - skill{s=Ground_Smash_Pet} ~onTimer:60
+    - skill{s=Orc_Giant_Basic_Attack_Pet} ~onTimer:15
+Orc_King_Pet:
+  Type: ZOMBIE
+  Display: "&aOrc Th Lnh"
+  Health: 4500
+  Damage: 0
+  LevelModifiers:
+    Health: 200
+    Damage: 0
+  Options:
+    MovementSpeed: 0.3
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+    Collidable: true
+    PreventItemPickup: true
+    PreventMobKillDrops: true
+    PreventJockeyMounts: true
+    PreventConversion: true
+  #Drops:
+  #- orc_glaive 1 1
+  Modules:
+    ThreatTable: true
+  DamageModifiers:
+    - FALL 0
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - model{mid=orc_king;n=false;step=1;scale=0.8} @self ~onSpawn
+    - partvisibility{m=orc_king;p=skulls;v=false;delay=1} @self ~onSpawn
+    - effect:sound{s=orc_sounds:samus.orc_idle;volume=1.5;pitch=1} @self ~onTimer:140 0.35
+    - effect:sound{s=orc_sounds:samus.orc_idle;volume=1.5;pitch=1} @self ~onDeath
+    - skill{s=Changetarget_Pet} ~onTimer:160 <99%
+    - skill{s=Orc_King_Attack_Pet} ~onTimer:15
+    - skill{s=Orc_King_Skill_Pet} ~onTimer:80
+
+#GATE RANK C-
+crowreaper_Pet:
+  Type: vindicator
+  Display: "&8Hc Hip S Vargoth"
+  Health: 12000
+  Damage: 0
+  LevelModifiers:
+    Health: 300
+    Damage: 0
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - model{mid=crowreaper;n=false;h=true;scale=0.8} @self ~onSpawn
+    - model{mid=crowreaper;n=false;h=true;scale=0.8} @self ~onLoad
+    - partvis{m=crowreaper;p=fullexplosion;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=allexplosioneffectall;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=dustparticles;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=spikes;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=swing;child=true} @self ~onSpawn
+    - skill{s=attacksreaper_Pet;sync=true} @target ~onTimer:15
+    - skill{s=crowskill_Pet;sync=true} @target ~onTimer:120
+    - skill{s=death_Pet;sync=true} @self ~onDeath
+    - skill{s=summonswarm_Pet;sync=true} @target ~onTimer:300
+
+  Options:
+    MovementSpeed: 0.3
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+    Collidable: true
+    PreventItemPickup: true
+    PreventMobKillDrops: true
+    PreventJockeyMounts: true
+    PreventConversion: true
+
+thecrowknight_Pet:
+  Type: vindicator
+  Display: "&5Ma Vng Baruka"
+  Health: 35000
+  Damage: 0
+  LevelModifiers:
+    Health: 500
+    Damage: 0
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - model{mid=thecrowknight;n=false;h=true;scale=0.8} @self ~onSpawn
+    - model{mid=thecrowknight;n=false;h=true;scale=0.8} @self ~onLoad
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=tptrack;child=true} @self ~onSpawn
+    - skill{s=attacks_Pet;sync=true} @target ~onTimer:15
+    - skill{s=death_Pet;sync=true} @self ~onDeath
+    - skill{s=summonspike_Pet;sync=true} @target ~onTimer:140
+    - skill{s=knightskill_Pet;sync=true} @target ~onTimer:120
+    - skill{s=summonswarm_Pet;sync=true} @target ~onTimer:200
+
+  Options:
+    MovementSpeed: 0.3
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+    Collidable: true
+    PreventItemPickup: true
+    PreventMobKillDrops: true
+    PreventJockeyMounts: true
+    PreventConversion: true
+
+#GATE RANK A
+apocalypse_type_a_Pet:
+  Type: HUSK
+  Display: "&dHc m Thnh Th"
+  Health: 100000
+  Damage: 0
+  LevelModifiers:
+    Health: 1000
+  DamageModifiers:
+    - SUFFOCATION 0
+    - FALL 0
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Modules:
+    ThreatTable: true
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0.3
+    FollowRange: 40
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 40
+    AlwaysShowName: true
+    Collidable: true
+    PreventItemPickup: true
+    PreventMobKillDrops: true
+    PreventConversion: true
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - model{mid=apocalypse_type_a;n=false;step=1;drive=true;ride=true;usm=true;scale=0.8} @self ~onSpawn
+    - model{mid=apocalypse_type_a;n=false;step=1;drive=true;ride=true;usm=true;scale=0.8} @self ~onLoad
+    - skill{s=apoc_attacks_Pet;sync=true} @target ~onTimer:20
+    - skill{s=apoc_skills_Pet;sync=true} @target ~onTimer:160
+    - skill{s=apocalypse_reset_Pet} @self ~onPlayerKill
+
+#GATE FIRE RANK A+ - S
+koboldWizard_em_Pet:
+  Type: zombie
+  Display: "&cPhp S Koblod"
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Health: 200000
+  Damage: 0
+  LevelModifiers:
+    Health: 2000
+    Damage: 0
+  DamageModifiers:
+    - FIRE 0
+    - MAGIC 0.7
+    - PROJECTILE 0.45
+  Equipment:
+    - air:4
+    - air:3
+    - air:2
+    - bow:0
+    - air:5
+  Drops:
+    - exp 10-25 1
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - model{m=em_kobold_wizard;n=false;damagetint=false} @self ~onSpawn 1
+    - setlevel{a=set;l=0} ~onSpawn
+    - setvariable{var=caster.skillxd;value="none";t=string} @Self ~onSpawn
+    - skill{s=koboldWizard_em_hp_check_Pet} @Self ~onSpawn
+    - setvariable{var=caster.eichpee;value="<caster.mhp>";t=integer} @Self ~onSpawn
+
+    - potion{type=JUMP;duration=999999;lvl=0;p=true} @Self ~OnSpawn
+    - setvariable{var=caster.skintone;value="0";t=integer} @Self ~onSpawn
+    - submodel{mid=em_kobold_wizard;partid=right_forearm;subpartid=right_forearm1b;remove=true} @self ~onSpawn
+    - submodel{mid=em_kobold_wizard;partid=left_forearm;subpartid=stages;remove=true} @self ~onSpawn
+    - submodel{mid=em_kobold_wizard;partid=right_forearm;subpartid=right_forearm1b;remove=true} @self ~onLoad
+    - submodel{mid=em_kobold_wizard;partid=left_forearm;subpartid=stages;remove=true} @self ~onLoad
+    - skill{s=koboldWizard_em_surroundtrigger_Pet;sync=false} @EIR{r=6;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]} ~onTimer:120 0.6 <70%
+    - randomskill{skills=sol_seer_solar_smite_pet,solarmancer_solar_snare_pet} @target ~onTimer:200
+    - skill{s=solarmancer_solar_fire_pet;sync=false} @target ~onTimer:200
+    - skill{s=koboldWizard_em_idlesounds_trigger_Pet;sync=false} ~onTimer:100 0.6 ?!incombat
+    - skill{s=koboldWizard_em_idlesounds_trigger_Pet;sync=false} ~onTimer:60 0.3 ?incombat
+    - skill{s=koboldWizard_em_meleetrigger_Pet;sync=false} @LivingInCone{a=160.0;r=4.5;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]} ~onTimer:15 ?incombat
+    - setvariable{var=caster.combor;value="0";t=integer} @Self ~onSpawn
+    - setvariable{var=caster.comboa;value="0";t=integer} @Self ~onSpawn
+
+    - setstance{stance=normal} @self ~onSpawn
+    - skill{s=hurt1koboldWizard_em_Pet} @self ~onDamaged 0.92 #Hurtmechanic
+    - skill{s=Kobold_em_aggressionaura_assign_Pet} @Trigger ~onDamaged 1 # AGRESSION MODULE -> Will mark the trigger to be aggroed (Or feared) by all Kobolds
+    - setvariable{var=caster.vulnerable;value="0";t=integer} @Self ~onSpawn
+    - setspeed{speed=1.3;type=walking} @self ~onSpawn
+    - sound{s=entity.evoker.death_Pet;p=<random.float.1to1.3>;v=1.5} @selflocation ~onDeath
+    - lockmodel{l=false;delay=0} @Self ~onDeath
+    - effect:particles{particle=cloud;amount=150;hS=1.1;vS=0.55;speed=0;size=4.5;repeat=0;repeatinterval=1;sideOffset=0;delay=60} @ModelPart{m=em_kobold_wizard;p=hip;offset=GLOBAL;y=0.2} ~onDeath
+    - effect:particles{particle=cloud;amount=60;hS=0.6;vS=0.2;speed=0;size=4.5;repeat=0;repeatinterval=1;sideOffset=0;delay=60} @ModelPart{m=em_kobold_wizard;p=head;offset=GLOBAL;y=0.2} ~onDeath
+    - setvariable{var=caster.hurtened;value="0";t=integer} @Self ~onSpawn
+    - setvariable{var=caster.hitrec;value="0";t=integer} @Self ~OnSpawn
+  Options:
+    Silent: true
+    AlwaysShowName: false
+    MovementSpeed: 0.3
+    Interactable: true
+    PreventOtherDrops: true
+    KnockbackResistance: 0.9
+    FollowRange: 24
+    Collidable: true
+    PreventItemPickup: true
+    PreventMobKillDrops: true
+    PreventRandomEquipment: true
+    PreventSunburn: true
+    PreventJockeyMounts: true
+    PreventConversion: true
+
+#GATE ICE RANK A+ - S
+ice_golem_Pet:
+  Type: HUSK
+  Display: "&bBng Hong Golem"
+  Health: 200000
+  Damage: 0
+  LevelModifiers:
+    Health: 2000
+    Damage: 0
+  DamageModifiers:
+    - SUFFOCATION 0
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Modules:
+    ThreatTable: true
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0.3
+    FollowRange: 30
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 30
+    AlwaysShowName: true
+    Collidable: true
+    PreventItemPickup: true
+    PreventMobKillDrops: true
+    PreventConversion: true
+  Skills:
+    - model{mid=ice_golem;n=false;step=1;usm=true;ride=true;drive=true} @self ~onSpawn
+    - model{mid=ice_golem;n=false;step=1;usm=true;ride=true;drive=true} @self ~onLoad
+    - randomskill{skills=ice_golem_left_backhand_Pet,ice_golem_right_backhand_Pet,ice_golem_left_punch_Pet,ice_golem_right_punch_Pet;sync=true} @self ~onTimer:20
+    - randomskill{skills=ice_golem_catch_Pet,ice_bruiser_spikes_Pet,ice_golem_smash_Pet,ice_queen_shards_Pet,ice_queen_mist_Pet;sync=true} @self ~onTimer:160
+    - skill{s=ice_golem_death_Pet} @self ~onDeath
+
+
+LR_HYDRA_Pet:
+  Type: IRON_GOLEM
+  Display: "Hydra"
+  Health: 1000
+  Damage: 0
+
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  DamageModifiers:
+    - FIRE 0.0
+    - SUFFOCATION 0.0
+  Modules:
+    ThreatTable: true
+  Options:
+    MaxCombatDistance: 16
+    Silent: true
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    FollowRange: 16
+    Despawn: NEVER
+    MovementSpeed: 0
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+    - CancelEvent{sync=true} @self ~onInteract
+    - CancelEvent{sync=true} @self ~onAttack
+    - model{m=lr_hydra;usm=true;d=false;lp=true;scale=0.5;sync=true} @self ~onSpawn
+    - model{m=lr_hydra;usm=true;d=false;lp=true;scale=0.5;sync=true} @self ~onLoad
+    - skill{s=LR_HYDRA_bossbar_set_Pet} @self ~onSpawn
+    - solo_velocity{m=set;x=0;y=-1;z=0} @self ~onTimer:1
+    - skill{s=LR_HYDRA_bossbar_damage_Pet} @self ~onDamaged
+    - sudoskill{s=LR_HYDRA_blood_fx_melee;cat=true} @trigger ~onDamaged ?damagecause{cause=ENTITY_ATTACK}
+    - sudoskill{s=LR_HYDRA_blood_fx_projectile;cat=true} @trigger ~onDamaged ?damagecause{cause=PROJECTILE}
+    - skill{s=LR_HYDRA_spot_player_Pet} @self ~onEnterCombat
+    - skill{s=LR_HYDRA_turn_right_Pet} @target ~onTimer:1 ?incombat
+    - skill{s=LR_HYDRA_turn_left_Pet} @target ~onTimer:1 ?incombat
+    - skill{s=LR_HYDRA_stop_turn_Pet} @target ~onTimer:20 ?incombat
+    - skill{s=LR_HYDRA_detect_bite_locations_Pet} @self ~onTimer:5 ?incombat
+    - skill{s=LR_HYDRA_bite_1_Pet} @self ~onSignal:BITE_CENTER
+    - skill{s=LR_HYDRA_bite_2_Pet} @self ~onSignal:BITE_CENTER
+    - skill{s=LR_HYDRA_bite_3_Pet} @self ~onSignal:BITE_LEFT
+    - skill{s=LR_HYDRA_bite_4_Pet} @self ~onSignal:BITE_CENTER
+    - skill{s=LR_HYDRA_bite_5_Pet} @self ~onSignal:BITE_RIGHT
+    - skill{s=LR_HYDRA_right_stomp_Pet} @target ~onTimer:13 ?incombat
+    - skill{s=LR_HYDRA_left_stomp_Pet} @target ~onTimer:17 ?incombat
+    - skill{s=LR_HYDRA_tail_swipe_right_Pet} @pir{r=16} ~onTimer:19 ?incombat
+    - skill{s=LR_HYDRA_tail_swipe_left_Pet} @pir{r=16} ~onTimer:23 ?incombat
+    - skill{s=LR_HYDRA_leap_turn_right_Pet} @target ~onTimer:29 ?incombat
+    - skill{s=LR_HYDRA_leap_turn_left_Pet} @target ~onTimer:31 ?incombat
+    - skill{s=LR_HYDRA_Poison_Path_Pet} @target ~onTimer:41 ?incombat
+    - skill{s=LR_HYDRA_Poison_Puddle_Pet} @target ~onTimer:43 ?incombat
+    - skill{s=LR_HYDRA_skill3_Puddle_Pet} @target ~onTimer:47 ?incombat
+    - skill{s=LR_HYDRA_random_head_break_Pet} @self ~onDamaged <50%
+    - sound{s=littleroom_hydra:hydra.growl;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self ~onTimer:60 .5
+    - solo_throw{v=1.5;vy=-0.5} @eir{r=2.5} ~onTimer:1
+    - state{s=passive;p=1} @self ~onSpawn
+    - skill{s=LR_HYDRA_death_Pet} @self ~onDeath
+Mage_Pet:
+  Type: SKELETON
+  Display: "&fMage"
+  Health: 400
+  Damage: 0
+  Options:
+    MovementSpeed: 0.3
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: true
+    Despawn: PERSISTENT
+    PreventOtherDrops: true
+    FollowRange: 40
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  Equipment:
+    - bow:HAND
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - float
+  AITargetSelectors:
+    - clear
+  Variables:
+    ModelName: boss_mage
+  Skills:
+    - cancelEvent{forcesync=true} @self ~onAttack
+    - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+    - model{mid="<caster.var.ModelName>";step=1;tint=true;usm=true;save=true;sync=true} @self ~onSpawn
+    - model{mid="<caster.var.ModelName>";step=1;tint=true;usm=true;save=true;sync=true} @self ~onLoad
+    - brightness{p=eye;em=false;b=15;s=15} @self ~onSpawn
+    - brightness{p=ball;em=true;b=15;s=15} @self ~onSpawn
+    - BodyRotation{mh=0;mb=75;player=true} @self ~onSpawn
+    - skill{s=Changetarget_Pet} ~onTimer:160 <99%
+    - skill{s=Cancelattack_Pet;sync=true} ~onShoot
+    - syncyaw{target=yaw;body=false} @self ~onTimer:1
+    - segment{m="<caster.var.ModelName>";p=lace2;em=true;roll=true;extend=0.1} @self ~onSpawn
+    - segment{m="<caster.var.ModelName>";p=lace5;em=true;roll=true;extend=0.1} @self ~onSpawn
+    - segment{m="<caster.var.ModelName>";p=lace3;em=true;roll=true;extend=0.6} @self ~onSpawn
+    - segment{m="<caster.var.ModelName>";p=lace4;em=true;roll=true;extend=0.6} @self ~onSpawn
+    - defaultstate{mid="<caster.var.ModelName>";type=idle;state=idle;speed=1} @self ~onSpawn
+    - defaultstate{mid="<caster.var.ModelName>";type=walk;state=walk;speed=1} @self ~onSpawn
+    - skill{s=Mage_Pet_Basic_Attack;sync=true} @target ~onTimer:15
+    - skill{s=Mage_Pet_Combat_Skills;sync=true} @target ~onTimer:140
+    - skill{s=BOSS_Mage_Stepdash_Pet} ~onTimer:160 0.3
+    - effect:sound{s=entity.goat.ram_impact;volume=0.7;pitch=0.7} @self ~onDamaged
+    - skill{s=BOSS_Mage_Death_Pet} ~onDeath
+

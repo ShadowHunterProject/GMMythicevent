@@ -1,0 +1,331 @@
+# --- VFX SUMMONS (Pet Version) ---
+
+vfx_solar_fire_summoned_pet:
+  Skills:
+    - state{model=vfx_solar_fire;state=spawn} @self
+    - lockmodel @self
+    - sound{s=tugkandeman.solar_fire;v=3;p=1} @self
+    - delay 6
+    - aura{auraName=vfxSolarFireD;duration=130;oT=vfx_solar_fire_summoned_damage_pet;i=20} @self
+    - delay 150
+    - remove @self
+
+vfx_solar_fire_summoned_damage_pet:
+  Skills:
+    - sound{s=block.fire.ambient;v=2;p=1} @self
+    - totem{md=2;oH=vfx_solar_fire_hit_pet;hnp=true;hp=true;hR=3.5;vR=3.5;i=1;drawhitbox=false} @selfLocation
+
+vfx_solar_fire_hit_pet:
+  Skills:
+    - damage{a=550;t=SKILL;pkb=false;pi=true} @target{ignore=players;ignore=owner}
+    - damage{a=560;t=SKILL;pkb=false;pi=true} @target{target=players;ignore=owner}
+
+vfx_solar_snare_summoned_pet:
+  Skills:
+    - state{model=vfx_solar_snare;state=spawn} @self
+    - lockmodel @self
+    - sound{s=tugkandeman.solar_snare;v=3;p=1} @self
+    - delay 17
+    - damage{a=330;t=SKILL;pkb=false;pi=true} @LivingInRadius{r=5;ignore=samefaction;ignore=players;ignore=owner}
+    - damage{a=340;t=SKILL;pkb=false;pi=true} @LivingInRadius{r=5;ignore=samefaction;target=players;ignore=owner}
+    - potion{type=SLOW;duration=60;l=255;p=false} @LivingInRadius{r=5;ignore=samefaction}
+    - potion{type=JUMP;duration=60;l=155;p=false} @LivingInRadius{r=5;ignore=samefaction}
+    - aura{auraName=vfxSolarSnarePull;duration=60;oT=vfx_solar_snare_pull_pet;interval=5} @self
+    - delay 93
+    - remove @self
+
+vfx_solar_snare_pull_pet:
+  Skills:
+    - damage{a=56;t=SKILL;pkb=false;pi=true} @LivingInRadius{r=5;ignore=samefaction}
+    - pull{v=10} @LivingInRadius{r=5;ignore=samefaction}
+
+vfx_solar_strike_summoned_pet:
+  Skills:
+    - state{model=vfx_solar_strike;state=spawn} @self
+    - lockmodel @self
+    - sound{s=tugkandeman.solar_strike;v=3;p=1} @self
+    - delay 17
+    - damage{a=550;t=SKILL;pkb=false;pi=true} @LivingInRadius{r=3.5;ignore=samefaction;ignore=players;ignore=owner}
+    - damage{a=560;t=SKILL;pkb=false;pi=true} @LivingInRadius{r=3.5;ignore=samefaction;target=players;ignore=owner}
+    - sound{s=entity.lightning_bolt.thunder;v=2;p=1.5} @self
+    - sound{s=entity.generic.explode;v=2;p=0.8} @self
+    - delay 24
+    - remove @self
+
+# --- SOLAR ABILITIES ---
+
+sol_seer_solar_smite_pet:
+  Cooldown: 6
+  TargetConditions:
+    - distance{d=1to10} true
+  Conditions:
+    - incombat true
+  Skills:
+    - delay 1
+    - setspeed{speed=0;type=WALKING} @self
+    - summon{type=vfx_solar_strike_pet;amount=1;io=true} @target
+    - delay 50
+    - setspeed{speed=1;type=WALKING} @self
+
+solarmancer_solar_snare_pet:
+  Cooldown: 8
+  TargetConditions:
+    - distance{d=1to10} true
+  Conditions:
+    - incombat true
+  Skills:
+    - delay 1
+    - setspeed{speed=0;type=WALKING} @self
+    - delay 15
+    - summon{type=vfx_solar_snare_pet;amount=1;io=true} @target
+    - delay 35
+    - setspeed{speed=1;type=WALKING} @self
+
+solarmancer_solar_fire_pet:
+  Cooldown: 16
+  TargetConditions:
+    - distance{d=1to10} true
+  Conditions:
+    - incombat true
+  Skills:
+    - delay 1
+    - setspeed{speed=0;type=WALKING} @self
+    - summon{type=vfx_solar_strike_pet;amount=1;io=true} @target
+    - delay 13
+    - summon{type=vfx_solar_fire_pet;amount=1;io=true} @target
+    - delay 37
+    - setspeed{speed=1;type=WALKING} @self
+
+# --- DUMMY SKILLS FOR PET ---
+koboldWizard_em_hp_check_Pet:
+  Skills:
+    - delay 1
+Kobold_em_aggressionaura_assign_Pet:
+  Skills:
+    - delay 1
+outrun_aleviate_koboldWizard_em_Pet:
+  Skills:
+    - delay 1
+koboldWizard_em_backhurtCLEAR_Pet:
+  Skills:
+    - delay 1
+koboldWizard_em_hurtCLEAR_Pet:
+  Skills:
+    - delay 1
+
+# --- SOUNDS ---
+koboldWizard_em_idlesounds_trigger_Pet:
+  Skills:
+    - delay 0to20
+    - skill{s=koboldWizard_em_idlesounds_Pet}
+koboldWizard_em_idlesounds_Pet:
+  Cooldown: 5
+  Conditions:
+    - stance{s=casting} false
+    - stance{s=normal} true
+    - hasaura{n=bruttackrest} false
+    - hasaura{n=bruttackrest2} false
+    - hasaura{n=soundcooldown} false
+  Skills:
+    - Aura{auraName=soundcooldown;duration=120to200} @Self
+    - sound{s=entity.evoker.ambient;p=<random.float.1to1.3>;v=2} @selflocation 1 ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2}
+
+# --- HURTSKILLS ---
+hurt1koboldWizard_em_Pet:
+  Cooldown: 0.5
+  Skills:
+    - skill{s=koboldWizard_em_backhurtCLEAR_Pet;sync=true} @Trigger 0.25
+    - variableadd{var=caster.hitrec;amount=1} @self
+    - variableadd{var=caster.combor;amount=1} @self
+    - randomskill{s=[
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt1;li=0;lo=0} @self
+      ],
+      [
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt2;li=0;lo=0} @self
+      ],
+      [
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt4;li=0;lo=0} @self
+      ],
+      [
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt3;li=0;lo=0} @self
+      ];sync=false}
+    - sound{s=entity.evoker.hurt;p=<random.float.1to1.2>;v=1.5} @selflocation 1
+    - skill{s=hurtbkoboldWizard_em_Pet} @self 0.15
+    - delay 15
+    - skill{s=koboldWizard_em_meleetrigger2_Pet;sync=false} @LivingInCone{a=110.0;r=6.5;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]} 0.2
+
+hurtbkoboldWizard_em_Pet:
+  Cooldown: 8
+  Conditions:
+    - variableEquals{var=caster.casting;value="1"} false
+    - variableEquals{var=caster.running;value="2"} false
+    - hasaura{n=koboldWizard_em_hurtbad} false
+    - hasaura{n=hurtenedbad} false
+  Skills:
+    - effect:particles{particle=crit;amount=12;hS=0.3;vS=0.3;speed=0.005;y=1.5} @Self
+    - lockmodel{l=true;delay=0;sync=true} @Self
+    - setstance{stance=casting} @self ?stance{s=normal}
+    - variableadd{var=caster.hitrec;amount=2} @self
+    - variableadd{var=caster.combor;amount=1} @self
+    - setvariable{var=caster.casting;value="1";t=integer} @Self ?variableEquals{var=caster.casting;value="0"}
+    - setvariable{var=caster.skillxd;value="hurtbad";t=string;delay=0} @Self
+    - state{remove=true;s=hurtbad1;lo=3} @self
+    - state{remove=true;s=hurtbad2;lo=3} @self
+    - state{remove=true;s=hurtbad3;lo=3} @self
+    - state{remove=true;s=hurtbad4;lo=3} @self
+    - randomskill{s=[ - state{state=hurtbad1;li=3;lo=8} @self ], [ - state{state=hurtbad2;li=3;lo=8} @self ], [ - state{state=hurtbad3;li=3;lo=8} @self ], [ - state{state=hurtbad4;li=3;lo=8} @self ];sync=true}
+    - setvariable{var=caster.hurtened;value="1";t=integer} @Self
+    - potion{type=SLOW;duration=27;level=7;p=false;force=true} @Self
+    - sound{s=entity.player.attack.crit;p=<random.float.1.3to1.6>;v=1.5} @selflocation
+    - sound{s=entity.evoker.hurt;p=<random.float.1to1.3>;v=1.5} @selflocation
+    - state{remove=true;s=attack1;lo=3} @self
+    - state{remove=true;s=attack2;lo=3} @self
+    - Aura{auraName=koboldWizard_em_hurtbad;duration=40} @self
+    - delay 12
+    - skill{s=[
+      - delay 0to4
+      - setvariable{var=caster.hurtened;value="0";t=integer} @Self
+      - setstance{stance=normal} @self ?stance{s=casting}
+      - setvariable{var=caster.casting;value="0";t=integer} @Self
+      - Aura{auraName=bruttackrest;duration=20} @self
+      - lockmodel{l=false;delay=0;sync=true} @Self];sync=false} @Self 0.4 ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+    - randomskill{s=koboldWizard_em_bruttack1_Pet;repeat=2;repeatinterval=5} @LivingInCone{a=110.0;r=6.5;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+    - delay 12
+    - lockmodel{l=false;delay=0;sync=true} @Self ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+    - setvariable{var=caster.hurtened;value="0";t=integer} @Self ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+    - setstance{stance=normal} @self ?stance{s=casting} ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+    - setvariable{var=caster.casting;value="0";t=integer} @Self ?variableEquals{var=caster.casting;value="1"} ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+    - setvariable{var=caster.skillxd;value="none";t=string;delay=0} @Self ?variableEquals{var=caster.skillxd;value="hurtbad"}
+    - skill{s=koboldWizard_em_meleetrigger2_Pet;cooldown=1;sync=false} @Trigger 0.6
+
+# --- MELEE TRIGGERS ---
+koboldWizard_em_surroundtrigger_Pet:
+  Conditions:
+    - incombat true
+    - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+    - variableEquals{var=caster.hurtened;value="1"} false
+    - variableEquals{var=caster.casting;value="1"} false
+  Skills:
+    - delay 1to14
+    - randomskill{s=koboldWizard_em_bruttack1_Pet;sync=false} 0.3 ?targets{a=1}
+    - randomskill{s=koboldWizard_em_bruttack1_Pet;sync=false} 0.6 ?targets{a=2to3}
+    - randomskill{s=koboldWizard_em_bruttack1_Pet;sync=false} 0.9 ?targets{a=>3}
+
+koboldWizard_em_meleetrigger_Pet:
+  Conditions:
+    - incombat true
+    - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+    - variableEquals{var=caster.hurtened;value="1"} false
+    - variableEquals{var=caster.casting;value="1"} false
+  Skills:
+    - delay 1to14
+    - skill{s=[
+      - randomskill{s=koboldWizard_em_bruttack1_Pet;sync=false} @LivingInCone{a=100.0;r=4.5;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - randomskill{s=koboldWizard_em_bruttack1_Pet;sync=false} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      ]} 1 ?targets{a=>0}
+
+koboldWizard_em_meleetrigger2_Pet:
+  Conditions:
+    - incombat true
+    - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+  Skills:
+    - delay 1to14
+    - skill{s=[
+      - randomskill{s=koboldWizard_em_bruttack1_Pet;sync=false} @LivingInCone{a=100.0;r=4.5;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - randomskill{s=koboldWizard_em_bruttack1_Pet;sync=false} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      ]} 1 ?targets{a=>0}
+
+# --- DEFENSE PROTOCOL (MELEE COMBO) ---
+koboldWizard_em_bruttack1_Pet:
+  Cooldown: 4
+  Conditions:
+    - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+    - stance{s=casting} false
+    - stance{s=normal} true
+    - variableEquals{var=caster.hurtened;value="1"} false
+    - variableEquals{var=caster.casting;value="1"} false
+    - hasaura{n=bruttackrest} false
+  Skills:
+    - lockmodel{l=false;delay=2;sync=true} @Self
+    - setstance{stance=casting} @self
+    - BodyClamp{maxbody=0;stable=0;rdelay=0;rduration=4} @self
+    - state{remove=true;s=attack1;lo=6} @self
+    - state{remove=true;s=attack2;lo=6} @self
+    - randomskill{s=[
+      - Aura{auraName=right_attack;duration=20} @Self
+      - state{state=attack1;li=1;lo=2} @self
+      - state{state=attack1_body;li=1;lo=2} @self
+      ],
+      [
+      - Aura{auraName=left_attack;duration=20} @Self
+      - state{state=attack2;li=1;lo=2} @self
+      - state{state=attack2_body;li=1;lo=2} @self
+      ];sync=true}
+    - state{remove=true;s=attack3;lo=3} @self
+    - state{remove=true;s=hurtbad1;lo=3} @self
+    - state{remove=true;s=hurtbad2;lo=3} @self
+    - state{remove=true;s=hurtbad3;lo=3} @self
+    - state{remove=true;s=hurtbad4;lo=3} @self
+    - setvariable{var=caster.skillxd;value="bruttack1";t=string;delay=0} @Self
+    - potion{type=SLOW;duration=32;level=7;p=false;force=false} @Self
+    - look{headOnly=false;immediately=false;repeat=5;repeatInterval=1} @Target
+    - spin{d=30;v=0;delay=2} @self
+    - lockmodel{l=true;delay=0;sync=true} @Self
+    - setvariable{var=caster.vulnerable;value="1";t=integer;delay=15} @Self
+    - setvariable{var=caster.vulnerable;value="0";t=integer;delay=17} @Self
+    - delay 10
+    - sound{s=entity.player.attack.sweep;p=<random.float.1to1.3>;v=1.5} @selflocation 0.7 ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2}
+    - setvariable{var=caster.casting;value="1";t=integer;delay=2} @Self ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+    - delay 4
+    - sound{s=entity.player.attack.sweep;p=<random.float.1.4to1.7>;v=1} @selflocation ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+    - delay 1
+    - propel{v=-0.0006;repeat=10;repeatInterval=1} @forward{f=10} ?onground ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2}
+    - Aura{auraName=attack1state;duration=19} @Self ?!variableEquals{var=caster.hurtened;value="1"}
+    - skill{s=[
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=100.0;r=3;rot=60;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=180.0;r=1.3;rot=70.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=140.0;r=3.5;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      ]} ?hasaura{n=right_attack} ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+    - skill{s=[
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=100.0;r=3;rot=300;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=180.0;r=1.3;rot=290.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=140.0;r=3.5;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      - skill{s=koboldWizard_em_bruttack1_hit_Pet;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=owner;conditions=[ - mythicmobtype{t=vfx_solar_mine_pet} false ]}
+      ]} ?hasaura{n=left_attack} ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+    - delay 15
+    - setstance{stance=normal} @self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+    - setvariable{var=caster.casting;value="0";t=integer} @Self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+    - lockmodel{l=false;delay=0;sync=true} @Self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+    - BodyClamp{maxbody=50;stable=15;rdelay=10;rduration=8} @self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+    - setvariable{var=caster.skillxd;value="none";t=string} @Self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+
+koboldWizard_em_bruttack1_hit_Pet:
+  TargetConditions:
+    - hasaura{n=hit_koboldWizard_em_bruttack1} false
+    - mythicmobtype{t=vfx_solar_mine_pet} false
+  Skills:
+    - damage{a=450;t=SKILL;pkb=false;pi=true} @target{ignore=players;ignore=owner}
+    - damage{a=440;t=SKILL;pkb=false;pi=true} @target{target=players;ignore=owner}
+    - sound{s=entity.player.attack.crit;p=<random.float.1.1to1.5>;v=1.2}
+    - effect:particles{p=sweep_attack;a=1;hs=0;vs=0;speed=0;y=1}
+    - effect:particles{p=flame;a=6;hs=0.5;vs=0.5;speed=0.2;y=1}
+    - effect:particles{p=lava;a=2;hs=0.5;vs=0.5;speed=0.1;y=1}
+    - Aura{auraName=hit_koboldWizard_em_bruttack1;duration=7}
+    - potion{type=SLOW;duration=10;lvl=7;particles=false}

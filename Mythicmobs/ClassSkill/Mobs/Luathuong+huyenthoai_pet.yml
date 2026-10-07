@@ -1,0 +1,113 @@
+lostassetsanime_firekatana_lc1_Pet:
+  Tags:
+  - skill_model
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=lostassetsanime_firekatana_slash;usm=true;lockpitch=true;hitboxscale=0;scale=1.3} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_slash;b=15;s=15} @self ~onSpawn
+  - state{s=slash1} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+lostassetsanime_firekatana_lc2_Pet:
+  Tags:
+  - skill_model
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=lostassetsanime_firekatana_slash;usm=true;lockpitch=true;hitboxscale=0;scale=1.3} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_slash;b=15;s=15} @self ~onSpawn
+  - state{s=slash2} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+lostassetsanime_firekatana_lc3_Pet:
+  Tags:
+  - skill_model
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=lostassetsanime_firekatana_slash;usm=true;lockpitch=true;hitboxscale=0;scale=1.3} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_slash;b=15;s=15} @self ~onSpawn
+  - state{s=slash3} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+
+
+lostassetsanime_firekatana_rc_Pet:
+  Tags:
+  - skill_model
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=lostassetsanime_firekatana_skill;usm=true;lockpitch=true;hitboxscale=0;scale=1.3} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_skill;b=15;s=15} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - remove{delay=30} @self ~onSpawn
+
+
+lostassetsanime_firekatana_slc_Pet:
+  Tags:
+  - skill_model
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=lostassetsanime_firekatana_skill;usm=true;lockpitch=true;hitboxscale=0;scale=1.3} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_skill;b=15;s=15} @self ~onSpawn
+  - state{s=skill2} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+
+lostassetsanime_firekatana_src_Pet:
+  Tags:
+  - skill_model
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=lostassetsanime_firekatana_skill;usm=true;lockpitch=true;hitboxscale=0;scale=1.3} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_skill;b=15;s=15} @self ~onSpawn
+  - state{s=skill3} @self ~onSpawn
+  - remove{delay=37} @self ~onSpawn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#o1T1oVQpJWOysWYFdVSJBTTFBTWxUleWhHaIRWMVRlTOhnMiBXUiVGbER3VzcUN4BVVNFnN
+# FORCED_SYNC_UPDATE639172407144678620

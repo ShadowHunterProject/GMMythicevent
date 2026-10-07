@@ -1,0 +1,157 @@
+VFX_AwakenedMage_Impact_Pet:
+  Type: text_display
+  DisplayOptions:
+    Text: ""
+    BlockLight: 15
+    SkyLight: 15
+    Scale: 1,1,1
+    Billboard: CENTER
+    BackgroundColor: 0,0,0,0
+    Translation: 0,0,0
+    ViewRange: 5
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - settextdisplay{text="";delay=0} @self ~onSpawn
+  - settextdisplay{text="";delay=1} @self ~onSpawn
+  - settextdisplay{text="";delay=2} @self ~onSpawn
+  - settextdisplay{text="";delay=3} @self ~onSpawn
+  - settextdisplay{text="";delay=4} @self ~onSpawn
+  - settextdisplay{text="";delay=5} @self ~onSpawn
+  - settextdisplay{text="";delay=6} @self ~onSpawn
+  - remove{delay=7} @self ~onSpawn
+
+VFX_AwakenedMage_Fireball2_Pet:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - remove{delay=100} @self ~onSpawn
+  - model{usestatemachine=true;mid=fireball;delay=2} @self ~onSpawn
+  - brightness{b=15;s=15;delay=2} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0;delay=2} @self ~onSpawn
+  - state{s=animation3;speed=1;delay=2} @self ~onSpawn
+  - particles{p=small_flame;amount=5;hS=0.05;vS=0.05;y=0;size=1;speed=0.05;delay=2} @self ~onTimer:1
+VFX_AwakenedMage_Fireball3_Pet:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - remove{delay=100} @self ~onSpawn
+  - model{usestatemachine=true;mid=fireball;delay=2} @self ~onSpawn
+  - brightness{b=15;s=15;delay=2} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0;delay=2} @self ~onSpawn
+  - state{s=animation4;speed=1;delay=2} @self ~onSpawn
+  - particles{p=small_flame;amount=5;hS=0.05;vS=0.05;y=0;size=1;speed=0.05;delay=2} @self ~onTimer:1
+VFX_AwakenedMage_Fireball_Pet:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - remove{delay=100} @self ~onSpawn
+  - model{usestatemachine=true;mid=fireball;delay=2} @self ~onSpawn
+  - brightness{b=15;s=15;delay=2} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0;delay=2} @self ~onSpawn
+  - state{s=animation;speed=1;delay=2} @self ~onSpawn
+  - particles{p=small_flame;amount=10;hS=0.1;vS=0.1;y=0;size=1;speed=0.05;delay=2} @self ~onTimer:1
+VFX_AwakenedMage_Fireball_Explosion_Pet:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - remove{delay=20} @self ~onSpawn
+  - model{usestatemachine=true;mid=fireball_explosion_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation;speed=1} @self ~onSpawn
+
+  - aura{sync=true;delay=1;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+      ];
+      ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=fireball_explosion_1;n=fireball_explosion_<caster.var.iteration>}
+      ];
+      oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+VFX_AwakenedMage_Fireball_Explosion2_Pet:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - remove{delay=20} @self ~onSpawn
+  - model{usestatemachine=true;mid=fireball_explosion_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation2;speed=1} @self ~onSpawn
+
+  - aura{sync=true;delay=1;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+      ];
+      ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=fireball_explosion_1;n=fireball_explosion_<caster.var.iteration>}
+      ];
+      oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_AwakenedMage_Fireball_Explosion_FULL_Pet:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - remove{delay=2} @self ~onSpawn
+  - summon{type=VFX_AwakenedMage_Fireball_Explosion_Pet;amount=1;radius=0;yRadius=0;onSurface=true} @selflocation ~onSpawn
+  - summon{type=VFX_AwakenedMage_Fireball_Explosion2_Pet;amount=1;radius=0;yRadius=0;onSurface=true} @selflocation ~onSpawn
+  - particles{p=campfire_cosy_smoke;amount=5;hS=0.6;vS=0.6;y=0;size=1;speed=0.1} @selflocation ~onSpawn
+
+
+
+
+

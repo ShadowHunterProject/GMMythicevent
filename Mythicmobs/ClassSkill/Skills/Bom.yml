@@ -1,0 +1,111 @@
+#===========================================================================skill1==================================================================================#    
+skill_bom1:
+  Skills:
+  - projectile{oT=skill_bom1_tick;oE=skill_bom1_vfx;v=20;i=1;hR=1;vR=1;mr=25;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.5;stopatblock=true} @Forward{f=20;y=0.5;lockpitch=true}
+  - effect:sound{s=entity.creeper.primed;volume=1.0;pitch=1} @self
+
+skill_bom1_tick:
+  Skills:
+  - effect:particles{p=flame;a=5;hs=0.1;vs=0.1;speed=0.01} @origin
+  - effect:particles{p=smoke_normal;a=2;hs=0.1;vs=0.1;speed=0.01} @origin
+
+skill_bom1_vfx:
+  Skills:
+  - totem{ch=9999;i=5;md=40;onTick=skill_bom1_countdown} @origin
+  - delay 40
+  - effect:sound{s=entity.generic.explode;volume=2.0;pitch=0.8} @origin
+  - effect:particlesphere{p=explosion_large;radius=3;amount=50} @origin
+  - effect:particlesphere{p=lava;radius=3;amount=100} @origin
+  - effect:particlesphere{p=flame;radius=3;amount=100} @origin
+  - effect:particles{p=campfire_cosy_smoke;a=50;hs=1.5;vs=1.5;speed=0.1} @origin
+  - skill{s=skill_bom1_damage} @origin
+
+skill_bom1_countdown:
+  Skills:
+  - effect:sound{s=ui.button.click;volume=1.0;pitch=2.0} @origin
+  - effect:particles{p=redstone;color=#FF0000;a=10;hs=0.5;vs=0.5;s=0} @origin
+
+skill_bom1_damage:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=4} ?isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=4} ?!isplayer
+#===================================================================================================================================================================#
+
+#===========================================================================skill2==================================================================================#
+skill_bom2:
+  Skills:
+  - projectile{oT=skill_bom2_tick;oE=skill_bom2_hit;v=15;i=1;hR=1;vR=1;mr=20;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.3;stopatblock=true;repeat=4;repeatinterval=5} @Forward{f=20;y=0.4;so=-3to3}
+  - effect:sound{s=entity.ghast.shoot;volume=1.0;pitch=1.5;repeat=4;repeatinterval=5} @self
+
+skill_bom2_tick:
+  Skills:
+  - effect:particles{p=end_rod;a=2;hs=0.1;vs=0.1;speed=0} @origin
+  - effect:particles{p=soul_fire_flame;a=3;hs=0.1;vs=0.1;speed=0} @origin
+
+skill_bom2_hit:
+  Skills:
+  - effect:sound{s=entity.dragon_fireball.explode;volume=1.5;pitch=1.2} @origin
+  - effect:particlesphere{p=explosion;radius=2;amount=30} @origin
+  - effect:particlesphere{p=soul_fire_flame;radius=2;amount=50} @origin
+  - skill{s=skill_bom2_damage} @origin
+
+skill_bom2_damage:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=3} ?isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=3} ?!isplayer
+  - potion{type=SLOW;duration=40;level=0;hasParticles=false} @ENO{r=3}
+#===================================================================================================================================================================#
+
+#===========================================================================skill3==================================================================================#
+skill_bom3:
+  Skills:
+  - effect:sound{s=block.portal.trigger;volume=2.0;pitch=0.5} @self
+  - delay 10
+  - projectile{oT=skill_bom3_tick;oE=skill_bom3_land;v=10;i=1;hR=1;vR=1;mr=30;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1;stopatblock=true} @Forward{f=30;y=0;lockpitch=true}
+
+skill_bom3_tick:
+  Skills:
+  - effect:particles{p=flash;a=1;hs=0;vs=0;speed=0} @origin
+  - effect:particles{p=large_smoke;a=5;hs=0.2;vs=0.2;speed=0.05} @origin
+
+skill_bom3_land:
+  Skills:
+  - effect:sound{s=entity.wither.spawn;volume=2.0;pitch=0.5} @origin
+  - totem{ch=9999;i=2;md=60;onTick=skill_bom3_charge} @origin
+  - delay 60
+  - effect:sound{s=entity.generic.explode;volume=3.0;pitch=0.5} @origin
+  #- effect:sound{s=entity.ender_dragon.death;volume=2.0;pitch=0.5} @origin
+  - effect:particlesphere{p=explosion_emitter;radius=6;amount=5} @origin
+  - effect:particlesphere{p=lava;radius=6;amount=30} @origin
+  - effect:particlesphere{p=flame;radius=6;amount=30} @origin
+  - effect:particlesphere{p=campfire_cosy_smoke;radius=7;amount=20} @origin
+  - skill{s=skill_bom3_damage} @origin
+
+skill_bom3_charge:
+  Skills:
+  #- solo_pull{v=4;to=true} @ENO{r=10}
+  - effect:particles{p=redstone;color=#FF0000;a=5;hs=3;vs=3;s=0} @origin
+  - effect:particles{p=portal;a=10;hs=3;vs=3;speed=1} @origin
+  - effect:sound{s=entity.experience_orb.pickup;volume=1.0;pitch=0.5} @origin
+
+skill_bom3_damage:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=8} ?isplayer
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=8} ?!isplayer
+  - potion{type=BLINDNESS;duration=80;level=0;hasParticles=false} @ENO{r=8}
+  - potion{type=SLOW;duration=80;level=2;hasParticles=false} @ENO{r=8}
+  - potion{type=CONFUSION;duration=80;level=0;hasParticles=false} @ENO{r=8}
+#===================================================================================================================================================================#
+

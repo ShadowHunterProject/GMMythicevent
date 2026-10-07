@@ -1,0 +1,89 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################  
+LR_HYDRA_dismembered_head:
+  Type: ARMOR_STAND
+  Options:
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+  Skills:
+  - model{m=lr_hydra_head;usm=true;step=1;d=false;sync=true} @self ~onSpawn
+  - model{m=lr_hydra_head;usm=true;step=1;d=false;sync=true} @self ~onLoad
+  - BodyClamp{mh=0;mb=0;rde=0;rdu=1} @self ~onSpawn
+  - BodyClamp{mh=0;mb=0;rde=0;rdu=1} @self ~onLoad
+  - state{s=land;cd=10} @self ~onTimer:1 ?onground
+  - skill{s=LR_HYDRA_recoil;cd=10} @pir{r=6} ~onTimer:1 ?onground
+  - e:p{p=falling_obsidian_tear;a=5;hs=.25;vs=.25} @modelpart{pid=neck_3_head_4} ~onTimer:1
+  - remove{delay=70;cd=10} @self ~onTimer:1 ?onground
+  
+  
+LR_HYDRA_ground_crack_fx:
+  Type: ARMOR_STAND
+  Options:
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+  Skills:
+  - model{m=lr_hydra_ground_break;usm=true;step=1;d=false;sync=true} @self ~onSpawn
+  - model{m=lr_hydra_ground_break;usm=true;step=1;d=false;sync=true} @self ~onLoad
+  - BodyClamp{mh=0;mb=0;rde=0;rdu=1} @self ~onSpawn
+  - BodyClamp{mh=0;mb=0;rde=0;rdu=1} @self ~onLoad
+  - remove{delay=40} @self ~onSpawn
+  - sound{s=littleroom_hydra:hydra.ground_crack;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self ~onSpawn
+  - solo_velocity{m=set;x=0;y=-100;z=0} @self ~onTimer:1
+  - lockmodel{l=true;delay=5;sync=true} @self ~onSpawn
+  - spin{duration=1;velocity=<random.float.0to100>} @self ~onSpawn
+  - effect:particle{p=block;m=dirt;a=25;hs=.5;vs=.15} @self ~onSpawn
+  - skill{s=LR_HYDRA_recoil} @pir{r=12} ~onSpawn
+  - damage{a=1} @pir{r=2} ~onSpawn
+  - solo_throw{v=2;vy=3} @pir{r=2} ~onSpawn
+
+LR_HYDRA_Poison_Puddle_Mob:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Faction: BOSS
+  Options:
+    Marker: false
+    Small: false
+    Invisible: true
+    Interactable: false
+    Collidable: false
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+  Skills:
+  - extinguish @self ~onTimer:20
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - model{mid=poison_puddle;n=false;step=1;scale=1.3;sync=true} @self ~onSpawn
+  - skill{s=LR_HYDRA_Poison_Puddle_LOOP} ~onTimer:40
+  - effect:sound{s=scorpion_sounds:samus.scorpion_poison;volume=0.9;pitch=1} @self ~onTimer:40
+  - remove{delay=160} @self ~onSpawn
+
+LR_HYDRA_abyssal_puddle_Mob:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Faction: BOSS
+  Options:
+    Marker: false
+    Small: false
+    Invisible: true
+    Interactable: false
+    Collidable: false
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+  Skills:
+  - extinguish @self ~onTimer:20
+  - cancelevent ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - model{mid=abyssal_puddle;n=false;step=1;usm=true;scale=3.0;sync=true} @self ~onSpawn
+  - delay 4 ~onSpawn
+  - lockmodel @self ~onSpawn
+  - effect:sound{s=scorpion_sounds:samus.scorpion_poison;volume=0.9;pitch=1} @self ~onSpawn
+  - remove{delay=160} @self ~onSpawn

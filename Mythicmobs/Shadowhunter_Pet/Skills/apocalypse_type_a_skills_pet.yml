@@ -1,0 +1,348 @@
+apoc_attacks_Pet:
+  Cooldown: 0
+  Conditions:
+  - incombat true
+  - targetwithin{d=5.5} true
+  TargetConditions:
+  - isowner false
+  Skills:
+  - randomskill{s=apocalypse_basic_attack_Pet,apocalypse_basic_attack2_Pet}
+
+apoc_skills_Pet:
+  Conditions:
+  - incombat true
+  - targetwithin{d=15} true
+  - incombat true
+  TargetConditions:
+  - isowner false
+  Skills:
+  - randomskill{s=apocalypse_black_hole_Pet}
+
+
+# ~Written by Gemix~
+
+apocalypse_setAItrue_Pet:
+  TargetConditions:
+  - isowner false
+  Conditions:
+  - incombat true
+  Skills:
+  - setAI{ai=true} @self
+
+
+#Basic Attack 1
+apocalypse_basic_attack_Pet:
+  TargetConditions:
+  - isowner false
+  Cooldown: 1.5
+  Conditions:
+  - incombat true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackbox} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  Skills:
+  - delay 1
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=basic1;duration=29} @self
+  - state{model=apocalypse_type_a;state=basic_attack} @self
+  - delay 7
+  - lockmodel @self
+  - aura{auraName=basic1D;duration=4;oT=basic1_damage_Pet} @self
+  - sound{s=entity.player.attack.sweep;v=3;p=1} @self
+  - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=12} @self
+  - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=12} @self
+  - sound{s=block.anvil.hit;p=2.0;v=1.2;r=12} @self
+  - sound{s=item.trident.throw;p=0.8;v=1.1;r=12} @self
+  - delay 22
+  - lockmodel{l=false;sync=true} @self
+  - setspeed{speed=1;type=WALKING} @self
+
+basic1_damage_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+  - totem{md=2;oH=[ - skill{s=apoc_deal_damage_Pet} ];hnp=true;hp=true;hR=4.5;vR=4.5;i=1;drawhitbox=false} @ModelPart{mid=apocalypse_type_a;pid=arm_sword}
+
+#Basic Attack 2
+apocalypse_basic_attack2_Pet:
+  TargetConditions:
+  - isowner false
+  Cooldown: 1.5
+  Conditions:
+  - incombat true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackbox} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  Skills:
+  - delay 1
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=basic2;duration=36} @self
+  - state{model=apocalypse_type_a;state=basic_attack2} @self
+  - delay 7
+  - lockmodel @self
+  - aura{auraName=basic2D;duration=4;oT=basic2_damage_Pet} @self
+  - sound{s=entity.player.attack.sweep;v=3;p=1} @self
+  - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=12} @self
+  - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=12} @self
+  - sound{s=block.anvil.hit;p=2.0;v=1.2;r=12} @self
+  - sound{s=item.trident.throw;p=0.8;v=1.1;r=12} @self
+  - delay 13
+  - aura{auraName=basic2D;duration=4;oT=basic2_damage_Pet} @self
+  - sound{s=entity.player.attack.strong;v=3;p=1} @self
+  - sound{s=entity.player.attack.sweep;p=1.1;v=0.8;r=12} @self
+  - sound{s=block.stone.break;p=2.0;v=1.2;r=12} @self
+  - delay 16
+  - lockmodel{l=false;sync=true} @self
+  - setspeed{speed=1;type=WALKING} @self
+
+basic2_damage_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+  - totem{md=2;oH=[ - skill{s=apoc_deal_damage_Pet} ];hnp=true;hp=true;hR=4.5;vR=4.5;i=1;drawhitbox=false} @ModelPart{mid=apocalypse_type_a;pid=arm_sword}
+
+
+
+#Black Hole
+apocalypse_black_hole_Pet:
+  TargetConditions:
+  - isowner false
+  Cooldown: 45
+  Conditions:
+  - incombat true
+  #- targetnotwithin{d=5} true
+  - incombat true
+  - targetwithin{d=15} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackbox} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  - hasaura{n=BH_CD} false
+  Skills:
+  - aura{auraName=BH_CD;duration=900} @self
+  - delay 1
+  - CancelEvent @self
+  - setspeed{speed=0;type=WALKING} @self
+  - aura{auraName=blackH;duration=260} @self
+  - state{model=apocalypse_type_a;state=black_hole} @self
+  - lockmodel @self
+  - aura{auraName=owner_immune;duration=300} @owner
+  - summon{type=black_hole_Pet;amount=1;io=true} @ModelPart{mid=apocalypse_type_a;pid=black_hole3}
+  - skill{s=main_pet_BH_totem} @self
+  - delay 260
+  - lockmodel{l=false;sync=true} @self
+  - setspeed{speed=1;type=WALKING} @self
+
+
+black_hole_summoned_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+  - CancelEvent @self
+  - state{model=black_hole;state=black_hole} @self
+  - lockmodel @self
+  - sound{s=entity.wither.spawn;v=3;p=1} @self
+  - sound{s=entity.wither.shoot;v=1.5;p=0.5;r=20} @self
+  - sound{s=block.portal.travel;v=2;p=0.5;r=20} @self
+  - delay 20
+  - aura{auraName=blackHD1;oT=black_hole_damage1_Pet;duration=20} @self
+  - delay 20
+  - aura{auraName=blackHD2;oT=black_hole_damage2_Pet;duration=30} @self
+  - delay 30
+  - aura{auraName=blackHD3;oT=black_hole_damage3_Pet;duration=40} @self
+  - delay 40
+  - aura{auraName=blackHD4;oT=black_hole_damage4_Pet;duration=20} @self
+  - delay 20
+  - aura{auraName=blackHD5;oT=black_hole_damage5_Pet;duration=20} @self
+  - delay 20
+  - aura{auraName=blackHD6;oT=black_hole_damage6_Pet;duration=110} @self
+  - delay 110
+  - remove @self
+
+black_hole_damage1_Pet:
+  Skills:
+  - pull{v=3.5} @EIR{r=6;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  
+black_hole_damage2_Pet:
+  Skills:
+  - pull{v=3.5} @EIR{r=6;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  
+black_hole_damage3_Pet:
+  Skills:
+  - pull{v=3.5} @EIR{r=6;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  
+black_hole_damage4_Pet:
+  Skills:
+  - pull{v=3.5} @EIR{r=6;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=2} @EIRR{min=18;max=24;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  
+black_hole_damage5_Pet:
+  Skills:
+  - pull{v=3.5} @EIR{r=6;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=2} @EIRR{min=18;max=24;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=1.5} @EIRR{min=24;max=30;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  
+black_hole_damage6_Pet:
+  Skills:
+  - pull{v=3.5} @EIR{r=6;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=3} @EIRR{min=6;max=12;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=2.5} @EIRR{min=12;max=18;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=2} @EIRR{min=18;max=24;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=1.5} @EIRR{min=24;max=30;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  - pull{v=1} @EIRR{min=30;max=36;ignore=owner;conditions=[- hasaura{n=owner_immune} false]}
+  
+
+#Leave Combat
+apocalypse_reset_Pet:
+  TargetConditions:
+  - isowner false
+  Conditions:
+  - playersinradius{a=0;r=40} true
+  Skills:
+  - heal{a=1000} @self
+
+# FORCED_SYNC_UPDATE639172407144718779
+
+black_hole_damage_burst_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+  - damage{a=360;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{r=6;ignore=owner;ignore=players;conditions=[- hastag{t=skill_model} false]}
+  - damage{a=300;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{target=players;r=6;ignore=owner;conditions=[- hastag{t=skill_model} false]}
+
+
+apoc_deal_damage_Pet:
+  Skills:
+  - damage{a=240;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{r=4.5;ignore=owner;ignore=players}
+  - damage{a=233;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{target=players;r=4.5;ignore=owner}
+
+main_pet_BH_totem:
+  Skills:
+  - delay 10
+  - projectile{onTick=apoc_bh_deal_damage_Pet;v=0;i=10;duration=250;hitNonPlayers=false;hitPlayers=false;hitBlocks=false} @ModelPart{mid=apocalypse_type_a;pid=black_hole3}
+
+apoc_bh_deal_damage_Pet:
+  Skills:
+  - damage{a=360;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{r=6;ignore=owner;ignore=players}
+  - damage{a=300;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{target=players;r=6;ignore=owner}
+
+# ==========================================
+# Pet Converted Skills from Bongtoi
+# ==========================================
+apocalypse_bongtoi1_Pet:
+  Cooldown: 5
+  Conditions:
+  - incombat true
+  - targetwithin{d=25} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  - hasaura{n=BT1_CD} false
+  TargetConditions:
+  - isowner false
+  Skills:
+  - aura{auraName=BT1_CD;duration=100} @self
+  - projectile{oE=apocalypse_bongtoi1_vfx_Pet;v=99;i=1;hR=1;vR=1;mr=15;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1} @target
+  - sound{s=entity.illusioner.cast_spell;v=1;p=0.5} @self
+  - sound{s=entity.wither.shoot;v=0.5;p=0.5} @self
+
+apocalypse_bongtoi1_vfx_Pet:
+  Skills:
+  - summon{type=BONGTOI_PUDDLE;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - summon{type=BONGTOI_PUDDLE;amount=4;radius=4;yRadius=0;onSurface=true} @origin
+  - totem{ch=9999;i=5;md=160;onTick=apocalypse_bongtoi_dmg_Pet} @origin
+
+apocalypse_bongtoi_dmg_Pet:
+  Cooldown: 1.0
+  Skills:
+  - sound{s=block.lava.pop;v=0.5;p=0.5} @EIR{r=7;ignore=owner}
+  - damage{a=360;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{r=7;ignore=owner;ignore=players;conditions=[- hastag{t=skill_model} false]}
+  - damage{a=300;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{target=players;r=7;ignore=owner;conditions=[- hastag{t=skill_model} false]}
+  - potion{type=SLOW;duration=40;level=1;hasParticles=false} @EIR{r=7;ignore=owner;ignore=players}
+  - potion{type=SLOW;duration=40;level=1;hasParticles=false} @EIR{target=players;r=7;ignore=owner}
+  - potion{type=BLINDNESS;duration=40;level=0;hasParticles=false} @EIR{r=7;ignore=owner;ignore=players}
+  - potion{type=BLINDNESS;duration=40;level=0;hasParticles=false} @EIR{target=players;r=7;ignore=owner}
+
+apocalypse_bongtoi2_Pet:
+  Cooldown: 10
+  Conditions:
+  - incombat true
+  - targetwithin{d=25} true
+  - hasaura{n=basic1} false
+  - hasaura{n=basic2} false
+  - hasaura{n=blackH} false
+  - hasaura{n=bongtoi2} false
+  - hasaura{n=BT2_CD} false
+  TargetConditions:
+  - isowner false
+  Skills:
+  - aura{auraName=BT2_CD;duration=200} @self
+  - aura{auraName=bongtoi2;duration=49} @self
+  - potion{type=SLOW;duration=49;level=2;hasParticles=false} @self
+  - delay 1
+  - projectile{oE=apocalypse_bongtoi2_hit_Pet;v=99;i=1;hR=1;vR=1;mr=20;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.5;tyo=1.5;g=0.1} @target
+
+apocalypse_bongtoi2_hit_Pet:
+  Skills:
+  - damage{a=360;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{r=7;ignore=owner;ignore=players;conditions=[- hastag{t=skill_model} false]}
+  - damage{a=300;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{target=players;r=7;ignore=owner;conditions=[- hastag{t=skill_model} false]}
+  - sound{s=entity.wither.shoot;p=0.5;v=2} @origin
+  - sound{s=entity.evoker.cast_spell;p=0.8;v=2} @origin
+  - sound{s=entity.illusioner.prepare_mirror;p=0.5;v=2} @origin
+  - effect:particles{p=witch;a=100;vs=1;hs=1;s=0.1;y=1} @origin
+  - effect:particles{p=smoke;a=50;vs=0.5;hs=0.5;s=0.05;y=1} @origin
+  - effect:particlesphere{p=dragonbreath;radius=3;a=100;s=0.05;y=1} @origin
+  - delay 5
+  - skill{s=apocalypse_bongtoi2_topray_strike_Pet;repeat=9;repeatInterval=20} @origin
+
+apocalypse_bongtoi2_topray_strike_Pet:
+  Skills:
+  - sound{s=block.amethyst_block.chime;p=1.2;v=2} @origin
+  - effect:particles{p=portal;a=50;vs=1;hs=1;s=0.5;y=0.5} @origin
+  - sudoskill{s=apocalypse_bongtoi2_summon_topray_offset_Pet} @EIR{r=8;ignore=owner;ignore=players;conditions=[- hastag{t=skill_model} false]}
+  - sudoskill{s=apocalypse_bongtoi2_summon_topray_offset_Pet} @EIR{target=players;r=8;ignore=owner;conditions=[- hastag{t=skill_model} false]}
+  - damage{a=360;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{r=8;ignore=owner;ignore=players;conditions=[- hastag{t=skill_model} false]}
+  - damage{a=300;t=SKILL;pkb=false;hnp=true;hp=true;pi=true} @EIR{target=players;r=8;ignore=owner;conditions=[- hastag{t=skill_model} false]}
+  - sound{s=minecraft:event.mob_effect.trial_omen;p=1.4;v=5} @EIR{r=8;ignore=owner}
+  - effect:particles{p=crit;a=30;vs=0.5;hs=0.5;s=0.1;y=1} @EIR{r=8;ignore=owner}
+  - effect:particles{p=largeexplode;a=1;y=1} @EIR{r=8;ignore=owner}
+
+apocalypse_bongtoi2_summon_topray_offset_Pet:
+  Skills:
+  - summon{type=BONGTOI_MIRROR_ATTACK_1;amount=1;radius=0;yRadius=0;onSurface=false} @Forward{f=0;y=4}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

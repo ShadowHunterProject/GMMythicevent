@@ -1,0 +1,249 @@
+
+VFX_PYRO_METEOR:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=meteor_vfx;lockpitch=true;scale=1.7} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation;speed=1} @self ~onSpawn
+  
+VFX_PYRO_METEOR_RUBBLES:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=meteor_vfx;lockpitch=true;scale=1.7} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation2;speed=1} @self ~onSpawn
+  
+  - remove{delay=27} @self ~onSpawn
+VFX_LAVA_RUPTURE:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=lava_obsidian_pieces_eruption_vfx;lockpitch=true;scale=1.7} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation;speed=1} @self ~onSpawn
+  
+  - remove{delay=30} @self ~onSpawn
+
+
+
+VFX_HELLFIRE_OVERBLAST:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=hellfire_overblast_vfx;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=beam_normal;speed=1} @self ~onSpawn
+  
+  - tp @forward{f=1;y=1.5;ofowner=true} ~onTimer:1
+  - look{force=true} @forward{f=2;y=1.5;ofowner=true} ~onTimer:1
+  - remove{delay=121} @self ~onSpawn
+VFX_HELLFIRE_OVERBLAST-ENHANCED:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=hellfire_overblast_vfx;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=beam_dark_red;speed=1} @self ~onSpawn
+  
+  - tp @forward{f=1;y=1.5;ofowner=true} ~onTimer:1
+  - look{force=true} @forward{f=2;y=1.5;ofowner=true} ~onTimer:1
+  - remove{delay=121} @self ~onSpawn
+
+
+
+
+
+VFX_INFERNAL_JUDGEMENT_JUMP:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_judgement_vfx;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=charge_jump;speed=1} @self ~onSpawn
+  
+  - remove{delay=48} @self ~onSpawn
+
+VFX_INFERNAL_JUDGEMENT_FireCircle1:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_circle;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation6;speed=1} @self ~onSpawn
+  - remove{delay=28} @self ~onSpawn
+VFX_INFERNAL_JUDGEMENT_FireCircle2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_circle;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation7;speed=1} @self ~onSpawn
+  - remove{delay=28} @self ~onSpawn
+VFX_INFERNAL_JUDGEMENT_FireCircle3:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_circle;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation4;speed=1} @self ~onSpawn
+  - remove{delay=28} @self ~onSpawn
+VFX_INFERNAL_JUDGEMENT_FireCircle4:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_circle;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation5;speed=1} @self ~onSpawn
+  - remove{delay=28} @self ~onSpawn
+VFX_INFERNAL_JUDGEMENT_FireCircle5:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_circle;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation2;speed=1} @self ~onSpawn
+  - remove{delay=28} @self ~onSpawn
+VFX_INFERNAL_JUDGEMENT_FireCircle6:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_circle;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation3;speed=1} @self ~onSpawn
+  - remove{delay=28} @self ~onSpawn
+
+
+
+
+VFX_INFERNAL_JUDGEMENT_SPEAR:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_spear;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spear;speed=1} @self ~onSpawn
+VFX_INFERNAL_JUDGEMENT_SPEAR-FINAL:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_judgement_vfx;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spear_red;speed=1} @self ~onSpawn
+
+  - remove{delay=53} @self ~onSpawn
+VFX_INFERNAL_JUDGEMENT_MAGMA_OBSIDIAN_RUPTURE:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=infernal_judgement_vfx;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=lava_obsidian_infernal_judgement;speed=1} @self ~onSpawn
+  
+  - remove{delay=61} @self ~onSpawn

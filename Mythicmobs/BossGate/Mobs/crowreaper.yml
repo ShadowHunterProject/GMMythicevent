@@ -1,0 +1,81 @@
+crowaxe:
+  Type: chicken
+  Display: 'crowaxe'
+  Health: 1000
+  Faction: ravenbosses
+  AiTargetSelectors:
+  - players
+  Skills:
+   - model{mid=crowaxe;n=false;h=true;sync=true} @self ~onSpawn
+   - setNoDamageTicks{ticks=500} @self ~onSpawn
+   - lockmodel{l=true;sync=true} @self ~onSpawn
+   - skill{s=axeactivate;sync=true} @self ~onSpawn
+
+  Options:
+    MovementSpeed: 0
+    MaxCombatDistance: 20 
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    Silent: true   
+    
+crowswarm:
+  Type: chicken
+  Display: 'crowswarm'
+  Health: 1000
+  Faction: ravenbosses
+  AiTargetSelectors:
+  - lookatplayers{r=12}
+  Skills:
+   - model{mid=crowswarm;n=false;h=true;sync=true} @self ~onSpawn
+   - look{immediately=true} @NearestPlayer{r=10} ~onSpawn
+   - setNoDamageTicks{ticks=500} @self ~onSpawn
+   - skill{s=crowswarmaction;sync=true} @self ~onSpawn
+
+  Options:
+    MovementSpeed: 0.05
+    MaxCombatDistance: 20 
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    PreventVanillaDamage: true
+    Silent: true   
+
+crowdummy:
+  Type: ARMOR_STAND
+  Display: 'crowdummy'
+  Options:
+    Marker: true
+    Invisible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+  Skills:
+  - skill{s=dummyspan} @self ~onSpawn   
+  
+  
+reaperspikes:
+  Type: chicken
+  Display: 'reaperspikes'
+  Health: 1000
+  Faction: ravenbosses
+  AiTargetSelectors:
+  - players
+  Skills:
+   - model{mid=reaperspikes;n=false;h=true;sync=true} @self ~onSpawn
+   - setNoDamageTicks{ticks=500} @self ~onSpawn
+   - partvis{m=reaperspikes;p=spikes;child=true;v=false} @self ~onSpawn 
+   - lockmodel{l=true;sync=true} @self ~onSpawn
+   - damage{a=0}
+   - skill{s=reaperspike;sync=true} @self ~onSpawn
+
+  Options:
+    MovementSpeed: 0
+    MaxCombatDistance: 20 
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    Silent: true   

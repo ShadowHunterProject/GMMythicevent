@@ -1,0 +1,45 @@
+Orc_Stone_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Pose:
+      Head: 0,0,0
+  ItemHead: Orc_Stone
+  Options:
+    Marker: true
+    Small: false
+    Invisible: true
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - equip{item=orc_stone:4} ~onSpawn
+
+
+Orc_Glaive_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Pose:
+      Head: 0,0,0
+  ItemHead: Orc_Glaive
+  Options:
+    Marker: true
+    Small: false
+    Invisible: true
+    Invincible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - equip{item=orc_glaive:4} ~onSpawn
+  - look{headOnly=false;immediately=true} @forward{f=5;y=1.5} ~onSpawn
+
+

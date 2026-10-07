@@ -1,0 +1,381 @@
+attacks_Pet:
+  Cooldown: 0
+  Conditions:
+    - incombat true
+    - targetwithin{d=4} true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - CancelEvent
+    - look{headOnly=false;immediately=true} @target
+    - skill{s=simplecombo_Pet}
+
+knightskill_Pet:
+  Conditions:
+    - incombat true
+    - targetwithin{d=10} true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - randomskill{s=simplecombo2_Pet 2,comboflyattack_Pet 2,explosion_Pet 1}
+
+
+
+summonspike_Pet:
+  Conditions:
+    - incombat true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - summon{type=crowspike_Pet;sio=true;amount=2;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=10;minr=4;s=7}
+    - delay 6 
+    - summon{type=crowspike_Pet;sio=true;amount=2;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=10;minr=4;s=7}
+    - delay 8
+    - summon{type=crowspike_Pet;sio=true;amount=1;radius=1;os=true} @PlayerLocationsInRadius{r=10}
+    - delay 10
+    - summon{type=crowspike_Pet;sio=true;amount=2;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=10;minr=4;s=7}
+    - delay 12
+    - summon{type=crowspike_Pet;sio=true;amount=1;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=10;minr=4;s=7}
+
+
+
+summonswarm_Pet:
+  Conditions:
+    - incombat true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - summon{type=crowswarm_Pet;sio=true;amount=1;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=5;minr=4;s=7}
+    - delay 6 
+    - summon{type=crowswarm_Pet;sio=true;amount=1;radius=1;os=true} @RandomLocationsNearCaster{a=1;r=5;minr=4;s=7}
+    - delay 6 
+
+
+
+fastcombo_Pet:
+  Cooldown: 5
+  Conditions:
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+    - incombat true
+    - playernotwithin{d=5} true
+    - playerwithin{d=10} true
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=thecrowknight;p=tptrack;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=fullexplosion;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=allexpeffects;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=dustparticles;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=rightswing;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=leftswing;child=true;v=true} @self
+    - look{headOnly=true;immediately=false;repeat=5;repeatInterval=1} @EntitiesInRadius{limit=1;sort=NEAREST;r=10;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - state{s=fastcombo} @self
+    - delay 20
+    - look{force=true;immediately=true;repeat=5;repeatInterval=1} @EntitiesInRadius{limit=1;sort=NEAREST;r=10;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - sound{s=entity.player.attack.crit;p=1.8;v=0.8;r=16} @Self
+    - sound{s=entity.zombie.attack_iron_door;p=1.6;v=0.8;r=16} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=16} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.8;r=16} @self
+    - sound{s=item.trident.throw;p=0.7;v=0.6;r=16} @Self
+    - sound{s=block.stone.hit;p=1.5;v=0.5;r=16} @Self
+    - sound{s=entity.blaze.shoot;p=1.4;v=0.3;r=16} @Self
+    - sound{s=block.anvil.hit;p=1.5;v=1.2;r=16} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=16} @self
+    - sound{s=entity.evoker.cast_spell;p=1.5;v=1;r=16} @self
+    - sound{s=entity.player.attack.sweep;p=1.5;v=0.7;r=16} @Self
+    - sound{s=item.trident.throw;p=1.3;v=0.6;r=16} @Self
+    - sound{s=block.wood.hit;p=1.4;v=0.5;r=16} @Self
+    - sound{s=entity.ender_dragon.flap;p=1.6;v=0.3;r=16} @Self
+    - sound{s=entity.arrow.shoot;p=1.8;v=0.4;r=16} @Self
+    - look{immediately=false;repeat=1;repeatInterval=1} @Target{ignore=owner}
+    - look{immediately=true} @Target{ignore=owner}
+    - tracklocation @targetlocation
+    - lockmodel{l=true} @self
+    - lunge{v=0.8;vy=.01;repeat=5;repeatInterval=1} @Target{ignore=owner}
+    - summon{type=crowfog_Pet;sio=true;amount=1;radius=1;os=true;repeat=6;repeatInterval=1} @self
+    - delay 6
+    - damage{a=188;type=ATTACK} @EIR{ignore=players;r=5.5;ignore=owner}
+    - damage{a=194;type=ATTACK} @EIR{target=players;r=5.5;ignore=owner}
+    - delay 10
+    - lockmodel{l=false} @self
+    - look{force=true;immediately=true;repeat=5;repeatInterval=1} @EIR{r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - sound{s=entity.player.attack.sweep;p=1.5;v=0.7} @Self
+    - sound{s=item.trident.throw;p=1.3;v=0.6} @Self
+    - sound{s=block.wood.hit;p=1.4;v=0.5} @Self
+    - sound{s=entity.ender_dragon.flap;p=1.6;v=0.3} @Self
+    - sound{s=entity.arrow.shoot;p=1.8;v=0.4} @Self
+    - lockmodel{l=true} @self
+    - delay 4
+    - damage{a=188;type=ATTACK} @EIC{ignore=players;r=6.5;a=180;ignore=owner}
+    - damage{a=194;type=ATTACK} @EIC{target=players;r=6.5;a=180;ignore=owner}
+    - delay 20
+    - look{force=true;immediately=true;repeat=5;repeatInterval=1} @EIR{r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=16} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=16} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=16} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=16} @self
+    - sound{s=entity.generic.explode;p=1.5;v=1.0;r=16} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=16} @self
+    - solo_throw{v=12;vy=5} @EIR{r=5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 20
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self 
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self 
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self 
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self 
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self 
+    - partvis{m=thecrowknight;p=tptrack;child=true} @self
+    - delay 2
+    - lockmodel{l=false} @self
+    - setspeed{t=walk;s=1.25} @self
+    - setAi{ai=true} @self
+
+
+
+simplecombo_Pet:
+  Cooldown: 1.5
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel @self
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=thecrowknight;p=fullexplosion;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=allexpeffects;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=dustparticles;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=rightswing;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=leftswing;child=true;v=true} @self
+    - state{s=simplecombo} @self
+    - delay 20
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=12} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=12} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=12} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=12} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=12} @self
+    - damage{a=188;type=ATTACK} @EIC{ignore=players;r=6.5;a=180;ignore=owner}
+    - damage{a=194;type=ATTACK} @EIC{target=players;r=6.5;a=180;ignore=owner}
+    - delay 6
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self 
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self 
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self 
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self 
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self 
+    - delay 2
+    - setspeed{t=walk;s=1.25} @self
+    - lockmodel{l=false} @self  
+
+
+
+simplecombo2_Pet:
+  Conditions:
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel @self
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=thecrowknight;p=fullexplosion;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=allexpeffects;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=dustparticles;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=rightswing;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=leftswing;child=true;v=true} @self
+    - look{headOnly=true;immediately=false;repeat=5;repeatInterval=1} @EIR{r=3;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - state{s=simplecombo2} @self
+    - delay 15
+    - lunge{v=0.8;vy=.01;repeat=5;repeatInterval=1} @Forward{f=3;uel=true}
+    - delay 5
+    - sound{s=entity.player.attack.crit;p=1.8;v=0.8} @Self
+    - sound{s=item.trident.throw;p=0.7;v=0.6} @Self
+    - sound{s=block.stone.hit;p=1.5;v=0.5} @Self
+    - sound{s=entity.blaze.shoot;p=1.4;v=0.3} @Self
+    - sound{s=block.anvil.hit;p=1.5;v=1.2;r=12} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=12} @self
+    - sound{s=entity.evoker.cast_spell;p=1.5;v=1} @self
+    - damage{a=188;type=ATTACK} @EIR{ignore=players;r=5.5;ignore=owner}
+    - damage{a=194;type=ATTACK} @EIR{target=players;r=5.5;ignore=owner}
+    - solo_throw{v=12;vy=5} @Target{ignore=owner}
+    - delay 6
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self 
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self 
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self 
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self 
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self 
+    - delay 2
+    - setspeed{t=walk;s=1.25} @self
+    - lockmodel{l=false} @self       
+
+
+
+comboflyattack_Pet:
+  Conditions:
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - setspeed{t=walk;s=0} @self
+    - partvis{m=thecrowknight;p=fullexplosion;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=allexpeffects;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=dustparticles;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=rightswing;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=leftswing;child=true;v=true} @self
+    - state{s=comboflyattack} @self
+    - delay 18
+    - lockmodel @self
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=16} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=16} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=16} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=16} @self
+    - sound{s=entity.generic.explode;p=1.5;v=1.0;r=16} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=16} @self
+    - damage{a=188;type=ATTACK} @EIC{ignore=players;r=6.5;a=180;ignore=owner}
+    - damage{a=194;type=ATTACK} @EIC{target=players;r=6.5;a=180;ignore=owner}
+    - potion{type=WITHER;duration=140;level=0} @EIC{r=6.5;a=180;ignore=owner}
+    - lockmodel{l=false} @self
+    - delay 38
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1} @self
+    - sound{s=entity.zombie.attack_iron_door;p=1.1;v=0.8;r=16} @self
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1;r=16} @self
+    - sound{s=block.anvil.hit;p=2.0;v=1.2;r=16} @self
+    - sound{s=entity.generic.impact.wood.hit;p=0.9;v=1;r=16} @self
+    - sound{s=entity.generic.explode;p=1.5;v=1.0;r=16} @self
+    - sound{s=item.axe.strip;p=0.8;v=1.1;r=16} @self
+    - damage{a=188;type=ATTACK} @EIC{ignore=players;r=6.5;a=180;ignore=owner}
+    - damage{a=194;type=ATTACK} @EIC{target=players;r=6.5;a=180;ignore=owner}
+    - solo_throw{v=12;vy=5} @EIR{r=5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - summon{type=crowfog_Pet;sio=true;amount=1;radius=1;os=true} @Ring{r=4;p=6;ignore=owner}
+    - potion{type=WITHER;duration=140;level=0} @EIC{r=6.5;a=180;ignore=owner}
+    - delay 18
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self 
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self 
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self 
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self 
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self 
+    - delay 2
+    - setspeed{t=walk;s=1.25} @self  
+
+
+
+explosion_Pet:
+  Conditions:
+    - incombat true
+    - incombat true
+    - targetinlineofsight true
+  TargetConditions:
+  - isowner false
+  Skills:
+    - setspeed{t=walk;s=0} @self
+    - lockmodel @self
+    - partvis{m=thecrowknight;p=fullexplosion;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=allexpeffects;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=dustparticles;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=rightswing;child=true;v=true} @self
+    - partvis{m=thecrowknight;p=leftswing;child=true;v=true} @self
+    - state{s=explosion} @self
+    - delay 36
+    - sound{s=entity.evoker.cast_spell;p=0.5;v=1} @self
+    - damage{a=188;type=ATTACK} @EIC{ignore=players;r=6.5;a=180;ignore=owner}
+    - damage{a=194;type=ATTACK} @EIC{target=players;r=6.5;a=180;ignore=owner}
+    - potion{type=SLOWNESS;duration=100;level=5} @EIC{r=6.5;a=180;ignore=owner}
+    - setNoDamageTicks{ticks=100;delay=1} @self
+    - potion{type=WITHER;duration=22;level=1} @EIC{r=6.5;a=180;ignore=owner}
+    - delay 10
+    - potion{type=WITHER;duration=22;level=1} @EIR{r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=188} @EIR{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=194} @EIR{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 12
+    - potion{type=WITHER;duration=22;level=1} @EIR{r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=188} @EIR{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=194} @EIR{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 12
+    - potion{type=WITHER;duration=22;level=1} @EIR{r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=188} @EIR{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=194} @EIR{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 12
+    - potion{type=WITHER;duration=22;level=1} @EIR{r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=188} @EIR{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=194} @EIR{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 12
+    - potion{type=WITHER;duration=22;level=1} @EIR{r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=188} @EIR{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]} 
+    - damage{a=194} @EIR{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]} 
+    - delay 12
+    - delay 14
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self 
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self 
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self 
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self 
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self 
+    - delay 1
+    - setspeed{t=walk;s=1.25} @self  
+    - lockmodel{l=false} @self 
+
+
+
+death_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - look{immediately=true} @Forward
+    - lockmodel{l=true} @self
+    - setAi{ai=false} @self
+    - delay 180
+    - sound{s=block.lava.extinguish} @self
+    - effect:particles{particle=poof;amount=30;hS=1;vS=1;speed=.01} @self
+    - delay 5
+    - remove @self     
+    
+#crowspike    
+
+
+spikedeath_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - delay 20
+    - partvis{m=crowspike;p=spike;child=true;v=true} @self
+    - partvis{m=crowspike;p=dustparticles;child=true;v=true} @self
+    - sound{s=block.stone.break;p=1.0;v=0.8;r=16} @self
+    - sound{s=block.stone.hit;p=1.0;v=1.0;r=16} @Self
+    - sound{s=entity.zombie.attack_iron_door;p=0.7;v=0.4;r=16} @Self
+    - sound{s=block.metal.hit;p=1.2;v=1.0;r=16} @self
+    - damage{a=188} @EIR{ignore=players;r=1.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - damage{a=194} @EIR{target=players;r=1.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+    - delay 240
+    - state{s=remove} @self
+    - delay 70
+    - remove @self    
+    
+#crowfog    
+
+
+crowfogaction_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+    - lockmodel{l=true} @self
+    - skill{s=crowfogdamage_Pet;repeat=30;repeatInterval=20} 
+    - delay 130
+    - remove @self
+
+
+
+crowfogdamage_Pet:
+  TargetConditions:
+  - isowner false
+  Skills:
+  - damage{a=188;pi=true;pk=true;ia=true} @EIR{ignore=players;r=1.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  - damage{a=194;pi=true;pk=true;ia=true} @EIR{target=players;r=1.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+  - potion{type=WITHER;duration=20;level=0} @EIR{r=1.5;ignore=owner;conditions=[ - hastag{t=skill_model} false ]}
+
+
+# FORCED_SYNC_UPDATE639172407144884065
+
+

@@ -1,0 +1,99 @@
+#Vfx Solar Fire
+vfx_solar_fire_pet:
+  Tags:
+    - skill_model
+  Type: ARMOR_STAND
+  Display: ""
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+    - SUFFOCATION 0
+    - FALL 0
+  Options:
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    Marker: true
+    KnockbackResistance: 1
+  Skills:
+    - model{mid=vfx_solar_fire;n=false;step=1;usm=true} @self ~onSpawn
+    - model{mid=vfx_solar_fire;n=false;step=1;usm=true} @self ~onLoad
+    - skill{s=vfx_solar_fire_summoned_pet} @self ~onSpawn
+
+#Vfx Solar Snare
+vfx_solar_snare_pet:
+  Tags:
+    - skill_model
+  Type: ARMOR_STAND
+  Display: ""
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+    - SUFFOCATION 0
+    - FALL 0
+  Options:
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    Marker: true
+    KnockbackResistance: 1
+  Skills:
+    - model{mid=vfx_solar_snare;n=false;step=1;usm=true} @self ~onSpawn
+    - model{mid=vfx_solar_snare;n=false;step=1;usm=true} @self ~onLoad
+    - skill{s=vfx_solar_snare_summoned_pet} @self ~onSpawn
+
+#Vfx Solar Strike
+vfx_solar_strike_pet:
+  Tags:
+    - skill_model
+  Type: ARMOR_STAND
+  Display: ""
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+    - SUFFOCATION 0
+    - FALL 0
+  Options:
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    Marker: true
+    KnockbackResistance: 1
+  Skills:
+    - model{mid=vfx_solar_strike;n=false;step=1;usm=true} @self ~onSpawn
+    - model{mid=vfx_solar_strike;n=false;step=1;usm=true} @self ~onLoad
+    - skill{s=vfx_solar_strike_summoned_pet} @self ~onSpawn
+

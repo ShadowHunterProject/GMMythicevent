@@ -1,0 +1,205 @@
+ice_mist:
+  Type: HUSK
+  Display: '&bIce Queen'
+  Faction: ICE ELEMENTALS
+  Health: 400
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  AIGoalSelectors:
+  -  clear
+  -  meleeattack
+  AITargetSelectors:
+  -  clear
+  -  attacker
+  -  players
+  -  OtherFaction
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    FollowRange: 1
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 30
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=ice_mist;tint=false;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=ice_mist;tint=false;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=ice_mist_damage} @self ~onSpawn
+
+
+#
+ice_sprite:
+  Type: PARROT
+  Display: '&bIce Sprite'
+  Faction: ICE ELEMENTALS
+  Health: 5
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - movetowardstarget
+  - randomFly
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0.3
+    FollowRange: 20
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 20
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=ice_sprite;tint=false;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=ice_sprite;tint=false;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=ice_sprite_shoot;sync=true} @self ~onTimer:45
+  - skill{s=ice_sprite_death} @self ~onDeath
+#SOUNDS
+  - sound{s=entity_allay.ambient_without_item;p=1.2} @self ~onSpawn
+  - sound{s=entity_allay.ambient_without_item;p=1.2} @self ~onLoad
+  - sound{s=entity_allay.ambient_without_item;p=1.2} @self ~onTimer:100
+
+
+#
+ice_thorns:
+  Type: HUSK
+  Display: '&bIce Queen'
+  Faction: ICE ELEMENTALS
+  Health: 400
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    FollowRange: 1
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 30
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=ice_thorns;tint=false;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=ice_thorns;tint=false;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=ice_thorns_root} @self ~onSpawn  
+  
+  
+ice_wall:
+  Type: HUSK
+  Display: '&bIce Queen'
+  Faction: ICE ELEMENTALS
+  Health: 400
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    FollowRange: 30
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 30
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=ice_wall;tint=false;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=ice_wall;tint=false;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=ice_wall_emerge} @self ~onSpawn
+  - skill{s=BossWall} @self ~onTimer:1
+  - skill{s=BossWall2} @self ~onTimer:1
+  
+
+#  
+ice_elemental_spikes:
+  Type: HUSK
+  Display: '&bIce Bruiser'
+  Faction: ICE ELEMENTALS
+  Health: 400
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  AIGoalSelectors:
+  -  clear
+  -  meleeattack
+  AITargetSelectors:
+  -  clear
+  -  attacker
+  -  players
+  -  OtherFaction
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0
+    FollowRange: 1
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 30
+    Gravity: false
+  Skills: 
+  - cancelevent ~onAttack
+  - model{mid=ice_elemental_spikes;tint=false;n=false;step=1;usm=true;sync=true} @self ~onSpawn
+  - model{mid=ice_elemental_spikes;tint=false;n=false;step=1;usm=true;sync=true} @self ~onLoad
+  - skill{s=ice_elemental_spikes_damage} @self ~onSpawn  
+

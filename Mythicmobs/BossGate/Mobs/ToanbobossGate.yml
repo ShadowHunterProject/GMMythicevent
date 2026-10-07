@@ -1,0 +1,595 @@
+#RankE
+Orc_Giant:
+  Type: ZOMBIE
+  Display: "&2Yêu Tinh Vương Kragg"
+  Health: 5000
+  Damage: 50
+  LevelModifiers:
+    Health: 100
+    Damage: 4
+  BossBar:
+    Enabled: true
+    Title: "&2&lYêu Tinh Vương Kragg"
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_12
+    DarkenSky: false
+  Options:
+    MovementSpeed: 0.23
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: false
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  Modules:
+    ThreatTable: true
+  DamageModifiers:
+    - FALL 0
+  AIGoalSelectors:
+    - 0 clear
+    - 1 meleeattack
+    - 2 movetowardstarget
+    - 3 randomstroll
+  AITargetSelectors:
+    - 0 clear
+    - 1 players
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank E) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - model{mid=orc_giant;n=false;step=1;sync=true} @self ~onSpawn
+    - model{mid=orc_giant;n=false;step=1;sync=true} @self ~onLoad
+    - partvisibility{m=orc_giant;p=stone;v=false;delay=1} @self ~onSpawn
+    - partvisibility{m=orc_giant;p=stone;v=false;delay=1} @self ~onLoad
+    - effect:sound{s=orc_sounds:samus.orc_giant_idle;volume=2;pitch=1} @self ~onTimer:140 0.35
+    - effect:sound{s=orc_sounds:samus.orc_giant_roar;volume=3;pitch=1} @self ~onDeath
+    - skill{s=Changetarget} ~onTimer:160 <99%
+    - skill{s=Cancelattack;sync=true} ~onAttack
+    - skill{s=Orc_Giant_Attack} ~onTimer:10
+    - skill{s=Orc_Giant_Skill} ~onTimer:40
+
+#RankD
+Orc_King:
+  Type: ZOMBIE
+  Display: "&aOrc Thủ Lĩnh"
+  Health: 50000
+  Damage: 200
+  LevelModifiers:
+    Health: 200
+    Damage: 5
+  BossBar:
+    Enabled: true
+    Title: "&a&lOrc Thủ Lĩnh"
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_12
+    DarkenSky: false
+  Options:
+    MovementSpeed: 0.2
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: false
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  #Drops:
+  #- orc_glaive 1 1
+  Modules:
+    ThreatTable: true
+  DamageModifiers:
+    - FALL 0
+  AIGoalSelectors:
+    - 0 clear
+    - 1 meleeattack
+    - 2 movetowardstarget
+    - 3 randomstroll
+  AITargetSelectors:
+    - 0 clear
+    - 1 players
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank D) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - model{mid=orc_king;n=false;step=1;sync=true} @self ~onSpawn
+    - model{mid=orc_king;n=false;step=1;sync=true} @self ~onLoad
+    - partvisibility{m=orc_king;p=skulls;v=false;delay=1} @self ~onSpawn
+    - partvisibility{m=orc_king;p=skulls;v=false;delay=1} @self ~onLoad
+    - effect:sound{s=orc_sounds:samus.orc_idle;volume=1.5;pitch=1} @self ~onTimer:140 0.35
+    - effect:sound{s=orc_sounds:samus.orc_idle;volume=1.5;pitch=1} @self ~onDeath
+    - skill{s=Changetarget} ~onTimer:160 <99%
+    - skill{s=Cancelattack;sync=true} ~onAttack
+    - skill{s=Orc_King_Attack} ~onTimer:10
+    - skill{s=Orc_King_Skill} ~onTimer:30
+
+#RankC
+crowreaper:
+  Type: vindicator
+  Display: "&8Hắc Hiệp Sĩ Vargoth"
+  Health: 150000
+  Damage: 400
+  LevelModifiers:
+    Health: 300
+    Damage: 9
+  BossBar:
+    Enabled: true
+    Title: "&2&lHắc Hiệp Sĩ Vargoth"
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_12
+    DarkenSky: false
+  Faction: ravenbosses
+  AiTargetSelectors:
+    - players
+  AiGoalSelectors:
+    - lookatplayers{r=20}
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank C) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - model{mid=crowreaper;n=false;h=true;sync=true} @self ~onSpawn
+    - model{mid=crowreaper;n=false;h=true;sync=true} @self ~onLoad
+    - partvis{m=crowreaper;p=fullexplosion;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=fullexplosion;child=true} @self ~onLoad
+    - partvis{m=crowreaper;p=allexplosioneffectall;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=allexplosioneffectall;child=true} @self ~onLoad
+    - partvis{m=crowreaper;p=dustparticles;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=dustparticles;child=true} @self ~onLoad
+    - partvis{m=crowreaper;p=spikes;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=spikes;child=true} @self ~onLoad
+    - partvis{m=crowreaper;p=swing;child=true} @self ~onSpawn
+    - partvis{m=crowreaper;p=swing;child=true} @self ~onLoad
+    - skill{s=attacksreaper;sync=true} @self ~onAttack
+    - skill{s=death;sync=true} @self ~onDeath
+    - skill{s=summonaxe;sync=true} @self ~onTimer:120
+    - skill{s=summonswarm;sync=true} @self ~onTimer:380
+
+  Options:
+    MovementSpeed: 0.3
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: false
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+
+#RankB
+thecrowknight:
+  Type: vindicator
+  Display: "&5Ma Vương Baruka"
+  Health: 400000
+  Damage: 800
+  LevelModifiers:
+    Health: 500
+    Damage: 9
+  BossBar:
+    Enabled: true
+    Title: "&5&lMa Vương Baruka"
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_12
+    DarkenSky: false
+  Faction: ravenbosses
+  AiTargetSelectors:
+    - players
+  AiGoalSelectors:
+    - lookatplayers{r=20}
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank B) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - model{mid=thecrowknight;n=false;h=true;sync=true} @self ~onSpawn
+    - model{mid=thecrowknight;n=false;h=true;sync=true} @self ~onLoad
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=fullexplosion;child=true} @self ~onLoad
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=allexpeffects;child=true} @self ~onLoad
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=dustparticles;child=true} @self ~onLoad
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=rightswing;child=true} @self ~onLoad
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=leftswing;child=true} @self ~onLoad
+    - partvis{m=thecrowknight;p=tptrack;child=true} @self ~onSpawn
+    - partvis{m=thecrowknight;p=tptrack;child=true} @self ~onLoad
+    - skill{s=attacks;sync=true} @self ~onAttack
+    - skill{s=death;sync=true} @self ~onDeath
+    - skill{s=summonspike;sync=true} @self ~onTimer:240
+    - skill{s=fastcombo;sync=true} @self ~onTimer:80
+    - skill{s=summonswarm;sync=true} @self ~onTimer:220
+
+  Options:
+    MovementSpeed: 0.3
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: false
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+
+#RankA
+apocalypse_type_a:
+  Type: HUSK
+  Display: "&dHắc Ám Thánh Thể"
+  Faction: SPACE
+  Health: 800000
+  Damage: 1400
+  LevelModifiers:
+    Health: 1000
+    Damage: 9
+  BossBar:
+    Enabled: true
+    Title: "&d&lHắc Ám Thánh Thể"
+    Range: 40
+    Color: RED
+    Style: SEGMENTED_10
+  DamageModifiers:
+    - SUFFOCATION 0
+    - FALL 0
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - movetowardstarget
+    - randomstroll
+  AITargetSelectors:
+    - clear
+    - players
+    - attacker
+    - players
+  Modules:
+    ThreatTable: true
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0.35
+    FollowRange: 40
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 40
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank A) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - cancelevent ~onAttack
+    - model{mid=apocalypse_type_a;n=false;step=1;drive=true;ride=true;usm=true;sync=true} @self ~onSpawn
+    - model{mid=apocalypse_type_a;n=false;step=1;drive=true;ride=true;usm=true;sync=true} @self ~onLoad
+    - randomskill{skills=apocalypse_basic_attack,apocalypse_basic_attack2,apocalypse_black_hole,apocalypse_bongtoi1,apocalypse_bongtoi2} @self ~onTimer:40
+    - skill{s=apocalypse_reset} @self ~onPlayerKill
+
+#RankA+Hoanguc
+koboldWizard_em:
+  Type: illusioner
+  Display: "&cPháp Sư Koblod"
+  Modules:
+    ThreatTable: true
+  AITargetSelectors:
+    - clear
+    - players
+    - attacker
+    - nearestconditionaltarget{mr=true;ms=true;conditions=[ - hasaura{n=koboldagression_frame} true ]}
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - lookatplayers
+    - randomstroll
+    - randomlookaround
+    - float
+  Health: 1500000
+  Damage: 2200
+  LevelModifiers:
+    Health: 2000
+    Damage: 9
+  BossBar:
+    Enabled: true
+    Title: "&c&lPháp Sư Koblod"
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_10
+  Faction: Kobold
+  DamageModifiers:
+    - FIRE 0
+    - MAGIC 0.7
+    - PROJECTILE 0.45
+  #Damage: 11 #This is the BASE damage. Applies for ALL skills Setting it to 12 will DOUBLE damage. Setting it to 3 will REDUCE damage in 50% from the original.
+  #KillMessages:
+  #- '<target.name> was killed by a Kobold.'
+  #- 'A Kobold slashed <target.name>.'
+  #- "<target.name> was slain by Kobolds"
+  #- "A group of Kobold killed <target.name>."
+  Equipment:
+    - air:4
+    - air:3
+    - air:2
+    #- imboots_koboldWizard_em:1
+    - air:0
+    - air:5
+  Drops:
+    - exp 10-25 1
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank A+ Hỏa Ngục) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    #- message{m="Hitrec <caster.var.hitrec> STACKS"} @PlayersNearOrigin{r=75} ~onDamaged 0 #DEBUGMESSAGE
+    #====== MODEL ASSIGNEMENT =============
+    - model{m=em_kobold_wizard;n=false;damagetint=false;sync=true} @self ~onSpawn 1
+    - model{m=em_kobold_wizard;n=false;damagetint=false;sync=true} @self ~onLoad 1
+    - setlevel{a=set;l=0} ~onSpawn
+    - setvariable{var=caster.skillxd;value="none";t=string} @Self ~onSpawn
+    - skill{s=koboldWizard_em_hp_check} @Self ~onSpawn
+    - setvariable{var=caster.eichpee;value="<caster.mhp>";t=integer} @Self ~onSpawn
+    - DefaultState{type=WALK;state=walk_combat;li=3;lo=2} @self ~onEnterCombat
+    - DefaultState{type=IDLE;state=idle_combat;li=3;lo=2} @self ~onEnterCombat
+    - DefaultState{type=WALK;state=walk;li=3;lo=2} @self ~onDropCombat
+    - DefaultState{type=IDLE;state=idle;li=3;lo=2} @self ~onDropCombat
+
+    - potion{type=JUMP;duration=999999;lvl=0;p=true} @Self ~OnSpawn
+    #============ DISGUISE PROTOCOL =================
+    - setvariable{var=caster.skintone;value="0";t=integer} @Self ~onSpawn
+    - submodel{mid=em_kobold_wizard;partid=right_forearm;subpartid=right_forearm1b;remove=true;sync=true} @self ~onSpawn
+    - submodel{mid=em_kobold_wizard;partid=left_forearm;subpartid=stages;remove=true;sync=true} @self ~onSpawn
+
+    - submodel{mid=em_kobold_wizard;partid=right_forearm;subpartid=right_forearm1b;remove=true;sync=true} @self ~onLoad
+    - submodel{mid=em_kobold_wizard;partid=left_forearm;subpartid=stages;remove=true;sync=true} @self ~onLoad
+
+    #============ ATTACK =================
+    - summon{type=vfx_solar_strike;amount=1;r=2} @target ~onTimer:60 0.6 ?incombat
+    - summon{type=vfx_solar_explosion;amount=1;r=2} @targetlocation ~onTimer:100 0.5 ?incombat
+    - summon{type=vfx_solar_mine;amount=1;r=2} @targetlocation ~onTimer:140 0.5 ?incombat
+    - summon{type=vfx_solar_fire;amount=1;r=2} @targetlocation ~onTimer:180 0.5 ?incombat
+
+    - skill{s=koboldWizard_em_meleetrigger} @Trigger ~onSignal:DEBUG_TEST 1
+    - CancelEvent{sync=true} @self ~onAttack 1 #CANCEL ATTACKS
+    - CancelEvent{sync=true} @self ~onShoot 1 #CANCEL ATTACKS
+
+    - skill{s=[
+      - skill{s=koboldWizard_em_meleetrigger;sync=false} @LivingInCone{a=160.0;r=4;rot=0.0;ignore=samefaction}
+      - skill{s=koboldWizard_em_meleetrigger;sync=false} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=samefaction}]} ~onTimer:14 0.8 ?incombat
+    - skill{s=[
+      - skill{s=koboldWizard_em_meleetrigger2;sync=false} @LivingInCone{a=160.0;r=5.5;rot=0.0;ignore=samefaction}
+      - skill{s=koboldWizard_em_meleetrigger2;sync=false} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=samefaction}]} ~onTimer:9 0.9 ?incombat
+
+    - skill{s=koboldWizard_em_surroundtrigger;sync=false} @EIR{r=6;ignore=samefaction} ~onTimer:15 0.6 <70% ?incombat
+    - skill{s=koboldWizard_em_idlesounds_trigger;sync=false} ~onTimer:32 0.3 ?incombat
+
+    - skill{s=koboldWizard_em_meleetrigger;sync=false} @LivingInCone{a=160.0;r=4.5;rot=0.0;ignore=samefaction} ~onAttack
+    - setvariable{var=caster.combor;value="0";t=integer} @Self ~onSpawn
+    - setvariable{var=caster.comboa;value="0";t=integer} @Self ~onSpawn
+
+    - setstance{stance=normal} @self ~onSpawn
+    - skill{s=hurt1koboldWizard_em} @self ~onDamaged 0.92 #Hurtmechanic
+    - skill{s=Kobold_em_aggressionaura_assign} @Trigger ~onDamaged 1 # AGRESSION MODULE -> Will mark the trigger to be aggroed (Or feared) by all Kobolds
+    - setvariable{var=caster.vulnerable;value="0";t=integer} @Self ~onSpawn
+    - solo_velocity{m=set;x=0;y=0;z=0} @self ~onDamaged
+    - setspeed{speed=1.3;type=walking} @self ~onEnterCombat
+    - setspeed{speed=0.7;type=walking} @self ~onDropCombat
+    #================ RIP IN PEPSI PROTOCOL
+
+    - sound{s=entity.evoker.death;p=<random.float.1to1.3>;v=1.5} @selflocation ~onDeath
+
+    - lockmodel{l=false;delay=0;sync=true} @Self ~onDeath
+    - effect:particles{particle=cloud;amount=150;hS=1.1;vS=0.55;speed=0;size=4.5;repeat=0;repeatinterval=1;sideOffset=0;delay=60} @ModelPart{m=em_kobold_wizard;p=hip;offset=GLOBAL;y=0.2} ~onDeath
+    - effect:particles{particle=cloud;amount=60;hS=0.6;vS=0.2;speed=0;size=4.5;repeat=0;repeatinterval=1;sideOffset=0;delay=60} @ModelPart{m=em_kobold_wizard;p=head;offset=GLOBAL;y=0.2} ~onDeath
+
+  Options:
+    Despawn: false
+    Silent: true
+    AlwaysShowName: false
+    MovementSpeed: 0.32
+    Interactable: true
+    PreventOtherDrops: true
+    KnockbackResistance: 0.9
+    FollowRange: 24
+
+#RankA+Ice
+ice_golem:
+  Type: HUSK
+  Display: "&bBăng Hoàng Golem"
+  Faction: ICE ELEMENTALS
+  Health: 1500000
+  Damage: 2200
+  LevelModifiers:
+    Health: 2000
+    Damage: 9
+  BossBar:
+    Enabled: true
+    Title: "&b&lBăng Hoàng Golem"
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_10
+  DamageModifiers:
+    - SUFFOCATION 0
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - movetowardstarget
+    - randomstroll
+  AITargetSelectors:
+    - clear
+    - players
+    - attacker
+    - players
+    - OtherFaction
+  Options:
+    NoDamageTicks: 10
+    MovementSpeed: 0.25
+    FollowRange: 30
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: false
+    Invincible: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    MaxCombatDistance: 30
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank A+ Băng Giá) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - cancelevent ~onAttack
+    - model{mid=ice_golem;n=false;step=1;usm=true;ride=true;drive=true;sync=true} @self ~onSpawn
+    - model{mid=ice_golem;n=false;step=1;usm=true;ride=true;drive=true;sync=true} @self ~onLoad
+    - skill{s=ice_golem_spawn} @self ~onSpawn
+    - randomskill{skills=ice_golem_left_backhand,ice_golem_right_backhand,ice_golem_left_punch,ice_golem_right_punch,ice_golem_catch,ice_bruiser_spikes,ice_golem_smash;sync=true} @self ~onTimer:35
+    - skill{s=ice_golem_death} @self ~onDeath
+
+#rankA+storm
+Mage:
+  Type: SKELETON
+  Display: "&cTusk"
+  Health: 1500000
+  Damage: 2200
+  Faction: Boss
+  BossBar:
+    Enabled: true
+    Title: "&c&lTusk"
+    Range: 35
+    Color: RED
+    Style: SEGMENTED_12
+    DarkenSky: false
+  Options:
+    MovementSpeed: 0.25
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: true
+    Despawn: PERSISTENT
+    PreventOtherDrops: true
+    FollowRange: 40
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  Equipment:
+    - bow:HAND
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+    - clear
+    - meleeAttack
+    - lookAtTarget{r=25}
+  AITargetSelectors:
+    - clear
+    - players
+    - players
+  Variables:
+    ModelName: boss_mage
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Dungeon Rank A+ Đền Thờ) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - model{mid="<caster.var.ModelName>";step=1;tint=true;usm=true;save=true;sync=true} @self ~onSpawn
+    - model{mid="<caster.var.ModelName>";step=1;tint=true;usm=true;save=true;sync=true} @self ~onLoad
+    - brightness{p=eye;em=false;b=15;s=15} @self ~onSpawn
+    - brightness{p=eye;em=false;b=15;s=15} @self ~onLoad
+    - brightness{p=ball;em=true;b=15;s=15} @self ~onSpawn
+    - brightness{p=ball;em=true;b=15;s=15} @self ~onLoad
+    - BodyRotation{mh=0;mb=75;player=true} @self ~onSpawn
+    - BodyRotation{mh=0;mb=75;player=true} @self ~onLoad
+    - skill{s=Changetarget} ~onTimer:160 <99%
+    - skill{s=Cancelattack;sync=true} ~onAttack
+    - skill{s=Cancelattack;sync=true} ~onShoot
+    - syncyaw{target=yaw;body=false} @self ~onTimer:1
+
+    - segment{m="<caster.var.ModelName>";p=lace2;em=true;roll=true;extend=0.1} @self ~onSpawn
+    - segment{m="<caster.var.ModelName>";p=lace2;em=true;roll=true;extend=0.1} @self ~onLoad
+    - segment{m="<caster.var.ModelName>";p=lace5;em=true;roll=true;extend=0.1} @self ~onSpawn
+    - segment{m="<caster.var.ModelName>";p=lace5;em=true;roll=true;extend=0.1} @self ~onLoad
+    - segment{m="<caster.var.ModelName>";p=lace3;em=true;roll=true;extend=0.6} @self ~onSpawn
+    - segment{m="<caster.var.ModelName>";p=lace3;em=true;roll=true;extend=0.6} @self ~onLoad
+    - segment{m="<caster.var.ModelName>";p=lace4;em=true;roll=true;extend=0.6} @self ~onSpawn
+    - segment{m="<caster.var.ModelName>";p=lace4;em=true;roll=true;extend=0.6} @self ~onLoad
+
+    - defaultstate{mid="<caster.var.ModelName>";type=idle;state=idle_prebattle;speed=1} @self ~onSpawn
+    - setstance{stance=Rest} @self ~onSpawn
+    - skill{s=Mage_WAKE} ~onTimer:10
+    - skill{s=Mage_SLEEP} ~onTimer:30
+
+    - skill{s=BOSS_Mage_SKILL_P1} ~onTimer:5
+
+    - skill{s=Mage_Dash} ~onTimer:30
+    - skill{s=Mage_QUICKSWITCH_TO_WALK} ~onTimer:5
+
+    - skill{s=BOSS_Mage_Stepdash} ~onTimer:20 0.5
+
+    - setspeed{speed=0.6;type=WALK;delay=1} @self ~onSpawn
+
+    - effect:sound{s=entity.goat.ram_impact;volume=0.7;pitch=0.7} @self ~onDamaged
+    - skill{s=BOSS_Mage_Flinch} ~onDamaged 0.07
+
+    - skill{s=BOSS_Mage_Death} ~onDeath
+
+LR_HYDRA:
+  Type: IRON_GOLEM
+  Display: "&aHydra"
+  Health: 2000000
+  Damage: 3500
+  Faction: BOSS
+  AITargetSelectors:
+    - players
+  AIGoalSelectors:
+    - clear
+  DamageModifiers:
+    - FIRE 0.0
+    - SUFFOCATION 0.0
+  Modules:
+    ThreatTable: true
+  Options:
+    MaxCombatDistance: 16
+    Silent: true
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    FollowRange: 16
+    Despawn: NEVER
+    MovementSpeed: 0
+  Skills:
+    - message{m="<caster.display> &7đã bị tiêu diệt bởi &c<trigger.name>&c!"} ~onDeath 1 @Server
+    - message{m="<caster.display> &7còn sống!! &7(Boss Thế Giới) (<caster.l.x{round=2}> <caster.l.y{round=2}> <caster.l.z{round=2}>)"} @Server ~onTimer:1600
+    - CancelEvent{sync=true} @self ~onInteract
+    - CancelEvent{sync=true} @self ~onAttack
+    - model{m=lr_hydra;usm=true;d=false;lp=true;scale=0.7;sync=true} @self ~onSpawn
+    - model{m=lr_hydra;usm=true;d=false;lp=true;scale=0.7;sync=true} @self ~onLoad
+    - skill{s=LR_HYDRA_bossbar_set} @self ~onSpawn
+    - solo_velocity{m=set;x=0;y=-1;z=0} @self ~onTimer:1
+    - skill{s=LR_HYDRA_bossbar_damage} @self ~onDamaged
+    - sudoskill{s=LR_HYDRA_blood_fx_melee;cat=true} @trigger ~onDamaged ?damagecause{cause=ENTITY_ATTACK}
+    - sudoskill{s=LR_HYDRA_blood_fx_projectile;cat=true} @trigger ~onDamaged ?damagecause{cause=PROJECTILE}
+    - skill{s=LR_HYDRA_spot_player} @self ~onEnterCombat
+    - skill{s=LR_HYDRA_turn_right} @target ~onTimer:1 ?incombat
+    - skill{s=LR_HYDRA_turn_left} @target ~onTimer:1 ?incombat
+    - skill{s=LR_HYDRA_stop_turn} @target ~onTimer:20 ?incombat
+    - skill{s=LR_HYDRA_detect_bite_locations} @self ~onTimer:5 ?incombat
+    - skill{s=LR_HYDRA_bite_1} @self ~onSignal:BITE_CENTER
+    - skill{s=LR_HYDRA_bite_2} @self ~onSignal:BITE_CENTER
+    - skill{s=LR_HYDRA_bite_3} @self ~onSignal:BITE_LEFT
+    - skill{s=LR_HYDRA_bite_4} @self ~onSignal:BITE_CENTER
+    - skill{s=LR_HYDRA_bite_5} @self ~onSignal:BITE_RIGHT
+    - skill{s=LR_HYDRA_right_stomp} @target ~onTimer:13 ?incombat
+    - skill{s=LR_HYDRA_left_stomp} @target ~onTimer:17 ?incombat
+    - skill{s=LR_HYDRA_tail_swipe_right} @pir{r=16} ~onTimer:19 ?incombat
+    - skill{s=LR_HYDRA_tail_swipe_left} @pir{r=16} ~onTimer:23 ?incombat
+    - skill{s=LR_HYDRA_leap_turn_right} @target ~onTimer:29 ?incombat
+    - skill{s=LR_HYDRA_leap_turn_left} @target ~onTimer:31 ?incombat
+    #- skill{s=LR_HYDRA_magma_meteor} @target ~onTimer:37 ?incombat
+    - skill{s=LR_HYDRA_Poison_Path} @target ~onTimer:41 ?incombat
+    - skill{s=LR_HYDRA_Poison_Puddle} @target ~onTimer:43 ?incombat
+    - skill{s=LR_HYDRA_skill3_Puddle} @target ~onTimer:47 ?incombat
+
+    - skill{s=LR_HYDRA_random_head_break} @self ~onDamaged <50%
+    - sound{s=littleroom_hydra:hydra.growl;v=4;sc=HOSTILE;pitch=<random.float.0.9to1.1>} @self ~onTimer:60 .5
+    - solo_throw{v=1.5;vy=-0.5} @eir{r=2.5} ~onTimer:1
+    - state{s=passive;p=1} @self ~onSpawn
+    - skill{s=LR_HYDRA_death} @self ~onDeath

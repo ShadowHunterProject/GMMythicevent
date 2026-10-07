@@ -1,0 +1,42 @@
+black_hole_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: 'APOCALYPSE TYPE-A'
+  Health: 50
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  Options:
+    Marker: true
+    Invisible: true
+    Gravity: false
+    HasArms: false
+    Small: true
+    NoDamageTicks: 10
+    Silent: true
+    Despawn: false
+    Invincible: true
+    Collidable: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    KnockbackResistance: 1
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - addtag{t=skill_model} @self ~onSpawn
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=black_hole;n=false;step=1;usm=true} @self ~onSpawn
+  - model{mid=black_hole;n=false;step=1;usm=true} @self ~onLoad
+  - skill{s=black_hole_summoned_Pet} @self ~onSpawn
+  - setgravity{g=false} @self ~onSpawn
+  - remove @self ~onTimer:270
+
+
+
+
+
+
+

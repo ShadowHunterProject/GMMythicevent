@@ -1,0 +1,63 @@
+crowspike_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: 'crowspike_Pet'
+  Health: 1000
+  AiTargetSelectors:
+  - clear
+  - ownerattacker
+  - ownerstarget
+  - monsters
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=crowspike;n=false;h=true} @self ~onSpawn
+  - setNoDamageTicks{ticks=500} @self ~onSpawn
+  - partvis{m=crowspike;p=dustparticles;child=true;v=false} @self ~onSpawn 
+  - lockmodel{l=true} @self ~onSpawn
+  - damage{a=0}
+  - skill{s=spikedeath_Pet;sync=true} @self ~onSpawn
+
+  Options:
+    Marker: true
+    Invisible: true
+    MovementSpeed: 0
+    MaxCombatDistance: 20
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    Gravity: false
+    Silent: true   
+    
+    
+crowfog_Pet:
+  Tags:
+  - skill_model
+  Type: ARMOR_STAND
+  Display: 'crowfog_Pet'
+  Health: 1000
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - aura{auraName=PetImmunity;duration=60} @Owner ~onTimer:20
+  - model{mid=crowfog;n=false;h=true} @self ~onSpawn
+  - setNoDamageTicks{ticks=500} @self ~onSpawn
+  - skill{s=crowfogaction_Pet;sync=true} @self ~onSpawn
+  - lockmodel{l=true} @self ~onSpawn
+
+  Options:
+    Marker: true
+    Invisible: true
+    MovementSpeed: 0
+    MaxCombatDistance: 20
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    PreventVanillaDamage: true
+    Gravity: false
+    Silent: true   
+
+
+

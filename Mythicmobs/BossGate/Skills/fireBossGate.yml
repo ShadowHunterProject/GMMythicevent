@@ -1,0 +1,360 @@
+koboldWizard_em_stepsound:
+  Conditions:
+  - variableEquals{var=caster.skillxd;value="none"} true
+  - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+  - stance{s=casting} false
+  - stance{s=normal} true
+  - variableEquals{var=caster.hurtened;value="1"} false
+  - variableEquals{var=caster.casting;value="1"} false
+  - onground true
+  Skills:
+  - blockstepsound{p=<random.float.1to1.2>;v=0.5} @selflocation{y=-0.3}
+koboldWizard_em_stepsound_run:
+  Conditions:
+  - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+  - variableEquals{var=caster.hurtened;value="1"} false
+  - onground true
+  Skills:
+  - blockstepsound{p=<random.float.1to1.2>;v=0.5} @selflocation{y=-0.3}
+
+koboldWizard_em_stepsound_skills:
+  Conditions:
+  - stance{s=casting} true
+  - variableEquals{var=caster.casting;value="1"} false
+  - onground true
+  Skills:
+  - blockstepsound{p=<random.float.1.1to1.3>;v=0.6} @selflocation{y=-0.3}
+koboldWizard_em_hp_check:
+  Cooldown: 9999
+  Conditions:
+  - playersinradius{a=>2;r=60} true
+  Skills:
+  - delay 5
+  - skill{s=koboldWizard_em_hp_checkB} @pir{r=80} #MODIFY THE RANGE TO CHECK FOR PLAYERS
+# GUIDE TO CUSTOMIZE HEALTH SCALING
+koboldWizard_em_hp_checkB:
+  Conditions:
+  Skills:
+  - setvariable{var=skill.amount_targets;val=<skill.targets>}
+  - setmaxhealth{amount=<caster.var.eichpee>+15*<skill.var.amount_targets>;mode=SCALE} @self
+# AMOUNT = (BASE HEALTH, modified in mob's hp) + (ADDITIONAL NET HEALTH PER PLAYER IN RANGE) * <skill.var.amount_targets>
+# (The last argument is just the variable for number of players, don't touch it.)
+
+# SOUNDSKILLS
+koboldWizard_em_idlesounds_trigger:
+  Skills:
+  - delay 0to20
+  - skill{s=koboldWizard_em_idlesounds}
+koboldWizard_em_idlesounds:
+  Cooldown: 5
+  Conditions:
+  - stance{s=casting} false
+  - stance{s=normal} true
+  - hasaura{n=bruttackrest} false
+  - hasaura{n=bruttackrest2} false
+  - hasaura{n=soundcooldown} false
+  Skills:
+  - Aura{auraName=soundcooldown;duration=120to200} @Self
+  - Aura{auraName=soundcooldown;duration=100to150} @EntitiesInRadius{r=15;limit=3;sort=RANDOM;conditions=[  - Mythicmobtype{t=koboldWizard_em} true ]} 0.6
+  - Aura{auraName=soundcooldown;duration=60to100} @EntitiesInRadius{r=15;limit=3;sort=RANDOM;conditions=[  - Mythicmobtype{t=dyerftum2_em} true ]} 0.4
+  - Aura{auraName=soundcooldown;duration=60to100} @EntitiesInRadius{r=15;limit=3;sort=RANDOM;conditions=[  - Mythicmobtype{t=dyerftum1_em} true ]} 0.4
+  - Aura{auraName=soundcooldown;duration=60to100} @EntitiesInRadius{r=15;limit=3;sort=RANDOM;conditions=[  - Mythicmobtype{t=dyerftumbrute_em} true ]} 0.4
+  - sound{s=entity.evoker.ambient;p=<random.float.1to1.3>;v=2} @selflocation 1 ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} #SOUND
+
+# HURTSKILLS
+
+hurt1koboldWizard_em:
+  Cooldown: 0.5
+  Skills:
+  - skill{s=koboldWizard_em_backhurtCLEAR;sync=true} @Trigger 0.25
+  - variableadd{var=caster.hitrec;amount=1} @self
+  - variableadd{var=caster.combor;amount=1} @self
+#
+  - randomskill{s=[
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt1;li=0;lo=0} @self
+    ],
+      [
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt2;li=0;lo=0} @self
+    ],
+      [
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt4;li=0;lo=0} @self
+    ],
+      [
+      - state{state=hurt1;lo=6;remove=true} @self
+      - state{state=hurt2;lo=6;remove=true} @self
+      - state{state=hurt3;lo=6;remove=true} @self
+      - state{state=hurt4;lo=6;remove=true} @self
+      - state{state=hurt3;li=0;lo=0} @self
+    ];sync=false}
+#  
+  - sound{s=entity.evoker.hurt;p=<random.float.1to1.2>;v=1.5} @selflocation 1 #SOUND
+  - skill{s=hurtbkoboldWizard_em} @self 0.15
+  - delay 15
+  - skill{s=koboldWizard_em_meleetrigger2;sync=false} @LivingInCone{a=110.0;r=6.5;rot=0.0;ignore=samefaction} 0.2
+
+#HURTBAD
+hurtbkoboldWizard_em:
+  Cooldown: 8
+  Conditions:
+  - damagecause{cause=FIRE} false
+  - damagecause{cause=FIRE_TICK} false
+  - damagecause{cause=FALL} false
+  - damagecause{cause=LAVA} false
+  - damagecause{cause=POISON} false
+  - damagecause{cause=THORNS} false
+  - damagecause{cause=CONTACT} false
+  - variableEquals{var=caster.casting;value="1"} false
+  - variableEquals{var=caster.running;value="2"} false
+  - hasaura{n=koboldWizard_em_hurtbad} false
+  - hasaura{n=hurtenedbad} false
+  Skills:
+  - effect:particles{particle=crit;amount=12;hS=0.3;vS=0.3;speed=0.005;y=1.5} @Self
+  - lockmodel{l=true;delay=0;sync=true} @Self
+  - setstance{stance=casting} @self ?stance{s=normal}
+  - skill{s=koboldWizard_em_hurtCLEAR;sync=true} 0.35
+  - variableadd{var=caster.hitrec;amount=2} @self
+  - variableadd{var=caster.combor;amount=1} @self
+  - variableadd{var=caster.combor;amount=1} @self 0.5
+  - setvariable{var=caster.casting;value="1";t=integer} @Self ?variableEquals{var=caster.casting;value="0"} 
+  - setvariable{var=caster.skillxd;value="hurtbad";t=string;delay=0} @Self
+  - state{remove=true;s=hurtbad1;lo=3} @self
+  - state{remove=true;s=hurtbad2;lo=3} @self
+  - state{remove=true;s=hurtbad3;lo=3} @self
+  - state{remove=true;s=hurtbad4;lo=3} @self
+
+  - randomskill{s=[
+      - state{state=hurtbad1;li=3;lo=8} @self
+    ],
+      [
+      - state{state=hurtbad2;li=3;lo=8} @self
+    ],
+      [
+      - state{state=hurtbad3;li=3;lo=8} @self
+    ],
+      [
+      - state{state=hurtbad4;li=3;lo=8} @self
+    ];sync=true}
+  - setvariable{var=caster.hurtened;value="1";t=integer} @Self
+  - potion{type=SLOW;duration=27;level=7;p=false;force=true} @Self
+  - potion{type=SLOW;duration=5;level=3;p=false;force=true;delay=27} @Self ?variableEquals{var=caster.rage;value="1"} 
+  
+  - sound{s=entity.player.attack.crit;p=<random.float.1.3to1.6>;v=1.5} @selflocation #SOUND
+  - sound{s=entity.evoker.hurt;p=<random.float.1to1.3>;v=1.5} @selflocation #SOUND
+#STATEREMOVE
+  - state{remove=true;s=attack1;lo=3} @self
+  - state{remove=true;s=attack2;lo=3} @self
+  
+#
+  - Aura{auraName=koboldWizard_em_hurtbad;duration=40} @self
+  - delay 12
+  - skill{s=[
+    - delay 0to4
+    - setvariable{var=caster.hurtened;value="0";t=integer} @Self
+    - setstance{stance=normal} @self ?stance{s=casting}
+    - setvariable{var=caster.casting;value="0";t=integer} @Self
+    - Aura{auraName=bruttackrest;duration=20} @self
+    - lockmodel{l=false;delay=0;sync=true} @Self];sync=false} @Self 0.4 ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+  - randomskill{s=koboldWizard_em_bruttack1;repeat=2;repeatinterval=5} @LivingInCone{a=110.0;r=6.5;rot=0.0;ignore=samefaction}
+  - delay 12
+  - lockmodel{l=false;delay=0;sync=true} @Self ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+  - setvariable{var=caster.hurtened;value="0";t=integer} @Self ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+  - setstance{stance=normal} @self ?stance{s=casting} ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+  - setvariable{var=caster.casting;value="0";t=integer} @Self ?variableEquals{var=caster.casting;value="1"} ?!variableEquals{var=caster.skillxd;value="hurtedvbad"} ?variableEquals{var=caster.skillxd;value="hurtbad"}
+  - setvariable{var=caster.skillxd;value="none";t=string;delay=0} @Self ?variableEquals{var=caster.skillxd;value="hurtbad"}
+  - skill{s=koboldWizard_em_meleetrigger2;cooldown=1;sync=false} @Trigger 0.6
+
+####
+
+#Dynamic AI ClearThreat
+koboldWizard_em_backhurtCLEAR:
+  Cooldown: 9
+  Conditions:
+  - hasaura{n=changedThreat} false
+  TriggerConditions:
+  - FieldOfView{angle=120;r=0} false
+  Skills:
+  - Aura{auraName=koboldWizard_em_seathe_impediment;duration=30;mergeSameCaster=true} @self
+  - Aura{auraName=changedThreat;duration=220} @self
+  - clearThreat{} @self
+  - threat{amount=150} @TargetedTarget
+koboldWizard_em_hurtCLEAR:
+  Cooldown: 6
+  Conditions:
+  - hasaura{n=changedThreat} false
+  TriggerConditions:
+  - FieldOfView{angle=30;r=0} false
+  Skills:
+  - Aura{auraName=koboldWizard_em_seathe_impediment;duration=30;mergeSameCaster=true} @self
+  - Aura{auraName=changedThreat;duration=200} @self
+  - clearThreat{} @self
+  - threat{amount=100} @TargetedTarget
+
+# ANTI KNOCKBACK
+outrun_aleviate_koboldWizard_em:
+  TargetConditions:
+  - lineofsight true
+  Skills:
+  - variablesubtract{var=caster.hitrec;amount=1} @self 0.8 ?variableInRange{var=caster.hitrec;value=>0}
+  - variablesubtract{var=caster.hitrec;amount=1} @self 0.4 ?variableInRange{var=caster.hitrec;value=>0}
+
+## MELEE TRIGGERS
+koboldWizard_em_surroundtrigger:
+  Conditions:
+  - incombat true
+  - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+  - variableEquals{var=caster.hurtened;value="1"} false
+  - variableEquals{var=caster.casting;value="1"} false
+  Skills:
+  - delay 1to14
+  - randomskill{s=koboldWizard_em_bruttack1;sync=false} 0.3 ?targets{a=1}
+  - randomskill{s=koboldWizard_em_bruttack1;sync=false} 0.6 ?targets{a=2to3}
+  - randomskill{s=koboldWizard_em_bruttack1;sync=false} 0.9 ?targets{a=>3}
+
+koboldWizard_em_meleetrigger:
+  Conditions:
+  - incombat true
+  - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+  - variableEquals{var=caster.rage;value="1"} CastInstead koboldWizard_em_meleetrigger2
+  - variableEquals{var=caster.hurtened;value="1"} false
+  - variableEquals{var=caster.casting;value="1"} false
+  Skills:
+  - delay 1to14
+  - skill{s=[
+      - randomskill{s=koboldWizard_em_bruttack1;sync=false} @LivingInCone{a=100.0;r=4.5;rot=0.0;ignore=samefaction}
+      - randomskill{s=koboldWizard_em_bruttack1;sync=false} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=samefaction}]} 1 ?targets{a=>0}
+
+koboldWizard_em_meleetrigger2:
+  Conditions:
+  - incombat true
+  - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+#  - variableEquals{var=caster.rage;value="1"} true
+  Skills:
+  - delay 1to14
+  - skill{s=[
+      - randomskill{s=koboldWizard_em_bruttack1;sync=false} @LivingInCone{a=100.0;r=4.5;rot=0.0;ignore=samefaction}
+      - randomskill{s=koboldWizard_em_bruttack1;sync=false} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=samefaction}]} 1 ?targets{a=>0}
+
+###################################################
+# (PRIMITIVE) DEFENSE PROTOCOL
+#
+
+koboldWizard_em_bruttack1:
+  Cooldown: 4
+  Conditions:
+  - variableEquals{var=caster.skillxd;value="hurtedvbad"} false
+  - stance{s=casting} false
+  - stance{s=normal} true
+  - variableEquals{var=caster.hurtened;value="1"} false
+  - variableEquals{var=caster.casting;value="1"} false
+  - hasaura{n=bruttackrest} false
+  TargetConditions:
+  - distance{d=0to3} true
+  - fieldofview{angle=80} true
+  Skills:
+  - lockmodel{l=false;delay=2;sync=true} @Self
+  - setstance{stance=casting} @self
+  - BodyClamp{maxbody=0;stable=0;rdelay=0;rduration=4} @self #BODYCLAMP START
+
+  - state{remove=true;s=attack1;lo=6} @self
+  - state{remove=true;s=attack2;lo=6} @self
+  - randomskill{s=[
+      - Aura{auraName=right_attack;duration=20} @Self
+      - state{state=attack1;li=1;lo=2} @self
+      - state{state=attack1_body;li=1;lo=2} @self
+    ],
+      [
+      - Aura{auraName=left_attack;duration=20} @Self
+      - state{state=attack2;li=1;lo=2} @self
+      - state{state=attack2_body;li=1;lo=2} @self
+    ];sync=true}
+# STATE REMOVE
+  - state{remove=true;s=attack3;lo=3} @self
+
+  - state{remove=true;s=hurtbad1;lo=3} @self
+  - state{remove=true;s=hurtbad2;lo=3} @self
+  - state{remove=true;s=hurtbad3;lo=3} @self
+  - state{remove=true;s=hurtbad4;lo=3} @self
+
+#
+  - setvariable{var=caster.skillxd;value="bruttack1";t=string;delay=0} @Self
+  - potion{type=SLOW;duration=32;level=7;p=false;force=false} @Self
+  - look{headOnly=false;immediately=false;repeat=5;repeatInterval=1} @Target
+  - spin{d=30;v=0;delay=2} @self
+  - lockmodel{l=true;delay=0;sync=true} @Self
+  - setvariable{var=caster.vulnerable;value="1";t=integer;delay=15} @Self
+  - setvariable{var=caster.vulnerable;value="0";t=integer;delay=17} @Self
+  - delay 10 #10
+  - sound{s=entity.player.attack.sweep;p=<random.float.1to1.3>;v=1.5} @selflocation 0.7 ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} #CHANGE
+  - setvariable{var=caster.casting;value="1";t=integer;delay=2} @Self ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+
+  - delay 4 #14
+  - sound{s=entity.player.attack.sweep;p=<random.float.1.4to1.7>;v=1} @selflocation ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest} #CHANGE
+
+  - delay 1 #15
+  - propel{v=-0.0006;repeat=10;repeatInterval=1} @forward{f=10} ?onground ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2}
+#  - skill{s=koboldWizard_em_bruttack1_adaptivelunge_reach;repeat=2;repeatInterval=1;delay=0} @Self ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2}
+  - Aura{auraName=attack1state;duration=19} @Self ?!variableEquals{var=caster.hurtened;value="1"}
+  
+  - skill{s=[
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=100.0;r=3;rot=60;ignore=samefaction} 
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=180.0;r=1.3;rot=70.0;ignore=samefaction} 
+  
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=140.0;r=3.5;rot=0.0;ignore=samefaction}
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=samefaction}]} ?hasaura{n=right_attack} ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+
+  - skill{s=[
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=100.0;r=3;rot=300;ignore=samefaction} 
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1} @LivingInCone{a=180.0;r=1.3;rot=290.0;ignore=samefaction} 
+  
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=140.0;r=3.5;rot=0.0;ignore=samefaction}
+      - skill{s=koboldWizard_em_bruttack1_hit;sync=true;repeat=2;repeatinterval=1;delay=1} @LivingInCone{a=200.0;r=1;rot=0.0;ignore=samefaction}]} ?hasaura{n=left_attack} ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+
+  - delay 15 #30
+  - setstance{stance=normal} @self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+  - setvariable{var=caster.casting;value="0";t=integer} @Self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+  - lockmodel{l=false;delay=0;sync=true} @Self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+  - BodyClamp{maxbody=50;stable=15;rdelay=10;rduration=8} @self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+  - setvariable{var=caster.skillxd;value="none";t=string} @Self ?variableEquals{var=caster.skillxd;value="bruttack1"} ?!variableEquals{var=caster.hurtened;value="1"}
+
+koboldWizard_em_bruttack1_hit:
+  TargetConditions:
+  - hasaura{n=hit_koboldWizard_em_bruttack1} false
+  - samefaction false
+  Skills:
+  - basedamage{m=1;ignorearmor=false;ia=true} @TargetedTarget
+  - sound{s=entity.player.attack.crit;p=<random.float.1.1to1.5>;v=1.2} @TargetedTarget #SOUND
+  - effect:particles{p=sweep_attack;a=1;hs=0;vs=0;speed=0;y=1} @TargetedTarget
+  - effect:particles{p=flame;a=6;hs=0.5;vs=0.5;speed=0.2;y=1} @TargetedTarget
+  - effect:particles{p=lava;a=2;hs=0.5;vs=0.5;speed=0.1;y=1} @TargetedTarget
+  - skill{s=outrun_aleviate_koboldWizard_em;sync=true} @TargetedTarget{limit=1;sort=NEAREST}
+  - Aura{auraName=hit_koboldWizard_em_bruttack1;duration=7} @TargetedTarget
+  - potion{type=SLOW;duration=10;lvl=7;particles=false} @TargetedTarget
+  
+#  - randomskill{s=koboldWizard_em_bruttack1;sync=false;repeat=4;repeatinterval=4} @LivingInCone{a=100.0;r=6.4;rot=0.0;ignore=samefaction;limit=1;sort=NEAREST} 0.5 ?!variableEquals{var=caster.hurtened;value="1"} ?!hasaura{n=bruttackrest2} ?!hasaura{n=bruttackrest}
+
+# In the case of the wizard, this skill will throw a slow prismatic bolt
+# that will deal important damage and slow. It'll deal higher damage the closer it is
+# to the caster, and will knock the victims back if too close on impact.
+
+Kobold_em_aggressionaura_assign:
+  TargetConditions:
+  - samefaction false
+  - isplayer castinstead Kobold_em_aggressionaura_assign2
+  Skills:
+  - Aura{auraName=koboldagression_frame;duration=1200;i=20;
+    onTick=Kobold_em_aggressionaura_tick;mergeAll=true} @TargetedTarget
+
+# FORCED_SYNC_UPDATE639172407144773632
+

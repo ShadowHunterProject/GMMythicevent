@@ -1,0 +1,317 @@
+# ========================================== #
+# CLASS SKILLS REBUILD FOR FIRE V1 & V2      #
+# Removed all basic attack dummy targeters   #
+# ========================================== #
+
+# ------------------------------------------ #
+# COMMON EFFECTS                             #
+# ------------------------------------------ #
+
+Flameborn_BURN:
+  Skills:
+  - effect:sound{s=entity.player.hurt_on_fire;volume=0.6;pitch=1;repeat=4;repeati=20} @target
+  - effect:sound{s=entity.generic.burn;volume=0.5;pitch=1.4;repeat=4;repeati=20} @target
+  - solo_damage{a=5;cause=ENTITY_ATTACK;pkb=true;hnp=true;hp=true;repeat=4;repeati=20} @target
+  - ignite{ticks=100} @target
+  - particles{p=small_flame;amount=10;hS=0.3;vS=0.7;y=1;size=1;speed=0.03;repeat=4;repeati=20} @target
+
+# ------------------------------------------ #
+# SKILL 1: Blazing Feathers                  #
+# ------------------------------------------ #
+
+Blazing_Feathers:
+  Skills:
+  - skill{s=Blazing_Feathers_SHOOT;repeat=2;repeatinterval=10}
+
+Blazing_Feathers_SHOOT:
+  Skills:
+  - summon{type=VFX_Phoenix_Shoot_Impact;amount=1;radius=0;yRadius=0;onSurface=true} @SelfEyeLocation{fo=1.2}
+  - effect:sound{s=entity.blaze.shoot;volume=0.6;pitch=<random.float.0.8to1.2>} @self
+  - projectile{tickinterpolation=5;bulletType=MOB;mob=VFX_Phoenix_Fireball;onHit=Blazing_Feathers_EXPLOSIVE_DAMAGE;v=23;i=1;hR=0.9;vR=0.9;mr=50;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=1.6;sfo=1.2;fo=true;hitConditions=[- isLiving true];drawhitbox=false;ham=true} @forward{f=12;uel=true}
+
+Blazing_Feathers_EXPLOSIVE_DAMAGE:
+  Skills:
+  - effect:sound{s=entity.generic.explode;volume=0.6;pitch=<random.float.0.8to1.2>} @origin
+  - summon{type=VFX_Phoenix_Impact;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=4.5;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=4.5;ignore=owner;ignore=caster} ?!isplayer{}
+  - skill{s=Flameborn_BURN} @EntitiesNearOrigin{r=4.5;ignore=caster;ignore=owner}
+  # Big Explosion instantly
+  - skill{s=Blazing_Feathers_BIG_EXPLOSION} @origin
+
+Blazing_Feathers_BIG_EXPLOSION:
+  Skills:
+  - effect:sound{s=entity.dragon_fireball.explode;volume=0.8;pitch=1;repeat=2;repeati=3} @origin
+  - summon{type=VFX_Phoenix_Explosion_SMALL;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - solo_damage{a="<skill.var.damage> * 1.5";cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=4;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a="<skill.var.damage> * 1.5";cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=4;ignore=owner;ignore=caster} ?!isplayer{}
+
+# ------------------------------------------ #
+# SKILL 2: Ashdance                          #
+# ------------------------------------------ #
+
+Ashdance:
+  Skills:
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.6;pitch=1.4} @self
+  - effect:sound{s=entity.blaze.shoot;volume=0.6;pitch=0.7} @self
+  - lunge{velocity=1;velocityY=-0.1;repeat=5;repeati=1} @Forward{f=-6;y=-1;lockpitch=true}
+  - summon{type=VFX_Phoenix_Dash;amount=1;radius=0;yRadius=0;onSurface=true} @SelfLocation{y=1.2}
+  - delay 7
+  - skill{s=Ashdance_SHOOT_MISSILES} @EntitiesNearOrigin{r=20;limit=1;sort=NEAREST;conditions=[- isLiving true]}
+  - delay 5
+  - effect:sound{s=block.fire.extinguish;volume=0.5;pitch=0.7} @self
+
+Ashdance_SHOOT_MISSILES:
+  Skills:
+  - effect:sound{s=entity.blaze.shoot;volume=0.3;pitch=<random.float.1.1to1.4>} @origin
+  - missile{oT=Ashdance_Missiles_TICK;onHit=Ashdance_PRO_DAMAGE;in=0.5;v=3;i=1;hR=0.3;vR=0.3;md=80;mr=30;hnp=true;hO=0;vo=0;sso=<random.float.-1to1>;eso=<random.float.-0.25to0.25>;sE=true;sB=true;hs=false;hfs=0;syo=<random.float.-1to1>;tyo=<random.float.0.9to1.7>;fo=true;byo=0;drawhitbox=false;ham=true}
+  - skill{s=Ashdance_Missile_Shot;delay=2}
+  - skill{s=Ashdance_Missile_Shot;delay=4}
+  - skill{s=Ashdance_Missile_Shot;delay=6}
+  - skill{s=Ashdance_Missile_Shot;delay=8}
+  - skill{s=Ashdance_Missile_Shot;delay=10}
+
+Ashdance_Missile_Shot:
+  Skills:
+  - effect:sound{s=entity.blaze.shoot;volume=0.3;pitch=<random.float.1.1to1.4>} @origin
+  - missile{oT=Ashdance_Missiles_TICK;onHit=Ashdance_PRO_DAMAGE;in=0.5;v=3;i=1;hR=0.3;vR=0.3;md=80;mr=30;hnp=true;hO=0;vo=0;sso=<random.float.-1to1>;eso=<random.float.-0.25to0.25>;sE=true;sB=true;hs=false;hfs=0;syo=<random.float.-1to1>;tyo=<random.float.0.9to1.7>;fo=true;byo=0;drawhitbox=false;ham=true}
+
+Ashdance_Missiles_TICK:
+  Skills:
+  - modifyProjectile{trait=VELOCITY;action=MULTIPLY;value=1.1}
+  - effect:particles{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;amount=1;hS=0;vS=0;y=0;size=0.4;speed=0.01} @origin
+  - effect:particles{p=dust_color_transition;color1=#4a0200;color2=#1c0000;amount=1;hS=0;vS=0;y=0;size=0.4;speed=0.01} @origin
+
+Ashdance_PRO_DAMAGE:
+  Skills:
+  - effect:sound{s=entity.generic.explode;volume=0.6;pitch=<random.float.0.8to1.2>} @origin
+  - summon{type=VFX_Phoenix_Impact;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=4.5;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=4.5;ignore=owner;ignore=caster} ?!isplayer{}
+  - skill{s=Flameborn_BURN} @EntitiesNearOrigin{r=4.5;ignore=caster;ignore=owner}
+
+# ------------------------------------------ #
+# SKILL 3: Flameburst Convergence            #
+# ------------------------------------------ #
+
+Flameburst_Convergence:
+  Skills:
+  - skill{s=Flameburst_Convergence_SHOOT;repeat=2;repeatinterval=10}
+
+Flameburst_Convergence_SHOOT:
+  Skills:
+  - effect:sound{s=entity.blaze.shoot;volume=0.6;pitch=0.8} @self
+  - summon{type=VFX_Phoenix_Shoot_Impact;amount=1;radius=0;yRadius=0;onSurface=true} @SelfEyeLocation{fo=1.2}
+  - summon{type=VFX_Phoenix_Shoot_Impact2;amount=1;radius=0;yRadius=0;onSurface=true} @SelfEyeLocation{fo=1.2;rot=30}
+  - summon{type=VFX_Phoenix_Shoot_Impact3;amount=1;radius=0;yRadius=0;onSurface=true} @SelfEyeLocation{fo=1.2;rot=-30}
+  
+  # Middle
+  - projectile{tickinterpolation=5;bulletType=MOB;mob=VFX_Phoenix_Feather_NOTRAIL;onHit=Flameburst_Convergence_DAMAGE_D;oE=Flameburst_Convergence_END;v=18;i=1;hR=0.6;vR=0.6;mr=15;hnp=true;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=1.6;sfo=1.2;fo=true;hitConditions=[- isLiving true];drawhitbox=false;ham=true} @forward{f=12;uel=true}
+  # Left
+  - projectile{oS=Flameburst_Convergence_T1;tickinterpolation=5;bulletType=MOB;mob=VFX_Phoenix_Feather_NOTRAIL1;onHit=Flameburst_Convergence_DAMAGE_D;v=20;i=1;hR=0.6;vR=0.6;mr=16;hnp=true;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=1.6;sfo=1.2;sso=-0.7;fo=true;hitConditions=[- isLiving true];drawhitbox=false;ham=true} @forward{f=12;uel=true}
+  # Right
+  - projectile{oS=Flameburst_Convergence_T2;tickinterpolation=5;bulletType=MOB;mob=VFX_Phoenix_Feather_NOTRAIL2;onHit=Flameburst_Convergence_DAMAGE_D;v=20;i=1;hR=0.6;vR=0.6;mr=16;hnp=true;hO=0;sE=false;sB=true;hs=false;hfs=0;syo=1.6;sfo=1.2;sso=0.7;fo=true;hitConditions=[- isLiving true];drawhitbox=false;ham=true} @forward{f=12;uel=true}
+
+Flameburst_Convergence_T1:
+  Skills:
+  - setprojectiledirection{delay=0} @ProjectileForward{f=3;rot=-20}
+  - setprojectiledirection{delay=3} @ProjectileForward{f=3;rot=-10}
+  - setprojectiledirection{delay=6} @ProjectileForward{f=3;rot=0}
+  - setprojectiledirection{delay=8} @ProjectileForward{f=3;rot=10}
+  - setprojectiledirection{delay=10} @ProjectileForward{f=3;rot=20}
+  - setprojectiledirection{delay=12} @ProjectileForward{f=3;rot=30}
+
+Flameburst_Convergence_T2:
+  Skills:
+  - setprojectiledirection{delay=0} @ProjectileForward{f=3;rot=20}
+  - setprojectiledirection{delay=3} @ProjectileForward{f=3;rot=10}
+  - setprojectiledirection{delay=6} @ProjectileForward{f=3;rot=0}
+  - setprojectiledirection{delay=8} @ProjectileForward{f=3;rot=-10}
+  - setprojectiledirection{delay=10} @ProjectileForward{f=3;rot=-20}
+  - setprojectiledirection{delay=12} @ProjectileForward{f=3;rot=-30}
+
+Flameburst_Convergence_DAMAGE_D:
+  Skills:
+  - effect:sound{s=entity.generic.explode;volume=0.6;pitch=<random.float.0.8to1.2>} @origin
+  - summon{type=VFX_Phoenix_Impact;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=3.7;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=3.7;ignore=owner;ignore=caster} ?!isplayer{}
+  - skill{s=Flameborn_BURN} @EntitiesNearOrigin{r=3.7;ignore=caster;ignore=owner}
+
+Flameburst_Convergence_END:
+  Skills:
+  - summon{type=VFX_Phoenix_Explosion_BIG;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - effect:sound{s=entity.dragon_fireball.explode;volume=1.2;pitch=0.8} @origin
+  - effect:sound{s=entity.generic.explode;volume=0.6;pitch=<random.float.0.8to1.2>} @origin
+  - summon{type=VFX_Phoenix_Impact2;amount=1;radius=0;yRadius=0;onSurface=false} @origin
+  - solo_damage{a="<skill.var.damage> * 2";cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=5;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a="<skill.var.damage> * 2";cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=5;ignore=owner;ignore=caster} ?!isplayer{}
+  - solo_throw{velocity=15;velocityY=10} @EntitiesNearOrigin{r=5;ignore=caster;ignore=owner;conditions=[ - solo_is_my_summon false ]}
+  - skill{s=Flameborn_BURN} @EntitiesNearOrigin{r=5;ignore=caster;ignore=owner}
+
+# ------------------------------------------ #
+# SKILL 4: Phoenix Totem                     #
+# ------------------------------------------ #
+
+Phoenix_Totem:
+  Skills:
+  - effect:sound{s=block.trial_spawner.spawn_mob;volume=0.6;pitch=0.7} @self
+  - summon{type=VFX_Phoenix_Totem;amount=1;radius=0;yRadius=0;onSurface=false} @targetblock{max=20}
+  - totem{md=200;oT=Phoenix_Totem_DMG_Aura;oE=Phoenix_Totem_DMG_Aura_EXPLODE;hnp=true;hp=true;hR=1;vR=1;i=20} @targetblock{max=20}
+
+Phoenix_Totem_DMG_Aura:
+  Skills:
+  - effect:sound{s=item.trident.return;volume=0.8;pitch=0.7} @origin
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.8;pitch=1.3} @origin
+  - effect:sound{s=entity.blaze.shoot;volume=0.6;pitch=0.7;delay=3} @origin
+  - effect:sound{s=entity.generic.extinguish_fire;volume=0.6;pitch=0.7;delay=3} @origin
+  - skill{s=PT_Sphere_Spread} @origin
+  - effect:sound{s=entity.generic.explode;volume=0.6;pitch=<random.float.0.8to1.2>} @origin
+  - summon{type=VFX_Phoenix_Impact2;amount=1;radius=0;yRadius=0;onSurface=false} @origin
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=6;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=6;ignore=owner;ignore=caster} ?!isplayer{}
+  - skill{s=Flameborn_BURN} @EntitiesNearOrigin{r=6;ignore=caster;ignore=owner}
+
+Phoenix_Totem_DMG_Aura_EXPLODE:
+  Skills:
+  - effect:sound{s=entity.wither.hurt;volume=0.6;pitch=0.6} @origin
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.8;pitch=1.3} @origin
+  - effect:sound{s=entity.dragon_fireball.explode;volume=0.7;pitch=1.4;delay=2} @origin
+  - effect:sound{s=entity.dragon_fireball.explode;volume=0.7;pitch=1.1;delay=6} @origin
+  - effect:sound{s=entity.dragon_fireball.explode;volume=0.8;pitch=0.7;delay=10} @origin
+  - summon{type=LRD_PIGLINKING_GROUND_FX;amount=1;radius=0;yRadius=0;onSurface=true} @origin{y=-1}
+  - skill{s=PT_Sphere_Spread} @origin
+  - summon{type=VFX_Phoenix_Explosion_SMALL;amount=1;radius=0;yRadius=0;onSurface=true;delay=0} @ringaroundorigin{r=1;p=4}
+  - summon{type=VFX_Phoenix_Explosion_SMALL;amount=1;radius=0;yRadius=0;onSurface=true;delay=2} @ringaroundorigin{r=2;p=4}
+  - summon{type=VFX_Phoenix_Explosion_SMALL;amount=1;radius=0;yRadius=0;onSurface=true;delay=4} @ringaroundorigin{r=3;p=4}
+  - summon{type=VFX_Phoenix_Explosion_SMALL;amount=1;radius=0;yRadius=0;onSurface=true;delay=6} @ringaroundorigin{r=4;p=4}
+  - summon{type=VFX_Phoenix_Explosion_SMALL;amount=1;radius=0;yRadius=0;onSurface=true;delay=8} @ringaroundorigin{r=5;p=4}
+  - solo_damage{a="<skill.var.damage> * 3";cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=9;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a="<skill.var.damage> * 3";cause=ENTITY_ATTACK;pkb=true} @EntitiesNearOrigin{r=9;ignore=owner;ignore=caster} ?!isplayer{}
+  - solo_throw{velocity=10;velocityY=6} @EntitiesNearOrigin{r=9;ignore=caster;ignore=owner;conditions=[ - solo_is_my_summon false ]}
+  - skill{s=Flameborn_BURN} @EntitiesNearOrigin{r=9;ignore=caster;ignore=owner}
+
+PT_Sphere_Spread:
+  Skills:
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=1;amount=20;y=0.1;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=1.5;amount=40;delay=1;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=2;amount=60;delay=2;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=2.5;amount=80;delay=3;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=3;amount=100;delay=4;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=3.5;amount=120;delay=5;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=4;amount=140;delay=6;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=4.5;amount=170;delay=7;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=5;amount=200;delay=8;speed=0.01;size=0.6} @origin
+# ------------------------------------------ #
+# SKILL 5: Scorching Nova                    #
+# ------------------------------------------ #
+
+Scorching_Nova:
+  Skills:
+  - effect:sound{s=entity.blaze.shoot;volume=0.8;pitch=0.5} @self
+  - effect:particles{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;amount=80;hS=1;vS=1;y=1;size=1.5;speed=0.05} @self
+  - delay 10
+  - effect:particles{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;amount=80;hS=1;vS=1;y=1;size=1.5;speed=0.05} @self
+  - delay 10
+  
+  - effect:sound{s=entity.dragon_fireball.explode;volume=1.0;pitch=0.8} @self
+  - effect:sound{s=entity.generic.explode;volume=1.0;pitch=0.5} @self
+  - summon{type=VFX_Phoenix_Impact2;amount=1;radius=0;yRadius=0;onSurface=false} @self
+  - skill{s=Scorching_Nova_Ring} @self
+  - solo_damage{a="<skill.var.damage> * 1.5";cause=ENTITY_ATTACK;pkb=true} @EIR{r=7;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a="<skill.var.damage> * 1.5";cause=ENTITY_ATTACK;pkb=true} @EIR{r=7;ignore=owner;ignore=caster} ?!isplayer{}
+  - solo_throw{velocity=15;velocityY=8} @EIR{r=7;ignore=caster;ignore=owner;conditions=[ - solo_is_my_summon false ]}
+  - skill{s=Flameborn_BURN} @EIR{r=7;ignore=caster;ignore=owner}
+
+Scorching_Nova_Ring:
+  Skills:
+  - effect:particlering{p=small_flame;radius=1;points=40;amount=1;hS=0;vS=0;y=0.1;speed=0.05} @origin
+  - effect:particlering{p=small_flame;radius=2;points=60;amount=1;hS=0;vS=0;y=0.1;speed=0.05;delay=1} @origin
+  - effect:particlering{p=small_flame;radius=3;points=80;amount=1;hS=0;vS=0;y=0.1;speed=0.05;delay=2} @origin
+  - effect:particlering{p=small_flame;radius=4;points=100;amount=1;hS=0;vS=0;y=0.1;speed=0.05;delay=3} @origin
+  - effect:particlering{p=small_flame;radius=5;points=120;amount=1;hS=0;vS=0;y=0.1;speed=0.05;delay=4} @origin
+  - effect:particlering{p=small_flame;radius=6;points=140;amount=1;hS=0;vS=0;y=0.1;speed=0.05;delay=5} @origin
+  - effect:particlering{p=small_flame;radius=7;points=160;amount=1;hS=0;vS=0;y=0.1;speed=0.05;delay=6} @origin
+  - effect:particlering{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=1;points=40;amount=1;hS=0;vS=0;y=0.1;speed=0.01;size=1.5} @origin
+  - effect:particlering{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=2;points=60;amount=1;hS=0;vS=0;y=0.1;speed=0.01;size=1.5;delay=1} @origin
+  - effect:particlering{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=3;points=80;amount=1;hS=0;vS=0;y=0.1;speed=0.01;size=1.5;delay=2} @origin
+  - effect:particlering{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=4;points=100;amount=1;hS=0;vS=0;y=0.1;speed=0.01;size=1.5;delay=3} @origin
+  - effect:particlering{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=5;points=120;amount=1;hS=0;vS=0;y=0.1;speed=0.01;size=1.5;delay=4} @origin
+  - effect:particlering{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=6;points=140;amount=1;hS=0;vS=0;y=0.1;speed=0.01;size=1.5;delay=5} @origin
+  - effect:particlering{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=7;points=160;amount=1;hS=0;vS=0;y=0.1;speed=0.01;size=1.5;delay=6} @origin
+
+# # ------------------------------------------ #
+# SKILL 6: Phoenix Rebirth                   #
+# ------------------------------------------ #
+
+Phoenix_Rebirth:
+  Skills:
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.9;pitch=1} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.9;pitch=0.6;repeat=1;repeati=3} @self
+  - orbital{auraName=VFX_Phoenix_Wings;bulletType=MOB;mob=VFX_Phoenix_Wings;hr=1;vr=1;hp=false;hnp=false;r=0;points=1;i=1;duration=200;oy=2.8;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - potion{type=JUMP;duration=200;level=1;hasParticles=false} @self
+  - potion{type=SLOW_FALLING;duration=200;level=0;hasParticles=false} @self
+  - potion{type=SPEED;duration=200;level=2;hasParticles=false} @self
+  - potion{type=INCREASE_DAMAGE;duration=200;level=1;hasParticles=false} @self
+  - potion{type=REGENERATION;duration=200;level=1;hasParticles=false} @self
+  - potion{type=DAMAGE_RESISTANCE;duration=200;level=0;hasParticles=false} @self
+  - potion{type=FIRE_RESISTANCE;duration=200;level=0;hasParticles=false} @self
+  - potion{type=FAST_DIGGING;duration=200;level=1;hasParticles=false} @self
+  - aura{auraName=PHOENIX_REBIRTH_AURA;duration=200} @self
+  - particles{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;amount=30;hS=0.4;vS=0.5;y=1;size=0.6;speed=0;repeat=40;repeati=5} @self
+  - particles{p=small_flame;amount=20;hS=0.4;vS=0.5;y=1;speed=0.03;repeat=40;repeati=5} @self
+  
+  # wing flaps (only works if VFX_Phoenix_Wings is properly spawned, which it is via orbital)
+  - changepart{m=vfx_phoenix_wings_1;p=bone;nm=vfx_phoenix_wings_3;np=bone;delay=194} @MobsInRadius{r=4;sort=NEAREST;limit=1;types=VFX_Phoenix_Wings}
+  - changepart{m=vfx_phoenix_wings_1;p=bone;nm=vfx_phoenix_wings_2;np=bone;delay=196} @MobsInRadius{r=4;sort=NEAREST;limit=1;types=VFX_Phoenix_Wings}
+  - changepart{m=vfx_phoenix_wings_1;p=bone;nm=vfx_phoenix_wings_1;np=bone;delay=198} @MobsInRadius{r=4;sort=NEAREST;limit=1;types=VFX_Phoenix_Wings}
+
+  # spread fire explosion
+  - skill{s=Phoenix_Rebirth_Sphere_Spread} @selflocation
+  - effect:sound{s=entity.generic.explode;volume=0.6;pitch=<random.float.0.8to1.2>;delay=1} @self
+  - summon{type=VFX_Phoenix_Impact2;amount=1;radius=0;yRadius=0;onSurface=false;delay=1} @self
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true;delay=1} @EIR{r=8;ignore=owner;ignore=caster} ?isplayer{}
+  - solo_damage{a=<skill.var.damage>;cause=ENTITY_ATTACK;pkb=true;delay=1} @EIR{r=8;ignore=owner;ignore=caster} ?!isplayer{}
+  - solo_throw{velocity=11;velocityY=0;delay=1} @EIR{r=8;ignore=caster;ignore=owner;conditions=[ - solo_is_my_summon false ]}
+  - skill{s=Flameborn_BURN;delay=1} @EIR{r=8;ignore=caster;ignore=owner}
+
+Phoenix_Rebirth_Sphere_Spread:
+  Skills:
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=1;amount=20;y=0.1;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=1.5;amount=40;delay=1;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=2;amount=60;delay=2;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=2.5;amount=80;delay=3;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=3;amount=100;delay=4;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=3.5;amount=120;delay=5;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=4;amount=140;delay=6;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=4.5;amount=170;delay=7;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=5;amount=200;delay=8;speed=0.01;size=0.6} @origin
+  - effect:particlesphere{p=dust_color_transition;color1=#ffcd17;color2=#fa2707;radius=5.5;amount=230;delay=9;speed=0.01;size=0.6} @origin
+  
+  - effect:particlesphere{p=small_flame;radius=1;amount=20;y=0.1;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=1.5;amount=40;delay=1;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=2;amount=60;delay=2;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=2.5;amount=80;delay=3;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=3;amount=100;delay=4;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=3.5;amount=120;delay=5;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=4;amount=140;delay=6;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=4.5;amount=170;delay=7;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=5;amount=200;delay=8;speed=0.07;size=0.6} @origin
+  - effect:particlesphere{p=small_flame;radius=5.5;amount=230;delay=9;speed=0.07;size=0.6} @origin
+
+# ------------------------------------------ #
+# VFX UTILS                                  #
+# ------------------------------------------ #
+
+VFX_Phoenix_Explosion_RAN:
+  Skills:
+  - randomskill{skills=VFX_Phoenix_Explosion_1,VFX_Phoenix_Explosion_2,VFX_Phoenix_Explosion_3}
+VFX_Phoenix_Explosion_1:
+  Skills:
+  - state{s=skill} @self
+VFX_Phoenix_Explosion_2:
+  Skills:
+  - state{s=skill2} @self
+VFX_Phoenix_Explosion_3:
+  Skills:
+  - state{s=skill3} @self

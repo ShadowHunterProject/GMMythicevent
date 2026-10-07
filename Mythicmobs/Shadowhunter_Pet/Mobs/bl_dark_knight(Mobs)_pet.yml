@@ -1,0 +1,28 @@
+bl_dark_knight_stones_Pet:
+  Type: ARMOR_STAND
+  AITargetSelectors:
+  - 0 clear
+  - 1 meleeattack
+  AIGoalSelectors:
+  - 0 clear
+  Options:
+    NoAI: true
+    Marker: true
+    ApplyInvisibility: true
+    Invisible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+  Skills:
+  - cancelEvent{forcesync=true} @self ~onAttack
+  - model{mid=bl_dark_knight_stones;n=false;usm=true} @self ~onSpawn
+  - aura{auraName=bl_dark_knight_stones_totem_Pet;onTick=bl_dark_knight_stones_totem_tick_Pet;interval=1;duration=70;delay=5} @self ~onSpawn
+  - sound{s=bl_dark_knight.stones;v=3;p=0.8} @self ~onSpawn
+  - state{s=spawn} @self ~onSpawn
+  - state{s=idle;delay=50} @self ~onSpawn
+  - state{s=end;delay=70} @self ~onSpawn
+  - remove{delay=95} @self ~onSpawn
+
+
+
+

@@ -1,0 +1,91 @@
+# ~Written by RopeFire~
+# ~Solar Beam written by Rolo~
+
+#                                                                           ~VFX~
+
+#VFX Solar Explosion
+vfx_solar_explosion_summoned:
+  Skills:
+  - delay 3
+  - damage{a=2200;is=true;ia=true} @LivingInRadius{r=2.5;ignore=samefaction}
+  - delay 20
+  - remove @self
+
+#VFX Solar Fire
+vfx_solar_fire_summoned:
+  Skills:
+  - state{model=vfx_solar_fire;state=spawn} @self
+  - lockmodel @self
+  - sound{s=tugkandeman.solar_fire;v=3;p=1} @self
+  - delay 6
+  - aura{auraName=vfxSolarFireD;duration=130;oT=vfx_solar_fire_summoned_damage;i=20} @self
+  - delay 150
+  - remove @self
+
+vfx_solar_fire_summoned_damage:
+  Skills:
+  - totem{md=2;oH=[ - damage{a=2236;is=true;pk=true;ia=true;pi=true} ];hnp=true;hp=true;hR=5.0;vR=5.0;i=1;drawhitbox=false} @selfLocation
+
+#VFX Solar Mine
+vfx_solar_mine_summoned:
+  Skills:
+  - aura{auraName=vfxSolarMineSpawn;duration=20} @self
+  - state{model=vfx_solar_mine;state=spawn} @self
+  - delay 600to1200
+  - damage{a=4294;ia=true} @self
+  - summon{type=vfx_solar_strike;amount=1} @self
+  - delay 15
+  - remove @self
+
+vfx_solar_mine_damaged:
+  Conditions:
+  - damagecause{cause=PROJECTILE} true
+  - hasaura{n=vfxSolarMineExplode} false
+  - hasaura{n=vfxSolarMineDamaged} false
+  Skills:
+  - aura{auraName=vfxSolarMineDamaged;duration=15} @self
+  - damage{a=4294;ia=true} @self
+  - summon{type=vfx_solar_strike;amount=1} @self
+  - delay 15
+  - remove @self
+
+vfx_solar_mine_explode:
+  Conditions:
+  - playerwithin{d=2} true
+  - hasaura{n=vfxSolarMineSpawn} false
+  - hasaura{n=vfxSolarMineExplode} false
+  - hasaura{n=vfxSolarMineDamaged} false
+  Skills:
+  - aura{auraName=vfxSolarMineExplode;duration=15} @self
+  - damage{a=4294;ia=true} @self
+  - summon{type=vfx_solar_strike;amount=1} @self
+  - delay 15
+  - remove @self
+
+#VFX Solar Snare
+vfx_solar_snare_summoned:
+  Skills:
+  - state{model=vfx_solar_snare;state=spawn} @self
+  - lockmodel @self
+  - sound{s=tugkandeman.solar_snare;v=3;p=1} @self
+  - delay 17
+  - potion{type=SLOW;duration=60;l=255;p=false} @EIR{r=2;limit=1;sort=NEAREST;ignore=samefaction}
+  - potion{type=JUMP;duration=60;l=155;p=false} @EIR{r=2;limit=1;sort=NEAREST;ignore=samefaction}
+  - aura{auraName=vfxSolarSnarePull;duration=60;oT=vfx_solar_snare_pull;interval=5} @self
+  - delay 93
+  - remove @self
+
+vfx_solar_snare_pull:
+  Skills:
+  - pull{v=10} @EIR{r=2;limit=1;sort=NEAREST;ignore=samefaction}
+
+#VFX Solar Strike
+vfx_solar_strike_summoned:
+  Skills:
+  - state{model=vfx_solar_strike;state=spawn} @self
+  - lockmodel @self
+  - sound{s=tugkandeman.solar_strike;v=3;p=1} @self
+  - delay 17
+  - damage{a=1717;is=true;ia=true} @LivingInRadius{r=2.5;ignore=samefaction}
+  - delay 24
+  - remove @self

@@ -1,0 +1,34 @@
+﻿LRD_PIGLINKING_slash_fx:
+  Type: block_display
+  Faction: PIGLINKING
+  Options:
+    NoAI: true
+    Collidable: false
+    Invincible: true
+    KnockbackResistance: true
+  Skills:
+  - model{m=lrd_piglin_king_fire_fx;usm=true;d=false;scale=0.75} @self ~onSpawn
+  - model{m=lrd_piglin_king_fire_fx;usm=true;d=false;scale=0.75} @self ~onLoad
+  - BodyRotation{mh=0;mb=0;rdu=0;rde=0} @self ~onSpawn
+  - remove{delay=30} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onLoad
+
+LRD_PIGLINKING_GROUND_FX:
+  Type: block_display
+  Faction: PIGLINKING
+  Options:
+    NoAI: true
+    Collidable: false
+    Invincible: true
+    KnockbackResistance: true
+  Skills:
+  - model{m=lrd_piglin_king_ground_fx;usm=true;d=false;scale=1.5} @self ~onSpawn
+  - model{m=lrd_piglin_king_ground_fx;usm=true;d=false;scale=1.5} @self ~onLoad
+  - solo_velocity{m=set;x=0;y=-100;z=0} @self ~onSpawn
+  - BodyClamp{mh=0;mb=0;rde=0;rdu=0} @self ~onSpawn
+  - BodyClamp{mh=0;mb=0;rde=0;rdu=0} @self ~onLoad
+  - remove{delay=40} @self ~onSpawn
+  - lockmodel{l=true;delay=5} @self ~onSpawn
+  - spin{duration=1;velocity=<random.float.0to100>} @self ~onSpawn
+  - effect:particle{p=block;m=dirt;a=25;hs=.5;vs=.15} @self ~onSpawn

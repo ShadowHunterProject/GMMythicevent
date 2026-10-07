@@ -1,0 +1,499 @@
+#luathuong
+#===========================================================================skill1==================================================================================#  
+
+lostassetsanime_firekatana_lc_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - skill{s=lostassetsanime_firekatana_lc1_Pet} 
+  - delay 10
+  - skill{s=lostassetsanime_firekatana_lc2_Pet} 
+
+
+lostassetsanime_firekatana_lc1_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - delay 1
+  - setVar{var=caster.firekatana_LC_Stack;value=1;d=40} @self
+  - slash{p=12;w=5;h=5.5;a=200;y=1.5;fo=1.2;r=3;rot=0,0,20;mpd=true;oH=Hit_lostassetsanime_firekatana_lc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=2}]} @forward{f=0;lockpitch=true}
+  - summon{type=lostassetsanime_firekatana_lc1_Pet;sio=true} @forward{f=0.5;yo=0.5;lockpitch=true}
+  - effect:sound{s=item.trident.throw;v=0.8;p=0.9} @self
+  - effect:sound{s=entity.breeze.shoot;v=1.2;p=1.4} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.4;p=0.8} @self
+  - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+
+
+lostassetsanime_firekatana_lc2_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - delay 1
+  - setVar{var=caster.firekatana_LC_Stack;value=2;d=40} @self
+  - slash{p=12;w=5;h=5.5;a=200;y=1.5;fo=1.2;r=3;rot=0,0,-20;mpd=true;oH=Hit_lostassetsanime_firekatana_lc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=2}]} @forward{f=0;lockpitch=true}
+  - summon{type=lostassetsanime_firekatana_lc2_Pet;sio=true} @forward{f=0.5;yo=0.5;lockpitch=true}
+  - effect:sound{s=item.trident.throw;v=0.7;p=0.9} @self
+  - effect:sound{s=entity.breeze.shoot;v=1.2;p=1.5} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.4;p=0.9} @self
+  - effect:sound{s=entity.wither.shoot;v=0.7;p=1.6} @self
+
+#===========================================================================skill2==================================================================================#
+
+lostassetsanime_firekatana_lcphase2_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - skill{s=lostassetsanime_firekatana_lc1_Pet} 
+  - delay 10
+  - skill{s=lostassetsanime_firekatana_lc2_Pet} 
+  - delay 10
+  - skill{s=lostassetsanime_firekatana_lc3_Pet} 
+
+
+lostassetsanime_firekatana_lc3_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - delay 1
+  - variableunset{var=caster.firekatana_LC_Stack} @Self
+  - slash{p=12;w=5;h=5.5;a=200;y=1.5;fo=1.2;r=3;rot=0,0,20;mpd=true;oH=Hit_lostassetsanime_firekatana_lc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=4}]} @forward{f=0;lockpitch=true}
+  - slash{p=12;w=5;h=5.5;a=200;y=1.5;fo=1.2;r=3;rot=0,0,-20;mpd=true;oH=Hit_lostassetsanime_firekatana_lc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=4}]} @forward{f=0;lockpitch=true}
+  - summon{type=lostassetsanime_firekatana_lc3_Pet;sio=true} @forward{f=0.5;yo=0.5;lockpitch=true}
+  - effect:sound{s=item.trident.throw;v=0.8;p=0.7} @self
+  - effect:sound{s=entity.breeze.shoot;v=1.3;p=1.2} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.7;p=0.7} @self
+  - effect:sound{s=entity.wither.shoot;v=0.8;p=1.2} @self
+
+
+Hit_lostassetsanime_firekatana_lc_Pet:
+  TargetConditions:
+  - owner false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=true} @EntitiesNearOrigin{ignore=players;r=3.9;limit=6;sort=NEAREST;conditions=[ - hastag{t=skill_model} false - isLiving true - hasaura{aura=immunedelay;ignore=owner} false  ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=true} @EntitiesNearOrigin{target=players;r=3.9;limit=6;sort=NEAREST;conditions=[ - hastag{t=skill_model} false - isLiving true - hasaura{aura=immunedelay;ignore=owner} false  ]}
+  - ignite{ticks=80} @EIR{r=3.9;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+
+#===========================================================================skill3==================================================================================#
+
+lostassetsanime_firekatana_rc_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - setVarLoc{var=caster.firekatana_RC_loc;v=@forward{f=0;lockpitch=true}} @Self  
+  - summon{type=lostassetsanime_firekatana_rc_Pet;sio=true} @forward{f=0.5;yo=0.0;lockpitch=true}
+  - slash{p=12;w=5;h=5.5;a=200;y=1.5;fo=1.2;r=3;rot=0,0,20;mpd=true;oH=Hit_lostassetsanime_firekatana_rc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=2}]} @forward{f=0;lockpitch=true}
+  - effect:sound{s=entity.breeze.shoot;v=1.2;p=1.4} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.4;p=0.8} @self
+  - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+  - solo_velocity{m=set;x=0;y=0.6;z=0.0;r=true} @self{conditions=[ - solo_is_my_summon false ]}
+  - onDamaged{d=16;damageMods="FALL -0.000001"} @Self
+  - delay 10
+  - solo_velocity{m=set;x=0;y=-1.0;z=0.0;r=true} @self{conditions=[ - solo_is_my_summon false ]}
+  - delay 2
+  - slash{p=36;w=6.5;h=6;a=360;y=1.2;fo=1.5;r=2.5;rot=0,0,20;mpd=true;oP=[  - effect:particles{p=flame;a=3;hS=0;vS=0;s=0.07;delay=2}]} @VariableLocation{var=caster.firekatana_RC_loc}
+  - slash{p=2;w=2.5;h=2;a=360;y=1.2;fo=1.5;r=8.5;rot=0,0,20;mpd=true;oH=Hit_lostassetsanime_firekatana_rc2_Pet} @VariableLocation{var=caster.firekatana_RC_loc}
+  - variableunset{var=caster.firekatana_RC_loc} @Self
+  - effect:sound{s=entity.breeze.shoot;v=1.6;p=1.2} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.9;p=0.7} @self
+  - effect:sound{s=entity.wither.shoot;v=0.8;p=1.7} @self
+  - effect:sound{s=entity.wither.shoot;v=0.6;p=0.7} @self
+  - effect:sound{s=item.trident.throw;v=0.8;p=0.6} @self
+  - effect:sound{s=entity.warden.sonic_boom;v=0.8;p=1.6} @self
+
+
+Hit_lostassetsanime_firekatana_rc_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{target=players}
+
+
+Hit_lostassetsanime_firekatana_rc2_Pet:
+  TargetConditions:
+  - owner false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{target=players}
+  - ignite{ticks=80} @EIR{r=3.9;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+
+#luahuyenthoai
+#===========================================================================skill1huyenthoai==================================================================================#
+
+lostassetsanime_firekatana_lcphase3_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - potion{type=slow;duration=50;level=1} @self
+  - setVarLoc{var=caster.firekatana_slc_loc;v=@forward{f=0;lockpitch=true}} @Self  
+  - summon{type=lostassetsanime_firekatana_slc_Pet;sio=true} @forward{f=0.5;yo=0.0;lockpitch=true}
+  - slash{p=12;w=5;h=5.5;a=200;y=1.5;fo=1.2;r=3;rot=0,0,20;mpd=true;oH=Hit_lostassetsanime_firekatana_slc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=2}]} @forward{f=0;lockpitch=true}
+  - effect:sound{s=entity.breeze.shoot;v=1.2;p=1.4} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.4;p=0.8} @self
+  - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+  - delay 10
+  - slash{p=12;w=5;h=5.5;a=200;y=1.5;fo=1.2;r=3;rot=0,0,20;mpd=true;oH=Hit_lostassetsanime_firekatana_slc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=2}]} @forward{f=0;lockpitch=true}
+  - effect:sound{s=entity.breeze.shoot;v=1.2;p=1.4} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.4;p=0.8} @self
+  - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+  - delay 9
+  - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+  - solo_velocity{m=set;x=0;y=1.2;z=0.4;r=true} @self{conditions=[ - solo_is_my_summon false ]}
+  - onDamaged{d=20;damageMods="FALL -0.000001"} @Self
+  - delay 6
+  - solo_velocity{m=set;x=0;y=-2.0;z=1.1;r=true} @self{conditions=[ - solo_is_my_summon false ]}
+  - delay 2
+  - slash{p=36;w=6.5;h=6;a=360;y=1.2;fo=1.5;r=2.5;rot=0,0,20;mpd=true;oP=[  - effect:particles{p=flame;a=3;hS=0;vS=0;s=0.07;delay=2}]} @VariableLocation{var=caster.firekatana_slc_loc}
+  - slash{p=2;w=2.5;h=2;a=360;y=1.2;fo=1.5;r=8.5;rot=0,0,20;mpd=true;oH=Hit_lostassetsanime_firekatana_slc2_Pet} @VariableLocation{var=caster.firekatana_slc_loc}
+  - variableunset{var=caster.firekatana_slc_loc} @Self
+  - effect:sound{s=entity.breeze.shoot;v=1.6;p=1.2} @self
+  - effect:sound{s=entity.breeze.wind_burst;v=0.9;p=0.7} @self
+  - effect:sound{s=entity.wither.shoot;v=0.8;p=1.7} @self
+  - effect:sound{s=entity.wither.shoot;v=0.6;p=0.7} @self
+  - effect:sound{s=item.trident.throw;v=0.8;p=0.6} @self
+  - effect:sound{s=entity.warden.sonic_boom;v=0.8;p=1.6} @self
+
+#===========================================================================skill2huyenthoai==================================================================================#
+
+lostassetsanime_firekatana_slc_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - skill{s=lostassetsanime_firekatana_lc3_Pet} 
+  - delay 10
+  - skill{s=lostassetsanime_firekatana_lcphase3_Pet} 
+
+
+Hit_lostassetsanime_firekatana_slc_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{target=players}
+
+
+Hit_lostassetsanime_firekatana_slc2_Pet:
+  TargetConditions:
+  - owner false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{target=players}
+  - ignite{ticks=80} @EIR{r=3.9;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+
+#===========================================================================skill3huyenthoai==================================================================================#
+
+lostassetsanime_firekatana_src_Pet:
+  Conditions:
+  - incombat true
+  - targetwithin{d=28} true
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - setVarLoc{var=caster.firekatana_src_loc;v=@forward{f=0;so=0.0;lockpitch=true}} @Self
+  - potion{type=SLOW;d=10;l=4;or=true;p=false;i=false} @Self
+  - summon{type=lostassetsanime_firekatana_src_Pet;sio=true} @forward{f=0.5;yo=0.0;lockpitch=true}
+  - sound{s=entity.warden.nearby_close;v=1.2;p=1.4} @Self
+  - sound{s=entity.warden.sonic_charge;v=1.6;p=13} @Self
+  - delay 10
+  - slash{p=36;w=6.5;h=6;a=360;y=1.2;fo=1.5;r=2.5;rot=0,0,15;mpd=true;oP=[  - effect:particles{p=flame;a=3;hS=0;vS=0;s=0.07;delay=2}]} @VariableLocation{var=caster.firekatana_src_loc}
+  - slash{p=72;w=11.5;h=11;a=360;y=1.2;fo=1.5;r=2.5;rot=0,0,8;mpd=true;oP=[  - effect:particles{p=flame;a=10;hS=0;vS=0;s=0.07;delay=2}]} @VariableLocation{var=caster.firekatana_src_loc}
+  - slash{p=2;w=2.5;h=2;a=360;y=1.2;fo=1.5;r=15.5;rot=0,0,0;mpd=true;oH=Hit_lostassetsanime_firekatana_src_Pet} @VariableLocation{var=caster.firekatana_src_loc}
+  - variableunset{var=caster.firekatana_src_loc} @Self
+  - sound{s=entity.wither.shoot;v=0.8;p=1.6} @Self
+  - sound{s=entity.wither.shoot;v=1.2;p=0.6} @Self
+  - sound{s=entity.warden.sonic_boom;v=1.2;p=0.9} @Self
+  - sound{s=entity.warden.attack_impact;v=1.2;p=0.5} @Self
+  - sound{s=item.totem.use;v=0.6;p=1.9} @Self
+
+
+Hit_lostassetsanime_firekatana_src_Pet:
+  TargetConditions:
+  - owner false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0} 
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{target=players}
+  - ignite{ticks=80} @EIR{r=3.9;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+
+# =========================================================
+# BOSS VERSION (FIX SYNTAX)
+# =========================================================
+
+
+lostassetsanime_boss_firekatana_domain_Pet:
+  Cooldown: 14
+  Conditions:
+  - incombat true
+  - targetwithin{d=28} true
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - setVarLoc{var=caster.fk_domain_loc;v=@target{lockpitch=true}} @Self
+  - setVarLoc{var=caster.fk_domain_center;v=@variablelocation{var=caster.fk_domain_loc}} @Self
+
+  - potion{type=SLOW;d=30;l=6;or=true;p=false;i=false} @Self
+  - sound{s=entity.warden.sonic_charge;v=2.0;p=0.6} @Self
+  - sound{s=item.trident.thunder;v=1.2;p=1.6} @Self
+  - effect:particles{p=flame;a=40;hS=0.7;vS=0.2;s=0.05} @VariableLocation{var=caster.fk_domain_center}
+  - effect:particles{p=smoke_large;a=18;hS=0.6;vS=0.2;s=0.08} @VariableLocation{var=caster.fk_domain_center}
+  - delay 12
+
+  - summon{type=lostassetsanime_firekatana_src_Pet;sio=true} @VariableLocation{var=caster.fk_domain_center}
+  - sound{s=entity.warden.nearby_close;v=1.4;p=1.2} @Self
+  - delay 6
+
+  - solo_pull{v=1.1;to=true} @EntitiesInRadius{r=13;loc=@VariableLocation{var=caster.fk_domain_center;ignore=owner};conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - effect:particles{p=flame;a=25;hS=1.2;vS=0.15;s=0.06} @VariableLocation{var=caster.fk_domain_center}
+  - delay 6
+
+  - skill{s=lostassetsanime_boss_firekatana_domain_slash1_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 6
+  - skill{s=lostassetsanime_boss_firekatana_domain_slash2_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 6
+  - skill{s=lostassetsanime_boss_firekatana_domain_slash3_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 8
+
+  - skill{s=lostassetsanime_boss_firekatana_domain_waves_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 10
+
+  - sound{s=entity.warden.sonic_boom;v=1.6;p=0.9} @Self
+  - sound{s=entity.generic.explode;v=1.2;p=0.8} @Self
+  - effect:particles{p=flame;a=90;hS=2.0;vS=0.25;s=0.06} @VariableLocation{var=caster.fk_domain_center}
+  - effect:particles{p=smoke_large;a=45;hS=1.8;vS=0.25;s=0.09} @VariableLocation{var=caster.fk_domain_center}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=7.8;loc=@VariableLocation{ignore=players;var=caster.fk_domain_center;ignore=owner};conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=7.8;loc=@VariableLocation{target=players;var=caster.fk_domain_center;ignore=owner};conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - ignite{ticks=90} @EntitiesInRadius{r=7.8;loc=@VariableLocation{var=caster.fk_domain_center;ignore=owner};conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+
+  - variableunset{var=caster.fk_domain_loc} @Self
+  - variableunset{var=caster.fk_domain_center} @Self
+
+
+
+lostassetsanime_boss_firekatana_domain_slash1_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - sound{s=entity.blaze.shoot;v=1.0;p=1.6} @Self
+  - slash{p=32;w=6.5;h=5.5;a=300;y=1.2;fo=1.5;r=2.7;rot=0,0,12;mpd=true;
+      oP=[ - effect:particles{p=flame;a=8;hS=0.2;vS=0.05;s=0.06} ];
+      oH=Hit_lostassetsanime_boss_firekatana_domain_Pet} @Origin
+
+
+lostassetsanime_boss_firekatana_domain_slash2_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - sound{s=entity.wither.shoot;v=1.1;p=1.2} @Self
+  - slash{p=54;w=9.5;h=8;a=340;y=1.2;fo=1.6;r=2.5;rot=0,0,8;mpd=true;
+      oP=[ - effect:particles{p=flame;a=14;hS=0.3;vS=0.07;s=0.06} ];
+      oH=Hit_lostassetsanime_boss_firekatana_domain_Pet} @Origin
+
+
+lostassetsanime_boss_firekatana_domain_slash3_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - sound{s=entity.warden.attack_impact;v=1.3;p=0.7} @Self
+  - slash{p=72;w=12.5;h=11;a=360;y=1.2;fo=1.6;r=2.5;rot=0,0,5;mpd=true;
+      oP=[ - effect:particles{p=flame;a=22;hS=0.35;vS=0.08;s=0.06} ];
+      oH=Hit_lostassetsanime_boss_firekatana_domain_Pet} @Origin
+
+
+
+lostassetsanime_boss_firekatana_domain_waves_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - sound{s=item.firecharge.use;v=1.2;p=0.9} @Self
+  - effect:particles{p=flame;a=35;hS=0.9;vS=0.12;s=0.06} @Origin
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - ignite{ticks=60} @EntitiesInRadius{r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - delay 4
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=10.4;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=10.4;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - ignite{ticks=60} @EntitiesInRadius{r=10.4;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - effect:particles{p=flame;a=45;hS=1.3;vS=0.12;s=0.06} @Origin
+  - delay 4
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=14.3;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=14.3;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - ignite{ticks=60} @EntitiesInRadius{r=14.3;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - effect:particles{p=flame;a=55;hS=1.7;vS=0.12;s=0.06} @Origin
+
+
+
+Hit_lostassetsanime_boss_firekatana_domain_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @target{target=players}
+  - ignite{ticks=80}
+  - potion{type=WEAKNESS;d=40;l=0;or=true;p=false;i=false} @target
+
+
+# =========================================================
+# PET VERSION (PVP + PVE, NEVER HIT OWNER)
+# =========================================================
+
+
+lostassetsanime_pet_firekatana_domain_Pet:
+  Cooldown: 14
+  Conditions:
+  - hasTag{t=MMO_PET} true
+  - incombat true
+  - targetwithin{d=28} true
+  - incombat true
+  TargetConditions:
+  - owner false
+  Skills:
+  - potion{type=FIRE_RESISTANCE;d=140;l=0;or=true;p=false;i=false} @Owner
+  - setVarLoc{var=caster.fk_domain_loc;v=@target{lockpitch=true}} @Self
+  - setVarLoc{var=caster.fk_domain_center;v=@variablelocation{var=caster.fk_domain_loc}} @Self
+
+  - potion{type=SLOW;d=24;l=4;or=true;p=false;i=false} @Self
+  - sound{s=entity.warden.sonic_charge;v=1.5;p=0.8} @Self
+  - sound{s=item.trident.thunder;v=1.0;p=1.8} @Self
+  - effect:particles{p=flame;a=30;hS=0.6;vS=0.2;s=0.05} @VariableLocation{var=caster.fk_domain_center}
+  - effect:particles{p=smoke_large;a=12;hS=0.5;vS=0.2;s=0.08} @VariableLocation{var=caster.fk_domain_center}
+  - delay 12
+
+  - summon{type=lostassetsanime_firekatana_src_Pet;sio=true} @VariableLocation{var=caster.fk_domain_center}
+  - sound{s=entity.warden.nearby_close;v=1.2;p=1.2} @Self
+  - delay 6
+
+  - solo_pull{v=1.0;to=true} @EntitiesInRadius{r=13;loc=@VariableLocation{var=caster.fk_domain_center;ignore=owner};ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_pull{v=1.0;to=true} @EntitiesInRadius{r=13;loc=@VariableLocation{var=caster.fk_domain_center;ignore=owner};ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - effect:particles{p=flame;a=22;hS=1.0;vS=0.15;s=0.06} @VariableLocation{var=caster.fk_domain_center}
+  - delay 6
+
+  - skill{s=lostassetsanime_pet_firekatana_domain_slash1_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 6
+  - skill{s=lostassetsanime_pet_firekatana_domain_slash2_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 6
+  - skill{s=lostassetsanime_pet_firekatana_domain_slash3_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 8
+
+  - skill{s=lostassetsanime_pet_firekatana_domain_waves_Pet} @VariableLocation{var=caster.fk_domain_center}
+  - delay 10
+
+  - sound{s=entity.warden.sonic_boom;v=1.2;p=1.1} @Self
+  - sound{s=entity.generic.explode;v=1.0;p=0.9} @Self
+  - effect:particles{p=flame;a=70;hS=1.8;vS=0.25;s=0.06} @VariableLocation{var=caster.fk_domain_center}
+  - effect:particles{p=smoke_large;a=35;hS=1.6;vS=0.25;s=0.09} @VariableLocation{var=caster.fk_domain_center}
+
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=7.8;loc=@VariableLocation{ignore=players;var=caster.fk_domain_center;ignore=owner};ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=7.8;loc=@VariableLocation{target=players;var=caster.fk_domain_center;ignore=owner};ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=7.8;loc=@VariableLocation{ignore=players;var=caster.fk_domain_center;ignore=owner};ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=7.8;loc=@VariableLocation{target=players;var=caster.fk_domain_center;ignore=owner};ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+
+  - variableunset{var=caster.fk_domain_loc} @Self
+  - variableunset{var=caster.fk_domain_center} @Self
+
+
+
+lostassetsanime_pet_firekatana_domain_slash1_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - sound{s=entity.blaze.shoot;v=0.9;p=1.6} @Self
+  - slash{p=32;w=6.5;h=5.5;a=300;y=1.2;fo=1.5;r=2.7;rot=0,0,12;mpd=true;
+      oP=[ - effect:particles{p=flame;a=8;hS=0.2;vS=0.05;s=0.06} ];
+      oH=Hit_lostassetsanime_pet_firekatana_domain_Pet} @Origin
+
+
+lostassetsanime_pet_firekatana_domain_slash2_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - sound{s=entity.wither.shoot;v=1.0;p=1.2} @Self
+  - slash{p=54;w=9.5;h=8;a=340;y=1.2;fo=1.6;r=2.5;rot=0,0,8;mpd=true;
+      oP=[ - effect:particles{p=flame;a=14;hS=0.3;vS=0.07;s=0.06} ];
+      oH=Hit_lostassetsanime_pet_firekatana_domain_Pet} @Origin
+
+
+lostassetsanime_pet_firekatana_domain_slash3_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  Skills:
+  - sound{s=entity.warden.attack_impact;v=1.2;p=0.7} @Self
+  - slash{p=72;w=12.5;h=11;a=360;y=1.2;fo=1.6;r=2.5;rot=0,0,5;mpd=true;
+      oP=[ - effect:particles{p=flame;a=22;hS=0.35;vS=0.08;s=0.06} ];
+      oH=Hit_lostassetsanime_pet_firekatana_domain_Pet} @Origin
+
+
+
+lostassetsanime_pet_firekatana_domain_waves_Pet:
+  TargetConditions:
+  - owner false
+  Skills:
+  - sound{s=item.firecharge.use;v=1.0;p=0.9} @Self
+  - effect:particles{p=flame;a=30;hS=0.9;vS=0.12;s=0.06} @Origin
+
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=6.5;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+
+  - delay 4
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=10.4;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=10.4;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=10.4;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=10.4;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - effect:particles{p=flame;a=40;hS=1.3;vS=0.12;s=0.06} @Origin
+
+  - delay 4
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=14.3;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=14.3;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{ignore=players;r=14.3;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=false} @EntitiesInRadius{target=players;r=14.3;ignore=owner;conditions=[ - hastag{t=skill_model} false, - solo_is_my_summon false ]}
+  - effect:particles{p=flame;a=50;hS=1.7;vS=0.12;s=0.06} @Origin
+
+
+
+Hit_lostassetsanime_pet_firekatana_domain_Pet:
+  TargetConditions:
+  - solo_is_my_summon false
+  - owner false
+  - hasTag{t=MMO_PET} false
+  - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+  - setNoDamageTicks{ticks=0}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @Target{ignore=players;ignore=owner}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=false} @Target{target=players;ignore=owner}
+  - potion{type=WEAKNESS;d=30;l=0;or=true;p=false;i=false} @Target{ignore=owner}
+
+
+# FORCED_SYNC_UPDATE639172407144843727
+
+

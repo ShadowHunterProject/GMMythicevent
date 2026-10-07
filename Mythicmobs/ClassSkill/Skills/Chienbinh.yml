@@ -1,0 +1,190 @@
+#--------------------------------------------skill 1------------------------------------------------------------#
+warrior_furious_strike_ST_CAST:
+  Skills:
+  - skill{s=warrior_furious_strike_ST_1}
+  - delay 13
+  - skill{s=warrior_furious_strike_ST_3}
+  - delay 10
+  - skill{s=warrior_furious_strike_ST_2}
+  - delay 10
+  - skill{s=warrior_furious_strike_ST_3}
+
+warrior_furious_strike_ST_1:
+  Skills:
+  - summon{type=vfx_warrior_rage_dust;amount=1;radius=0;yRadius=0;onSurface=false} @selflocation
+  - skill{s=warrior_shockwave_effect} @selflocation
+  - skill{s=Knockback_Prevent_CAST;duration=8} @self
+  - Aura{auraName=warrior_furious_strike_stack_stagger1;duration=8;delay=1} @self
+  - Aura{auraName=warrior_furious_strike_stack;duration=30;maxStacks=3;delay=1} @self
+  - summon{type=vfx_warrior_furious_strike_knockup;amount=1;radius=0;yRadius=0;onSurface=false} @forward{f=2;lockpitch=true}
+  - particles{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;amount=25;hS=0.4;vS=0.1;y=0.1;size=0.75;speed=0;repeat=10;repeati=1} @self
+  - sound{s=entity.player.attack.knockback} @self
+  - lunge{velocity=1;velocityY=0.75} @forward{f=1;lockpitch=true}
+
+  # scale model x1.3 -> scale hitbox dame x1.3
+  - totem{md=2;c=1;oH=warrior_furious_strike_DAMAGE1;hnp=true;hp=true;hR=4.55;vR=3.9;i=1;drawhitbox=false} @forward{f=3;lockpitch=true}
+
+  - delay 5
+  - solo_pull{v=5;repeat=4;repeati=2} @EIR{r=4;conditions=[ - solo_is_my_summon false ]}
+
+warrior_furious_strike_ST_2:
+  Skills:
+  - Aura{auraName=warrior_furious_strike_stack;duration=30;maxStacks=3;delay=1} @self
+  - Aura{auraName=warrior_furiousslash_stack_stagger2;duration=7;delay=1} @self
+  - orbital{auraName=vfx_warrior_furious_strike_whirl;bulletType=MOB;mob=vfx_warrior_furious_strike_whirl;hr=1;vr=1;hp=false;hnp=false;r=0;duration=10;oy=1;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - potion{type=LEVITATION;duration=12;level=1;hasParticles=false} @self
+  - potion{type=LEVITATION;duration=12;level=1;hasParticles=false} @EIR{r=3}
+  - particles{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;amount=25;hS=0.4;vS=0.1;y=0.1;size=0.75;speed=0;repeat=10;repeati=1} @self
+  - lunge{velocity=0.5;velocityY=0.7} @forward{f=1;lockpitch=true}
+
+  # scale model x1.3 -> r 6 -> 7.8
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @EIR{r=7.8;ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @EIR{r=7.8;target=players}
+
+  - solo_throw{velocity=2;velocityY=4} @EIR{r=3;conditions=[ - solo_is_my_summon false ]}
+  - sound{s=entity.player.attack.sweep} @self
+  - delay 4
+  - solo_pull{v=5;repeat=4;repeati=2} @EIR{r=4;conditions=[ - solo_is_my_summon false ]}
+  - delay 20
+  - potion{type=SLOW_FALLING;duration=20;level=4;hasParticles=false} @self
+
+warrior_furious_strike_ST_3:
+  Skills:
+  - Aura{auraName=warrior_furious_strike_stack;duration=30;maxStacks=3;delay=1} @self # 30 = 1.5 seconds
+  - orbital{auraName=vfx_warrior_leaping_slash_downslash;bulletType=MOB;mob=vfx_warrior_leaping_slash_downslash;hr=1;vr=1;hp=false;hnp=false;r=0;duration=10;oy=1;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - potion{type=SLOW_FALLING;duration=10;level=4;hasParticles=false} @self
+
+  # scale model x1.3 -> r 10 -> 13
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @EIR{r=13;ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @EIR{r=13;target=players}
+
+  - delay 2
+  - lunge{velocity=0.25;velocityY=-1.5} @forward{f=1;lockpitch=true}
+  - solo_throw{velocity=0.25;velocityY=-1.5} @EIR{r=3;conditions=[ - solo_is_my_summon false ]}
+  - delay 6
+  - sound{s=block.anvil.land} @self
+  - skill{s=warrior_schockwave_effect2_small} @selflocation
+  - stun{duration=20} @EIR{r=3}
+  - summon{type=vfx_warrior_rage_dust;amount=1;radius=0;yRadius=0;onSurface=false} @selflocation
+  - summon{type=vfx_warrior_leaping_slash_impact;amount=1;radius=0;yRadius=0;onSurface=false} @forward{f=3;lockpitch=true}
+
+warrior_furious_strike_DAMAGE1:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @target{ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @target{target=players}
+  - solo_throw{velocity=2;velocityY=8}
+
+#-------------------------------------------------------------------------------------------------------------------#
+
+
+#----------------------------------------------Noitai----------------------------------------------------------------#
+warrior_rage:
+  Skills:
+  - sound{s=entity.ravager.roar} @self
+  - potion{type=DAMAGE_RESISTANCE;duration=160;level=1;hasParticles=false} @self
+  - potion{type=SPEED;duration=160;level=1;hasParticles=false} @self
+  - particles{p=dust_color_transition;color1=#ff952e;color2=#ff3700;amount=1;hS=0.3;vS=0.3;y=0.4;size=0.75;speed=0;repeat=60;repeati=1} @self
+  - summon{type=vfx_warrior_rage_dust;amount=1;radius=0;yRadius=0;onSurface=false} @selflocation
+  - orbital{auraName=vfx_warrior_rage;bulletType=MOB;mob=vfx_warrior_rage;hr=1;vr=1;hp=false;hnp=false;r=0;duration=20;oy=1;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - solo_throw{velocity=15;velocityY=2} @EIR{r=5;conditions=[ - solo_is_my_summon false ]}
+  - skill{s=warrior_shockwave_effect_small} @self
+
+#-------------------------------------------------------------------------------------------------------------------#
+
+
+#--------------------------------------------skill 2------------------------------------------------------------#
+
+warrior_whirlwind_skill:
+  Skills:
+  - Aura{auraName=warrior_whirlwind_duration;duration=80} @self
+  - orbital{auraName=vfx_warrior_whirlwind;bulletType=MOB;mob=vfx_warrior_whirlwind;hr=1;vr=1;hp=false;hnp=false;r=0;duration=80;oy=1;rx=0;ry=0;rz=0;avx=0;avy=0;avz=0} @self
+  - sound{s=entity.player.attack.sweep;repeat=1;repeati=40} @self
+  - particles{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;amount=25;hS=0.4;vS=0.1;y=0.1;size=0.75;speed=0;repeat=20;repeati=5} @self
+  - particlering{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;radius=1;points=30;amount=1;hS=0;vS=0;y=0.1;size=0.8;repeat=7;repeati=10} @self
+  - particlering{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;radius=3;points=60;amount=1;hS=0;vS=0;y=0.1;size=1.5;repeat=7;repeati=10} @self
+  - particlering{p=dust_color_transition;color1=#f3e2b6;color2=#ebc78f;radius=5;points=60;amount=1;hS=0;vS=0;y=0.1;size=1.5;repeat=7;repeati=10} @self
+
+  # scale model x1.3 -> r 5 -> 6.5
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=true;repeat=7;repeati=10} @EIR{r=6.5;ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=true;hnp=true;hp=true;repeat=7;repeati=10} @EIR{r=6.5;target=players}
+
+  - solo_pull{v=5;repeat=40;repeati=2} @EIRR{min=3;max=5;conditions=[ - solo_is_my_summon false ]}
+
+#------------------------------------------------------------------------------------------------------------------#
+
+
+#--------------------------------------------skill 3------------------------------------------------------------#
+warrior_hellblade:
+  Skills:
+  - sound{s=entity.ender_dragon.growl} @self
+  - delay 8
+  - sound{s=block.lava.pop} @self
+  - Aura{auraName=warrior_hellblade_duration;duration=80} @self
+  - particles{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;amount=3;hS=0.4;vS=0.1;y=0.1;size=0.75;speed=0;repeat=10;repeati=1} @self
+  - potion{type=SLOW;duration=80;level=2;hasParticles=false} @EIR{r=4;conditions=[ - solo_is_my_summon false ]}
+  - summon{type=vfx_warrior_hellblade;amount=1;radius=0;yRadius=0;onSurface=false} @selflocation
+  - delay 3
+  - particle{p=lava} @self
+  - skill{s=warrior_lava_effect;repeat=7;repeati=10} @selflocation
+  - skill{s=warrior_cloud_effect;repeat=7;repeati=10} @selflocation
+  - skill{s=warrior_hellblade_damage;repeat=4;repeati=19} @selflocation
+
+warrior_hellblade_damage:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  Skills:
+  # scale model x1.3 -> r 5 -> 6.5
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @EntitiesNearOrigin{r=6.5;ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=false;hnp=true;hp=true;delay=1} @EntitiesNearOrigin{r=6.5;target=players}
+
+Knockback_Prevent_CAST:
+  Skills:
+  - onDamaged{auraName=shield_block;oH=Knockback_Prevent_BLOCK;cE=true;d=<skill.duration> * 5} @self
+
+Knockback_Prevent_BLOCK:
+  Skills:
+  - heal{a=0} @self
+
+warrior_shockwave_effect:
+  Skills:
+  - particlering{p=dust_color_transition;color1=#e8e7e7;color2=#d5d4d4;radius=1;points=10;amount=4;hS=0;vS=0;y=0.1;size=0.75}
+  - particlering{p=dust_color_transition;color1=#e8e7e7;color2=#d5d4d4;radius=2;points=10;amount=2;hS=0;vS=0;y=0.1;size=0.75;delay=1}
+  - particlering{p=dust_color_transition;color1=#e8e7e7;color2=#d5d4d4;radius=3;points=10;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=2}
+  - particlering{p=dust_color_transition;color1=#e8e7e7;color2=#d5d4d4;radius=4;points=10;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=3}
+  - particlering{p=dust_color_transition;color1=#e8e7e7;color2=#d5d4d4;radius=5;points=10;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=4}
+  - particlering{p=dust_color_transition;color1=#e8e7e7;color2=#d5d4d4;radius=6;points=10;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=5}
+
+warrior_lava_effect:
+  Skills:
+  - particlering{p=lava;radius=1;points=5;amount=4;hS=0;vS=0;y=0.1;size=0.75} @origin
+  - particlering{p=lava;radius=2;points=5;amount=2;hS=0;vS=0;y=0.1;size=0.75;delay=1} @origin
+  - particlering{p=lava;radius=3;points=5;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=2} @origin
+  - particlering{p=lava;radius=4;points=5;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=3} @origin
+  - particlering{p=lava;radius=5;points=5;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=4} @origin
+  - particlering{p=lava;radius=6;points=5;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=5} @origin
+  - particlering{p=lava;radius=7;points=5;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=6} @origin
+
+warrior_cloud_effect:
+  Skills:
+  - particlering{p=campfire_cosy_smoke;radius=1;points=30;amount=4;hS=0;vS=0;y=0.1;size=0.75} @origin
+  - particlering{p=campfire_cosy_smoke;radius=2;points=5;amount=2;hS=0;vS=0;y=0.1;size=0.75;delay=1} @origin
+  - particlering{p=campfire_cosy_smoke;radius=3;points=5;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=2} @origin
+
+warrior_shockwave_effect_small:
+  Skills:
+  - particlering{p=dust_color_transition;color1=#fa8c28;color2=#ffd27c;radius=1;points=10;amount=4;hS=0;vS=0;y=0.1;size=0.75}
+  - particlering{p=dust_color_transition;color1=#fa8c28;color2=#ffd27c;radius=2;points=10;amount=2;hS=0;vS=0;y=0.1;size=0.75;delay=1}
+
+warrior_schockwave_effect2_small:
+  Skills:
+  - particlering{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;radius=1;points=10;amount=4;hS=0;vS=0;y=0.1;size=0.75;delay=1}
+  - particlering{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;radius=2;points=10;amount=2;hS=0;vS=0;y=0.1;size=0.75;delay=2}
+  - particlering{p=dust_color_transition;color1=#ffa31a;color2=#ff6714;radius=3;points=10;amount=1;hS=0;vS=0;y=0.1;size=0.75;delay=3}
+
+#-----------------------------------------------------------------------------------------------------------------#
+
+

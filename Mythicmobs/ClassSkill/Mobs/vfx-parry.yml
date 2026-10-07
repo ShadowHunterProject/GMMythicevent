@@ -1,0 +1,20 @@
+vfx-parry:
+  Type: ARMOR_STAND
+  Display: "VFX"
+  Faction: Server
+  Options:
+    Despawn: true
+    Marker: true
+    HasGravity: false
+    Invisible: true
+    Invincible: true
+  Skills:
+  - skill{s=[
+    - model{mid=vfx_parry;hitboxscale=0;init=false;usm=true}
+    - brightness{mid=vfx_parry;s=15;b=15}
+    - state{mid=vfx_parry;state=parry1;p=1}
+    - rendererinit{mid=vfx_parry}
+    - delay 20
+    - remove @self
+    ]} @self ~onSpawn
+  - remove @self ~onLoad

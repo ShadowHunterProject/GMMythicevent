@@ -1,0 +1,538 @@
+Mage_Pet_Basic_Attack:
+  Cooldown: 1
+  Conditions:
+    - incombat true
+    - targetwithin{d=20} true
+    - offgcd true
+  Skills:
+    - gcd{ticks=20}
+    - state{s=c1;speed=1.5;lo=5} @self
+    - delay 5
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+
+Mage_Pet_Combat_Skills:
+  Cooldown: 3
+  Conditions:
+    - incombat true
+    - targetwithin{d=20} true
+  Skills:
+    - randomskill{skills=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet 40,BOSS_Mage_FireKatana_slc_Pet 20,BOSS_Mage_FireKatana_src_Pet 20,BOSS_Mage_FireKatana_domain_Pet 20}
+Changetarget_Pet:
+  Cooldown: 0
+  Skills:
+    - runaitargetselector{target=clear}
+    - runaitargetselector{target=players}
+
+Cancelattack_Pet:
+  Skills:
+    - CancelEvent
+
+Mage_SLEEP_Pet:
+  Conditions:
+    - stance{s=Rest} true
+  Skills:
+    - setAI{AI=false} @self
+    - onDamaged{auraName=damageResist;d=40;cE=true;deflectProjectiles=true} @self
+
+Mage_WAKE_Pet:
+  Cooldown: 99999
+  Conditions:
+    - playerwithin{d=10} true
+    - stance{s=Rest} true
+  Skills:
+    - onDamaged{auraName=damageResist;d=76;cE=true;deflectProjectiles=true} @self
+    - state{s=start_combat;li=3;lo=5;speed=1} @self
+    - delay 20
+    - defaultstate{mid=boss_mage;type=idle;state=idle;speed=1} @self
+    - delay 20
+    - effect:sound{s=block.trial_spawner.ominous_activate;volume=1.5;pitch=<randomfloat.1.1to1.2>} @self
+    - delay 35
+    - setstance{stance=Walking} @self
+    - delay 1
+    - setAI{AI=true} @self
+
+Mage_LOOK_Pet:
+  Conditions:
+    - hasaura{n=PARRIED} false
+    - hasaura{n=AI_OFF} false
+    - stance{s=Rest} false
+    - hasAI true
+  Skills:
+    - look{headOnly=false;immediately=true;force=false;repeat=20;repeati=1} @target
+
+BOSS_BLOCK_Pet:
+  Skills:
+    - effect:sound{s=item.shield.block;volume=2;pitch=<randomfloat.0.8to0.9>}
+
+Mage_Dash_Pet:
+  Conditions:
+    - offgcd
+    - stance{s=Rest} false
+    - hasaura{n=PARRIED} false
+  Skills:
+    - randomskill{skills=Mage_Walk_Pet 30,Mage_Run_Pet 70}
+
+Mage_Walk_Pet:
+  Cooldown: 99999
+  Skills:
+    - setSkillCooldown{skill=Mage_Run_Pet;seconds=0} @self
+    - defaultstate{t=walk;s=walk;li=5;lo=5} @self
+    - setspeed{speed=0.6;type=walking} @self
+    - setstance{stance=Walking} @self
+
+Mage_Run_Pet:
+  Cooldown: 99999
+  Conditions:
+    - targetwithin{d=10} false
+  Skills:
+    - setSkillCooldown{skill=Mage_Walk_Pet;seconds=0} @self
+    - defaultstate{t=walk;s=run;li=5;lo=5} @self
+    - setspeed{speed=1.7;type=walking} @self
+    - setstance{stance=Running} @self
+
+Mage_QUICKSWITCH_TO_WALK_Pet:
+  Conditions:
+    - offgcd
+    - targetwithin{d=10} true
+    - stance{s=Running} true
+    - hasaura{n=PARRIED} false
+  Skills:
+    - setSkillCooldown{skill=Mage_Run_Pet;seconds=0} @self
+    - defaultstate{t=walk;s=walk;li=5;lo=5} @self
+    - setspeed{speed=0.6;type=walking} @self
+    - setstance{stance=Walking} @self
+
+BOSS_Mage_Flinch_Pet:
+  Cooldown: 12
+  Conditions:
+    - hasAura{aura=NOFLINCH} false
+  Skills:
+    - gcd{ticks=50}
+    - aura{auraName=FLINCHED;duration=50} @self
+    - setspeed{speed=0;type=walking} @self
+    - state{s=flinch;speed=1;lo=10} @self
+
+    - lunge{velocity=0.1;velocityY=0;repeat=7;repeatInterval=1} @forward{forward=-5;sideoffset=0}
+
+    - delay 8
+
+    - setAI{ai=false} @self
+
+    - delay 42
+
+    - setAI{ai=true} @self
+    - BodyRotation{mh=0;mb=75;player=true} @self
+    - setSkillCooldown{skill=Mage_Walk_Pet;seconds=0} @self
+    - skill{s=Mage_Walk_Pet;delay=1}
+
+BOSS_Mage_Stepdash_Pet:
+  Skills:
+    - randomskill{skills=BOSS_Mage_Stepdash_FRONT_Pet,BOSS_Mage_Stepdash_LEFT_Pet,BOSS_Mage_Stepdash_RIGHT_Pet,BOSS_Mage_Stepdash_BACK_Pet}
+
+BOSS_Mage_Stepdash_FRONT_Pet:
+  Cooldown: 1
+  Conditions:
+    - offgcd
+    - stance{s=Rest} false
+    - incombat true
+    - (targetwithin{d=7} true && targetnotwithin{d=3} true) true
+  Skills:
+    - gcd{ticks=10}
+    - state{s=dash_front;lo=5;speed=1} @self
+    - lunge{velocity=0.3;velocityY=0;repeat=8;repeatInterval=1} @forward{forward=5;sideoffset=0}
+    - effect:sound{s=item.armor.equip_leather;volume=2;pitch=0.7;delay=2} @self
+
+BOSS_Mage_Stepdash_LEFT_Pet:
+  Cooldown: 1
+  Conditions:
+    - offgcd
+    - stance{s=Rest} false
+    - incombat true
+    - targetwithin{d=5} true
+  Skills:
+    - gcd{ticks=10}
+    - state{s=dash_left;lo=5;speed=1} @self
+    - lunge{velocity=0.3;velocityY=0;repeat=8;repeatInterval=1} @forward{forward=0;sideoffset=-5}
+    - effect:sound{s=item.armor.equip_leather;volume=2;pitch=0.7;delay=2} @self
+
+BOSS_Mage_Stepdash_RIGHT_Pet:
+  Cooldown: 1
+  Conditions:
+    - offgcd
+    - stance{s=Rest} false
+    - incombat true
+    - targetwithin{d=5} true
+  Skills:
+    - gcd{ticks=10}
+    - state{s=dash_right;lo=5;speed=1} @self
+    - lunge{velocity=0.3;velocityY=0;repeat=8;repeatInterval=1} @forward{forward=0;sideoffset=5}
+    - effect:sound{s=item.armor.equip_leather;volume=2;pitch=0.7;delay=2} @self
+
+BOSS_Mage_Stepdash_BACK_Pet:
+  Cooldown: 1
+  Conditions:
+    - offgcd
+    - stance{s=Rest} false
+    - incombat true
+    - targetwithin{d=4} true
+  Skills:
+    - gcd{ticks=10}
+    - state{s=dash_back;lo=5;speed=1} @self
+    - lunge{velocity=0.3;velocityY=0;repeat=8;repeatInterval=1} @forward{forward=-5;sideoffset=0}
+    - effect:sound{s=item.armor.equip_leather;volume=2;pitch=0.7;delay=2} @self
+
+BOSS_Mage_REMOVESKILLAURA_Pet:
+  Skills:
+    - auraremove{aura=SKILL_NEXT} @self
+
+BOSS_Mage_SKILL_P1_Pet:
+  Skills:
+    - randomskill{skills=BOSS_Sorcery_Combo_ST_1_Pet 40,BOSS_Sorcery_Combo_ST_2_Pet 30,BOSS_Sorcery_Combo_ST_3_Pet 30,BOSS_Mage_FireKatana_slc_Pet 20,BOSS_Mage_FireKatana_src_Pet 20,BOSS_Mage_FireKatana_domain_Pet 15}
+
+BOSS_Awakened_Mage_BURN_Pet:
+  TargetConditions:
+    - owner false
+    - entitytype{t=ARMOR_STAND} false
+    - hasaura{n=FW_BURN} false
+  Skills:
+    - aura{auraName=FW_BURN;duration=<skill.burnduration> * 20}
+    - delay 1
+    - effect:sound{s=entity.player.hurt_on_fire;volume=0.6;pitch=1;repeat=<skill.burnduration> - 1;repeati=20} @TargetedTarget{conditions=[- isLiving true,- hasaura{n=FW_FREEZE} false,- hasaura{n=FW_BURN} true]}
+    - effect:sound{s=entity.generic.burn;volume=0.5;pitch=1.4;repeat=<skill.burnduration> - 1;repeati=20} @TargetedTarget{conditions=[- isLiving true,- hasaura{n=FW_FREEZE} false,- hasaura{n=FW_BURN} true]}
+    - basedamage{m=0.2;pkb=true;repeat=<skill.burnduration> - 1;repeati=20} @TargetedTarget{conditions=[- isLiving true,- hasaura{n=FW_FREEZE} false,- hasaura{n=FW_BURN} true]}
+    - ignite{ticks=<skill.burnduration> * 20}
+    - particles{p=small_flame;amount=10;hS=0.3;vS=0.7;y=1;size=1;speed=0.03;repeat=<skill.burnduration> - 1;repeati=20} @TargetedTarget{conditions=[- isLiving true,- hasaura{n=FW_FREEZE} false,- hasaura{n=FW_BURN} true]}
+
+BOSS_Sorcery_Combo_ST_1_Pet:
+  Cooldown: 5
+  Conditions:
+    - incombat true
+    - offgcd
+    - stance{s=Walking}
+    - incombat true
+    - targetwithin{d=20} true
+  Skills:
+    - terminable{sync=true;auraName=STOPSKILL;oS=BOSS_Sorcery_Combo_ST_1_SKILL;d=20;conditions=[ - hasaura{n=FLINCHED} true ]} @self
+
+BOSS_Sorcery_Combo_ST_1_SKILL_Pet:
+  Skills:
+    - BodyRotation{mh=0;mb=0;player=true} @self
+    - gcd{ticks=20}
+    - setspeed{speed=0;type=walking} @self
+    - state{s=c1;speed=1;lo=10} @self
+
+    - look{force=true;repeat=10;repeati=1} @target #LOCKON
+
+    - delay 7
+
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+
+    - delay 13
+
+    - BodyRotation{mh=0;mb=75;player=true} @self
+    - setSkillCooldown{skill=Mage_Walk_Pet;seconds=0} @self
+    - skill{s=Mage_Walk_Pet;delay=1}
+
+BOSS_Sorcery_Combo_ST_1_SHOOT_Pet:
+  Skills:
+    - projectile{bmd=true;bulletType=MOB;mob=VFX_AwakenedMage_Fireball;oH=BOSS_Sorcery_Combo_DAMAGE_D_Pet;ohb=BOSS_Sorcery_Combo_DAMAGE_D_Pet;v=21;i=1;hR=1;vR=1;mr=30;hnp=true;hO=0;sE=true;sB=true;hs=false;hfs=0;sfo=0;syo=0;tyo=0;sso=0;fo=true;hitConditions=[- isLiving true,- isowner false];byo=0;drawhitbox=false;ham=true} @target
+    - effect:sound{s=awakened_mage_sounds:samus.awakened_mage.fire_ball;volume=1;pitch=<random.float.0.9to1.1>} @forward{f=1;y=0}
+    - sound{s=entity.blaze.shoot;v=1;p=1} @self
+
+BOSS_Sorcery_Combo_DAMAGE_D_Pet:
+  Cooldown: 0.001
+  Skills:
+    - skill{s=BOSS_Sorcery_Combo_DAMAGE_DD_Pet} @EIR{r=3;limit=5;sort=NEAREST;conditions=[- isowner false]}
+    - effect:sound{s=awakened_mage_sounds:samus.awakened_mage.fire_explode;volume=0.7;pitch=<random.float.0.9to1.1>} @origin
+    - sound{s=entity.generic.explode;v=0.6;p=1.2} @origin
+    - summon{type=VFX_AwakenedMage_Fireball_Explosion_FULL_Pet;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+    - particles{p=campfire_cosy_smoke;amount=4;hS=0.3;vS=0.3;y=0;size=1;speed=0.05} @origin
+
+BOSS_Sorcery_Combo_DAMAGE_DD_Pet:
+  Skills:
+    - skill{s=BOSS_Sorcery_Combo_DAMAGE_Pet} @target{conditions=[- isLiving true]}
+
+BOSS_Sorcery_Combo_DAMAGE_Pet:
+  TargetConditions:
+    - isowner false
+    - isblocking castinstead BOSS_BLOCK_Pet
+  Skills:
+    - damage{a=400;pkb=false;hnp=true;hp=false;pi=true} @target{ignore=players;ignore=owner}
+    - damage{a=500;pkb=false;hnp=true;hp=false;pi=true} @target{target=players;ignore=owner}
+    - projectile{targetisorigin=true;bulletType=MOB;mob=VFX_AwakenedMage_Impact;v=0;i=1;hR=0;vR=0;mr=2;hnp=false;hO=0;sE=false;sB=false;hs=false;hfs=0;sfo=0;syo=1.2;tyo=1.2;sso=0;fo=true;byo=0;ham=true}
+    - effect:sound{s=universal_sounds:samus.universal.hit_impact_thud;volume=0.45;pitch=<random.float.1.1to1.2>} @self
+    - sound{s=entity.player.attack.crit;v=0.6;p=1.2} @self
+  # - skill{s=BOSS_Awakened_Mage_BURN_Pet;burnduration=3} 1
+
+BOSS_Mage_Death_Pet:
+  Skills:
+    - effect:sound{s=entity.ender_dragon.death;volume=1;pitch=1} @self
+    - particles{p=large_smoke;amount=30;hS=1;vS=1;y=1;speed=0.1} @self
+    - delay 60
+    - remove @self
+
+BOSS_Sorcery_Combo_ST_2_Pet:
+  Cooldown: 5
+  Conditions:
+    - incombat true
+    - offgcd
+    - stance{s=Walking}
+    - incombat true
+    - targetwithin{d=20} true
+  Skills:
+    - terminable{sync=true;auraName=STOPSKILL;oS=BOSS_Sorcery_Combo_ST_2_SKILL;d=40;conditions=[ - hasaura{n=FLINCHED} true ]} @self
+
+BOSS_Sorcery_Combo_ST_2_SKILL_Pet:
+  Skills:
+    - BodyRotation{mh=0;mb=0;player=true} @self
+    - gcd{ticks=40}
+    - setspeed{speed=0;type=walking} @self
+    - state{s=c2;speed=1;lo=10} @self
+    - look{force=true;repeat=20;repeati=1} @target #LOCKON
+    - delay 7
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 7
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 7
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 13
+    - BodyRotation{mh=0;mb=75;player=true} @self
+    - setSkillCooldown{skill=Mage_Walk_Pet;seconds=0} @self
+    - skill{s=Mage_Walk_Pet;delay=1}
+
+BOSS_Sorcery_Combo_ST_3_Pet:
+  Cooldown: 5
+  Conditions:
+    - incombat true
+    - offgcd
+    - stance{s=Walking}
+    - incombat true
+    - targetwithin{d=20} true
+  Skills:
+    - terminable{sync=true;auraName=STOPSKILL;oS=BOSS_Sorcery_Combo_ST_3_SKILL;d=60;conditions=[ - hasaura{n=FLINCHED} true ]} @self
+
+BOSS_Sorcery_Combo_ST_3_SKILL_Pet:
+  Skills:
+    - BodyRotation{mh=0;mb=0;player=true} @self
+    - gcd{ticks=60}
+    - setspeed{speed=0;type=walking} @self
+    - state{s=c3;speed=1;lo=10} @self
+    - look{force=true;repeat=35;repeati=1} @target #LOCKON
+    - delay 7
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 5
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 5
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 5
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 5
+    - skill{s=BOSS_Sorcery_Combo_ST_1_SHOOT_Pet}
+    - delay 13
+    - BodyRotation{mh=0;mb=75;player=true} @self
+    - setSkillCooldown{skill=Mage_Walk_Pet;seconds=0} @self
+    - skill{s=Mage_Walk_Pet;delay=1}
+
+#luahuyenthoai
+#===========================================================================skill1huyenthoai==================================================================================#
+
+BOSS_Mage_FireKatana_lcphase3_Pet:
+  Conditions:
+    - incombat true
+  Skills:
+    - potion{type=slow;duration=50;level=1} @self
+    - setVarLoc{var=caster.firekatana_slc_loc;v=@forward{f=0;lockpitch=true}} @Self
+    - summon{type=lostassetsanime_firekatana_slc_Pet} @forward{f=0.5;yo=0.0;lockpitch=true}
+    - slash{p=12;w=3.5;h=4.5;a=200;y=1.5;fo=1.2;r=1.5;rot=0,0,20;mpd=true;oH=Hit_BOSS_Mage_FireKatana_slc_Pet;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=2}]} @forward{f=0;lockpitch=true}
+    - effect:sound{s=entity.breeze.shoot;v=1.2;p=1.4} @self
+    - effect:sound{s=entity.breeze.wind_burst;v=0.4;p=0.8} @self
+    - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+    - delay 10
+    - slash{p=12;w=3.5;h=4.5;a=200;y=1.5;fo=1.2;r=1.5;rot=0,0,20;mpd=true;oH=Hit_BOSS_Mage_FireKatana_slc;oP=[  - effect:particles{p=flame;a=1;hS=0;vS=0;s=0.04;delay=2}]} @forward{f=0;lockpitch=true}
+    - effect:sound{s=entity.breeze.shoot;v=1.2;p=1.4} @self
+    - effect:sound{s=entity.breeze.wind_burst;v=0.4;p=0.8} @self
+    - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+    - delay 9
+    - effect:sound{s=entity.wither.shoot;v=0.7;p=1.4} @self
+    - solo_velocity{m=set;x=0;y=1.2;z=0.4;r=true} @self
+    - onDamaged{d=20;damageMods="FALL -0.000001"} @Self
+    - delay 6
+    - solo_velocity{m=set;x=0;y=-2.0;z=1.1;r=true} @self
+    - delay 2
+    - slash{p=36;w=5.0;h=5.0;a=360;y=1.2;fo=1.5;r=1.0;rot=0,0,20;mpd=true;oP=[  - effect:particles{p=flame;a=3;hS=0;vS=0;s=0.07;delay=2}]} @VariableLocation{var=caster.firekatana_slc_loc}
+    - slash{p=2;w=1.0;h=1.0;a=360;y=1.2;fo=1.5;r=7.0;rot=0,0,20;mpd=true;oH=Hit_BOSS_Mage_FireKatana_slc2_Pet} @VariableLocation{var=caster.firekatana_slc_loc}
+    - variableunset{var=caster.firekatana_slc_loc} @Self
+    - effect:sound{s=entity.breeze.shoot;v=1.6;p=1.2} @self
+    - effect:sound{s=entity.breeze.wind_burst;v=0.9;p=0.7} @self
+    - effect:sound{s=entity.wither.shoot;v=0.8;p=1.7} @self
+    - effect:sound{s=entity.wither.shoot;v=0.6;p=0.7} @self
+    - effect:sound{s=item.trident.throw;v=0.8;p=0.6} @self
+    - effect:sound{s=entity.warden.sonic_boom;v=0.8;p=1.6} @self
+
+#===========================================================================skill2huyenthoai==================================================================================#
+
+BOSS_Mage_FireKatana_slc_Pet:
+  Cooldown: 3
+  Conditions:
+    - incombat true
+  Skills:
+    - skill{s=lostassetsanime_firekatana_lc3_Pet}
+    - delay 10
+    - skill{s=BOSS_Mage_FireKatana_lcphase3_Pet}
+
+Hit_BOSS_Mage_FireKatana_slc_Pet:
+  TargetConditions:
+    - owner false
+    - samefaction false
+    - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+    - setNoDamageTicks{ticks=0}
+    - damage{a=450;pkb=false;hnp=true;hp=false;pi=true} @target{ignore=players;ignore=owner}
+    - damage{a=380;pkb=false;hnp=true;hp=false;pi=true} @target{target=players;ignore=owner}
+
+Hit_BOSS_Mage_FireKatana_slc2_Pet:
+  TargetConditions:
+    - owner false
+    - samefaction false
+    - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+    - setNoDamageTicks{ticks=0}
+    - damage{a=450;pkb=false;hnp=true;hp=false;pi=true} @target{ignore=players;ignore=owner}
+    - damage{a=500;pkb=false;hnp=true;hp=false;pi=true} @target{target=players;ignore=owner}
+  # - ignite{ticks=80} @EIR{r=3.9;conditions=[- owner false]}
+
+#===========================================================================skill3huyenthoai==================================================================================#
+
+BOSS_Mage_FireKatana_src_Pet:
+  Cooldown: 5
+  Conditions:
+    - incombat true
+    - targetwithin{d=28} true
+  Skills:
+    - setVarLoc{var=caster.firekatana_src_loc;v=@forward{f=0;so=0.0;lockpitch=true}} @Self
+    - potion{type=SLOW;d=10;l=4;or=true;p=false;i=false} @Self
+    - summon{type=lostassetsanime_firekatana_src_Pet} @forward{f=0.5;yo=0.0;lockpitch=true}
+    - sound{s=entity.warden.nearby_close;v=1.2;p=1.4} @Self
+    - sound{s=entity.warden.sonic_charge;v=1.6;p=13} @Self
+    - delay 10
+    - slash{p=36;w=5.0;h=5.0;a=360;y=1.2;fo=1.5;r=1.0;rot=0,0,15;mpd=true;oP=[  - effect:particles{p=flame;a=3;hS=0;vS=0;s=0.07;delay=2}]} @VariableLocation{var=caster.firekatana_src_loc}
+    - slash{p=72;w=10.0;h=10.0;a=360;y=1.2;fo=1.5;r=1.0;rot=0,0,8;mpd=true;oP=[  - effect:particles{p=flame;a=10;hS=0;vS=0;s=0.07;delay=2}]} @VariableLocation{var=caster.firekatana_src_loc}
+    - slash{p=2;w=1.0;h=1.0;a=360;y=1.2;fo=1.5;r=14.0;rot=0,0,0;mpd=true;oH=Hit_BOSS_Mage_FireKatana_src_Pet} @VariableLocation{var=caster.firekatana_src_loc}
+    - variableunset{var=caster.firekatana_src_loc} @Self
+    - sound{s=entity.wither.shoot;v=0.8;p=1.6} @Self
+    - sound{s=entity.wither.shoot;v=1.2;p=0.6} @Self
+    - sound{s=entity.warden.sonic_boom;v=1.2;p=0.9} @Self
+    - sound{s=entity.warden.attack_impact;v=1.2;p=0.5} @Self
+    - sound{s=item.totem.use;v=0.6;p=1.9} @Self
+
+Hit_BOSS_Mage_FireKatana_src_Pet:
+  TargetConditions:
+    - owner false
+    - samefaction false
+    - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+    - setNoDamageTicks{ticks=0}
+    - damage{a=450;pkb=false;hnp=true;hp=false;pi=true} @target{ignore=players;ignore=owner}
+    - damage{a=500;pkb=false;hnp=true;hp=false;pi=true} @target{target=players;ignore=owner}
+  # - ignite{ticks=80} @EIR{r=3.9;conditions=[- owner false]}
+
+# =========================================================
+# BOSS VERSION (FIX SYNTAX)
+# =========================================================
+
+BOSS_Mage_FireKatana_domain_Pet:
+  Cooldown: 6
+  Conditions:
+    - incombat true
+    - targetwithin{d=28} true
+    - incombat true
+  Skills:
+    - setVarLoc{var=caster.fk_domain_loc;v=@target{lockpitch=true}} @Self
+    - setVarLoc{var=caster.fk_domain_center;v=@variablelocation{var=caster.fk_domain_loc}} @Self
+
+    - potion{type=SLOW;d=30;l=6;or=true;p=false;i=false} @Self
+    - sound{s=entity.warden.sonic_charge;v=2.0;p=0.6} @Self
+    - sound{s=item.trident.thunder;v=1.2;p=1.6} @Self
+    - effect:particles{p=flame;a=40;hS=0.7;vS=0.2;s=0.05} @VariableLocation{var=caster.fk_domain_center}
+    - effect:particles{p=smoke_large;a=18;hS=0.6;vS=0.2;s=0.08} @VariableLocation{var=caster.fk_domain_center}
+    - delay 12
+
+    - summon{type=lostassetsanime_firekatana_src_Pet} @VariableLocation{var=caster.fk_domain_center}
+    - sound{s=entity.warden.nearby_close;v=1.4;p=1.2} @Self
+    - delay 6
+
+    - pull{v=1.1;to=true} @EIR{r=13;loc=@VariableLocation{var=caster.fk_domain_center};conditions=[- owner false]}
+    - effect:particles{p=flame;a=25;hS=1.2;vS=0.15;s=0.06} @VariableLocation{var=caster.fk_domain_center}
+    - delay 6
+
+    - skill{s=BOSS_Mage_FireKatana_domain_slash1_Pet} @VariableLocation{var=caster.fk_domain_center}
+    - delay 6
+    - skill{s=BOSS_Mage_FireKatana_domain_slash2_Pet} @VariableLocation{var=caster.fk_domain_center}
+    - delay 6
+    - skill{s=BOSS_Mage_FireKatana_domain_slash3_Pet} @VariableLocation{var=caster.fk_domain_center}
+    - delay 8
+
+    - skill{s=BOSS_Mage_FireKatana_domain_waves_Pet} @VariableLocation{var=caster.fk_domain_center}
+    - delay 10
+
+    - sound{s=entity.warden.sonic_boom;v=1.6;p=0.9} @Self
+    - sound{s=entity.generic.explode;v=1.2;p=0.8} @Self
+    - effect:particles{p=flame;a=90;hS=2.0;vS=0.25;s=0.06} @VariableLocation{var=caster.fk_domain_center}
+    - effect:particles{p=smoke_large;a=45;hS=1.8;vS=0.25;s=0.09} @VariableLocation{var=caster.fk_domain_center}
+    - damage{a=44;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=7.8;loc=@VariableLocation{var=caster.fk_domain_center;conditions=[- owner false,- isplayer false]}}
+    - damage{a=89;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=7.8;loc=@VariableLocation{var=caster.fk_domain_center;conditions=[- owner false,- isplayer true]}}
+    # - ignite{ticks=90} @EIR{r=7.8;loc=@VariableLocation{var=caster.fk_domain_center;conditions=[- owner false]}}
+
+    - variableunset{var=caster.fk_domain_loc} @Self
+    - variableunset{var=caster.fk_domain_center} @Self
+
+BOSS_Mage_FireKatana_domain_slash1_Pet:
+  Skills:
+    - sound{s=entity.blaze.shoot;v=1.0;p=1.6} @Self
+    - slash{p=32;w=5.0;h=4.5;a=300;y=1.2;fo=1.5;r=1.2;rot=0,0,12;mpd=true;
+      oP=[ - effect:particles{p=flame;a=8;hS=0.2;vS=0.05;s=0.06} ];
+      oH=Hit_BOSS_Mage_FireKatana_domain_Pet} @Origin
+
+BOSS_Mage_FireKatana_domain_slash2_Pet:
+  Skills:
+    - sound{s=entity.wither.shoot;v=1.1;p=1.2} @Self
+    - slash{p=54;w=8.0;h=7.0;a=340;y=1.2;fo=1.6;r=1.0;rot=0,0,8;mpd=true;
+      oP=[ - effect:particles{p=flame;a=14;hS=0.3;vS=0.07;s=0.06} ];
+      oH=Hit_BOSS_Mage_FireKatana_domain_Pet} @Origin
+
+BOSS_Mage_FireKatana_domain_slash3_Pet:
+  Skills:
+    - sound{s=entity.warden.attack_impact;v=1.3;p=0.7} @Self
+    - slash{p=72;w=11.0;h=10.0;a=360;y=1.2;fo=1.6;r=1.0;rot=0,0,5;mpd=true;
+      oP=[ - effect:particles{p=flame;a=22;hS=0.35;vS=0.08;s=0.06} ];
+      oH=Hit_BOSS_Mage_FireKatana_domain_Pet} @Origin
+
+BOSS_Mage_FireKatana_domain_waves_Pet:
+  Skills:
+    - sound{s=item.firecharge.use;v=1.2;p=0.9} @Self
+    - effect:particles{p=flame;a=35;hS=0.9;vS=0.12;s=0.06} @Origin
+    - damage{a=450;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=6.5;conditions=[- owner false,- isplayer false]}
+    - damage{a=500;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=6.5;conditions=[- owner false,- isplayer true]}
+    # - ignite{ticks=60} @EIR{r=6.5;conditions=[- owner false]}
+    - delay 4
+    - damage{a=400;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=10.4;conditions=[- owner false,- isplayer false]}
+    - damage{a=350;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=10.4;conditions=[- owner false,- isplayer true]}
+    # - ignite{ticks=60} @EIR{r=10.4;conditions=[- owner false]}
+    - effect:particles{p=flame;a=45;hS=1.3;vS=0.12;s=0.06} @Origin
+    - delay 4
+    - damage{a=350;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=14.3;conditions=[- owner false,- isplayer false]}
+    - damage{a=300;pkb=true;hnp=true;hp=false;pi=true} @EIR{r=14.3;conditions=[- owner false,- isplayer true]}
+    # - ignite{ticks=60} @EIR{r=14.3;conditions=[- owner false]}
+    - effect:particles{p=flame;a=55;hS=1.7;vS=0.12;s=0.06} @Origin
+
+Hit_BOSS_Mage_FireKatana_domain_Pet:
+  TargetConditions:
+    - owner false
+    - samefaction false
+    - entitytype{t=ARMOR_STAND,ITEM_DISPLAY,BLOCK_DISPLAY,TEXT_DISPLAY,INTERACTION} false
+  Skills:
+    - setNoDamageTicks{ticks=0}
+    - damage{a=440;pkb=false;hnp=true;hp=false;pi=true} @target{ignore=players;ignore=owner}
+    - damage{a=400;pkb=false;hnp=true;hp=false;pi=true} @target{target=players;ignore=owner}
+    # - ignite{ticks=80}
+    - potion{type=WEAKNESS;d=40;l=0;or=true;p=false;i=false} @target

@@ -1,0 +1,501 @@
+# Cetus_Slash #Bo ky nang cua dragon_water
+
+FX_Cetus_Slash1:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=Cetus_slash_1;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_2;np=body;delay=2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_3;np=body;delay=4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_4;np=body;delay=6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_5;np=body;delay=8} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_6;np=body;delay=10} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_7;np=body;delay=12} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+FX_Cetus_Slash2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=Cetus_slash_1;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_2;np=body;delay=2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_3;np=body;delay=4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_4;np=body;delay=6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_5;np=body;delay=8} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_6;np=body;delay=10} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_7;np=body;delay=12} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+FX_Cetus_Slash3:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=Cetus_slash_1;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill3} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_2;np=body;delay=2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_3;np=body;delay=4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_4;np=body;delay=6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_5;np=body;delay=8} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_6;np=body;delay=10} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_7;np=body;delay=12} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+FX_Cetus_Slash4_1:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=Cetus_slash_1;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_2;np=body;delay=2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_3;np=body;delay=4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_4;np=body;delay=6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_5;np=body;delay=8} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_6;np=body;delay=10} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_7;np=body;delay=12} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+FX_Cetus_Slash4_2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=Cetus_slash_1;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill5} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_2;np=body;delay=2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_3;np=body;delay=4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_4;np=body;delay=6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_5;np=body;delay=8} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_6;np=body;delay=10} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_7;np=body;delay=12} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+FX_Cetus_Slash5:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=Cetus_slash_1;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_2;np=body;delay=2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_3;np=body;delay=4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_4;np=body;delay=6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_5;np=body;delay=8} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_6;np=body;delay=10} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_7;np=body;delay=12} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+# Cetus_DragonCharge
+
+FX_Cetus_Dragon1:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_dragon;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - remove{delay=30} @self ~onSpawn
+  - effect:particles{p=end_rod;amount=3;speed=0;hS=0.1;vS=0.1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=block_crack;m=WATER;amount=5;speed=0;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=bubble;amount=30;speed=0.01;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+
+FX_Cetus_DragonCharge_Point:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - remove{delay=30} @self ~onSpawn
+  #- skill{s=Cetus_DragonCharge_Point_Skills} @self ~onSpawn
+
+FX_Cetus_Dragon2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_dragon;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill2} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+  - effect:particles{p=end_rod;amount=3;speed=0;hS=0.1;vS=0.1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=block_crack;m=WATER;amount=5;speed=0;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=bubble;amount=30;speed=0.01;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+
+fx_cetus_water_wave:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill1;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wave2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill2;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wave3:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill3;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wave4:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill4;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wave5:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill5;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wave6:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill6;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wave7:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill7;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wave8:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill8;sp=1.25} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+fx_cetus_water_wavecharge:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_waterwave_charge;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - remove{delay=30} @self ~onSpawn
+
+# Cetus_DragonWhirl
+
+FX_Cetus_Dragon3:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_dragon;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill3} @self ~onSpawn
+  - remove{delay=70} @self ~onSpawn
+  - setrotation{relative=true;yaw=180} @self ~onSpawn
+  - effect:particles{p=end_rod;amount=3;speed=0;hS=0.1;vS=0.1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=block_crack;m=WATER;amount=5;speed=0;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=bubble;amount=30;speed=0.01;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+
+# Cetus_GreatSword
+
+fx_cetus_greatsword:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_greatsword;lockpitch=true} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - remove{delay=240} @self ~onSpawn
+  - summon{type=FX_Cetus_BigSlash;amount=1;radius=0;yRadius=0;onSurface=true;delay=8} @forward{f=1.5;y=0.3;sideOffset=-1;lockpitch=true} ~onSpawn
+  - particleorbital{r=6;points=30;t=80;i=1;vy=25;particle=redstone;delay=40;size=3;color=#ffffff} @self ~onSpawn
+  - particleorbital{r=5.7;points=30;t=80;i=1;vy=25;particle=redstone;delay=40;size=3;color=#8fd3ff} @self ~onSpawn
+  - particleorbital{r=5.5;points=30;t=80;i=1;vy=25;particle=redstone;delay=40;size=3;color=#4d9be6} @self ~onSpawn
+  - particleorbital{r=5.3;points=30;t=80;i=1;vy=25;particle=redstone;delay=40;size=3;color=#4d65b4} @self ~onSpawn
+  - summon{type=fx_cetus_Crack;amount=1;radius=0;yRadius=0;onSurface=true;delay=40} @forward{f=0;y=0;sideOffset=0;lockpitch=true} ~onSpawn
+  - summon{type=fx_cetus_strike;amount=1;radius=0;yRadius=0;onSurface=true;delay=40} @forward{f=0;y=0;sideOffset=0;lockpitch=true} ~onSpawn
+
+FX_Cetus_BigSlash:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=Cetus_slash_1;lockpitch=true} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill7} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_2;np=body;delay=2} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_3;np=body;delay=4} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_4;np=body;delay=6} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_5;np=body;delay=8} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_6;np=body;delay=10} @self ~onSpawn
+  - changepart{m=Cetus_slash_1;p=body;nm=Cetus_slash_7;np=body;delay=12} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+fx_cetus_Crack:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_crack_1;lockpitch=true} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - changepart{m=fx_cetus_crack_1;p=bone1;nm=fx_cetus_crack_2;np=bone1;delay=20} @self ~onSpawn
+  - changepart{m=fx_cetus_crack_1;p=bone1;nm=fx_cetus_crack_3;np=bone1;delay=120} @self ~onSpawn
+  - remove{delay=200} @self ~onSpawn
+
+fx_cetus_strike:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=cetus_strike_1;lockpitch=true} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - changepart{m=cetus_strike_1;p=bone;nm=cetus_strike_2;np=bone;delay=2} @self ~onSpawn
+  - changepart{m=cetus_strike_1;p=bone;nm=cetus_strike_3;np=bone;delay=4} @self ~onSpawn
+  - changepart{m=cetus_strike_1;p=bone;nm=cetus_strike_4;np=bone;delay=6} @self ~onSpawn
+  - changepart{m=cetus_strike_1;p=bone;nm=cetus_strike_5;np=bone;delay=8} @self ~onSpawn
+  - remove{delay=10} @self ~onSpawn
+
+# Cetus_Parry
+
+fx_cetus_parry:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_greatsword;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill2} @self ~onSpawn
+  - remove{delay=60} @self ~onSpawn
+
+fx_cetus_parryattack:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_greatsword;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=parry} @self ~onSpawn
+  - remove{delay=40} @self ~onSpawn
+
+# Cetus_Dragon_Surge
+
+FX_Cetus_DragonSurge_Orbital:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_dragon;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=ult} @self ~onSpawn
+  - remove{delay=140} @self ~onSpawn
+
+FX_Cetus_DragonSurge_slash1:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_dragon;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=ult1} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+  - effect:particles{p=end_rod;amount=3;speed=0;hS=0.1;vS=0.1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=block_crack;m=WATER;amount=5;speed=0;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=bubble;amount=30;speed=0.01;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+
+FX_Cetus_DragonSurge_slash2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+    KnockbackResistance: 1
+  Skills:
+  - model{usestatemachine=true;mid=fx_cetus_dragon;lockpitch=true;scale=1.5} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=ult2} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+  - effect:particles{p=end_rod;amount=3;speed=0;hS=0.1;vS=0.1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=block_crack;m=WATER;amount=5;speed=0;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1
+  - effect:particles{p=bubble;amount=30;speed=0.01;hS=0.2;vS=1} @ModelPart{mid=fx_cetus_dragon;p=body4;em=false} ~onTimer:1

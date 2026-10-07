@@ -1,0 +1,543 @@
+#===========================================================================skill1==================================================================================#    
+## Singularity (Shift + LMB)
+PbWS_Singularity_mmocore:
+  
+  Skills:
+  - setvariable{var=skill.shieldFound;value=0} @caster
+  
+  # Try Shield 1
+  - skill{s=[
+        - variableadd{var=skill.shieldFound;amount=1} @caster
+        - skill{s=PbWS_Orbit_Shield_1_Out}
+        
+        - delay 170
+        - skill{s=PbWS_Orbit_Shield_1_Return_mmocore}
+    ]} @self ?varInRange{var=skill.shieldFound;value=<2} ?varEquals{var=caster.pbws_shield_1_availability;value=1}
+  
+  # Try Shield 4
+  - skill{s=[
+        - variableadd{var=skill.shieldFound;amount=1} @caster
+        - skill{s=PbWS_Orbit_Shield_4_Out}
+        
+        - delay 170
+        - skill{s=PbWS_Orbit_Shield_4_Return_mmocore}
+    ]} @self ?varInRange{var=skill.shieldFound;value=<2} ?varEquals{var=caster.pbws_shield_4_availability;value=1}
+  
+  # Try Shield 2
+  - skill{s=[
+        - variableadd{var=skill.shieldFound;amount=1} @caster
+        - skill{s=PbWS_Orbit_Shield_2_Out}
+        
+        - delay 170
+        - skill{s=PbWS_Orbit_Shield_2_Return_mmocore}
+    ]} @self ?varInRange{var=skill.shieldFound;value=<2} ?varEquals{var=caster.pbws_shield_2_availability;value=1}
+  
+  # Try Shield 3
+  - skill{s=[
+        - variableadd{var=skill.shieldFound;amount=1} @caster
+        - skill{s=PbWS_Orbit_Shield_3_Out}
+        
+        - delay 170
+        - skill{s=PbWS_Orbit_Shield_3_Return_mmocore}
+    ]} @self ?varInRange{var=skill.shieldFound;value=<2} ?varEquals{var=caster.pbws_shield_3_availability;value=1}
+  
+  - setvariable{var=skill.casted;value=0} @caster
+  - summon{t=PbWS_VFX_Singularity;r=0;yr=0;os=true;
+        onSummon=[
+          - setvariable{var=skill.casted;value=1} @caster
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+         
+          - delay 19
+          - SudoSkill{s=PbWS_Singularity_mmocore-ARRIVAL;setcasterastrigger=true}
+        ]
+    } @Target{ignore=armorstands;conditions=[  - solo_can_target{interaction=OFFENSE_ACTION}  ]}
+    
+  - summon{t=PbWS_VFX_Singularity;r=0;yr=0;os=true;
+        onSummon=[
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+      
+          - delay 19
+          - SudoSkill{s=PbWS_Singularity_mmocore-ARRIVAL;setcasterastrigger=true}
+        ]
+    } @TargetLocation{d=15;ignoreTransparent=true} ?varEquals{var=skill.casted;value=0}
+  
+  - delay 20
+  - Aura{auraName=pbws_singularity_active_test;duration=150;i=20;
+        onTick=[
+          - totem{oS=PbWS_Singularity_mmocore-TICK} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_VFX_Singularity} ]}
+        ]
+    } @self
+
+
+PbWS_Singularity_mmocore-TICK:
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true;pi=true} @ENO{r=8.5;ignore=armorstands;ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=true;pi=true} @ENO{r=8.5;ignore=armorstands;target=players}
+  - solo_pull{v=3;to=true} @ENO{r=6.5;ignore=armorstands;conditions=[ - solo_is_my_summon false ]}
+  
+  - potion{type=SLOW;duration=40;level=3} @ENO{r=8.5;ignore=armorstands;conditions=[  - haspotioneffect{type=SLOW;level=>1} ]}
+  - potion{type=SLOW;duration=40;level=2} @ENO{r=8.5;ignore=armorstands;conditions=[  - haspotioneffect{type=SLOW;level=1} ]}
+  - potion{type=SLOW;duration=40;level=1} @ENO{r=8.5;ignore=armorstands;conditions=[  - haspotioneffect{type=SLOW} false ]}
+
+PbWS_Singularity_mmocore-ARRIVAL:
+  Skills:
+  - solo_pull{velocity=7} @EIR{r=8;targetself=false;targetowner=false;ignore=armorstands;conditions=[ - solo_is_my_summon false ]}
+
+#===================================================================================================================================================================#
+
+#===========================================================================skill2==================================================================================#
+## Ultimate Ability: Awakening (Shift + RMB)
+PbWS_Awakening_mmocore:
+  
+  Skills:
+  - skill{s=PbWS_Oribt_Shield_All_Out}
+  
+  - setvariable{var=skill.casted;value=0} @caster
+  - summon{t=PbWS_VFX_Shield_Ult_Charging;r=0;yr=0;os=true;
+        onSummon=[
+          - setvariable{var=skill.casted;value=1} @caster
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+        ]
+    } @Target{ignore=armorstands;conditions=[  - solo_can_target{interaction=OFFENSE_ACTION}  ]}
+    
+  - summon{t=PbWS_VFX_Shield_Ult_Charging;r=0;yr=0;os=true;
+        onSummon=[
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+        ]
+    } @TargetLocation{d=15;ignoreTransparent=true} ?varEquals{var=skill.casted;value=0}
+    
+  - totem{oS=PbWS_Awakening_mmocore_Charging-TICK;repeat=33;repeatInterval=5;delay=25} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_VFX_Shield_Ult_Charging} ]}
+  
+  - delay 90
+  - skill{s=[
+      - summon{t=PbWS_VFX_Shield_Ult_Unleashed}
+      - remove
+    ]} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_VFX_Shield_Ult_Charging} ]}
+  
+  - totem{oS=PbWS_Awakening_mmocore_Unleashed-TICK;repeat=33;repeatInterval=5;delay=5} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_VFX_Shield_Ult_Unleashed} ]}
+  - totem{oS=PbWS_Awakening_mmocore_Unleashed_Launch_Shield;repeat=8;repeatInterval=20} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_VFX_Shield_Ult_Unleashed} ]}
+  - sound{s=block.conduit.deactivate;p=0.7;v=0.65;repeat=7;repeatInterval=20;delay=11} @self
+  
+  - delay 180
+  - skill{s=PbWS_Oribt_Shield_All_Return_mmocore}
+
+PbWS_Awakening_mmocore_Charging-TICK:
+  Skills:
+  - solo_pull{v=2.5;to=true} @ENO{r=13;ignore=armorstands;conditions=[ - solo_is_my_summon false ]}
+
+PbWS_Awakening_mmocore_Unleashed-TICK:
+  Skills:
+  - potion{type=SLOW;duration=10;level=3} @ENO{r=13;ignore=armorstands;conditions=[ - solo_is_my_summon false ]}
+
+PbWS_Awakening_mmocore_Unleashed_Launch_Shield:
+  Skills:
+  - summon{t=PbWS_VFX_Perihelion;r=0;yr=0;os=true;
+        onSummon=[
+          - solo_velocity{m=set;x=0;y=-999;z=0}
+          - delay 15
+          - totem{oS=PbWS_Perihelion_mmocore_DAMAGE_NO_KNOCKBACK}
+          - delay 20
+          - remove
+        ]
+    } @ENO{r=13;ignore=armorstands;limit=2;sort=RANDOM}
+
+PbWS_Perihelion_mmocore_DAMAGE_NO_KNOCKBACK:
+  Skills:
+  - solo_damage{a="<skill.var.damage>";pkb=true;pi=true} @ENO{r=6;ignore=armorstands;ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=true;pi=true} @ENO{r=6;ignore=armorstands;target=players}
+#===================================================================================================================================================================#
+
+#===========================================================================skill3==================================================================================#
+## Gaze of the Lurker (Double Shift)
+PbWS_Gaze_Of_The_Lurker_mmoitem_Trigger:
+  
+  Skills:
+  - Aura{auraName=pbws_shield_double_shift_trigger;duration=5} @self
+  
+PbWS_Gaze_Of_The_Lurker_mmocore:
+  
+  Skills:
+  #- sendtitle{title="&e&k┊┊&r &e&lBẢO HỘ HỦY DIỆT &e&k┊┊&r";subtitle="&a&lHồi bản thân +1000hp";d=20} @self
+  #- command{c="mythiclib tempstat add <caster.name> ADDITIONAL_CHONGCHIU 1000 100";asConsole=true} @self
+  - potion{type=ABSORPTION;duration=200;level=4} @self
+  - potion{type=DAMAGE_RESISTANCE;duration=200;level=2} @self
+  - potion{type=FAST_DIGGING;duration=200;level=4} @self
+  - potion{type=FIRE_RESISTANCE;duration=200;level=4} @self
+  - potion{type=NIGHT_VISION;duration=200;level=4} @self
+  - potion{type=INCREASE_DAMAGE;duration=200;level=7} @self
+  - potion{type=LUCK;duration=200;level=4} @self
+  - potion{type=SPEED;duration=200;level=4} @self
+  - auraremove{aura=pb_shield_double_shift_trigger} @self
+  - skill{s=PbWS_Oribt_Shield_All_Out;setcasterastrigger=true}
+  
+  - summon{t=PbWS_VFX_Gaze_Of_The_Lurker} @SelfLocation{fo=-1.5}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-2.5}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-5}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-7.5}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-10}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-12.5}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-15}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-17.5}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-20}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-22.5}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-25}
+  - totem{oT=PbWS_Gaze_Of_The_Lurker_mmocore-TICK;int=10;d=70} @SelfLocation{fo=-27.5}
+  
+  - delay 120
+  - skill{s=PbWS_Oribt_Shield_All_Return_mmocore;setcasterastrigger=true}
+  
+  - delay 10
+  - skill{s=HEAL_PERCENT_1} @self
+
+HEAL_PERCENT_1:
+  Skills:
+  - heal{amount=1000} @self    
+
+PbWS_Gaze_Of_The_Lurker_mmocore-TICK:
+  Skills:
+  - delay 40
+  - setvariable{var=skill.damage_divided;value=0;type=FLOAT} @caster
+  - variableMath{var=skill.damage_divided;equation="100 / 8"} @caster
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=4.5;ignore=armorstands;ignore=players}
+  - solo_damage{a="<skill.var.damage>";pkb=true} @ENO{r=4.5;ignore=armorstands;target=players}
+  - potion{type=SLOW;duration=20;level=3} @ENO{r=3.5;ignore=armorstands}
+
+
+#===========================================================================================================================================================#
+
+#===========================================================================combobotro3skills==================================================================================#
+## Shield Management
+PbWS_Orbit_Shield_1_Out:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_1_availability;value=1}
+  Skills:
+  - setvariable{var=caster.pbws_shield_1_availability;value=0} @caster
+  - variableadd{var=caster.pbws_shield_count;value=-1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Out_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=left_outter_leave;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 10
+  - SudoSkill{s=PbWS_Orbit_Shield_1_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+PbWS_Orbit_Shield_1_Return:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_1_availability;value=0}
+  Skills:
+  - setvariable{var=caster.pbws_shield_1_availability;value=1} @caster
+  - variableadd{var=caster.pbws_shield_count;value=1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=left_outter_join;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 3
+  - SudoSkill{s=PbWS_Orbit_Shield_1_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+
+PbWS_Orbit_Shield_1_Return_mmocore:
+  Skills:
+  - skill{s=PbWS_Orbit_Shield_1_Return}
+  #- skill{s=PbWS_Resonance_mmocore}
+
+PbWS_Orbit_Shield_2_Out:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_2_availability;value=1}
+  Skills:
+  - setvariable{var=caster.pbws_shield_2_availability;value=0} @caster
+  - variableadd{var=caster.pbws_shield_count;value=-1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Out_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=left_inner_leave;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 10
+  - SudoSkill{s=PbWS_Orbit_Shield_2_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+PbWS_Orbit_Shield_2_Return:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_2_availability;value=0}
+  Skills:
+  - setvariable{var=caster.pbws_shield_2_availability;value=1} @caster
+  - variableadd{var=caster.pbws_shield_count;value=1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=left_inner_join;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 3
+  - SudoSkill{s=PbWS_Orbit_Shield_2_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+
+PbWS_Orbit_Shield_2_Return_mmocore:
+  Skills:
+  - skill{s=PbWS_Orbit_Shield_2_Return}
+  #- skill{s=PbWS_Resonance_mmocore}
+
+PbWS_Orbit_Shield_3_Out:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_3_availability;value=1}
+  Skills:
+  - setvariable{var=caster.pbws_shield_3_availability;value=0} @caster
+  - variableadd{var=caster.pbws_shield_count;value=-1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Out_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=right_inner_leave;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 10
+  - SudoSkill{s=PbWS_Orbit_Shield_3_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+PbWS_Orbit_Shield_3_Return:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_3_availability;value=0}
+  Skills:
+  - setvariable{var=caster.pbws_shield_3_availability;value=1} @caster
+  - variableadd{var=caster.pbws_shield_count;value=1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=right_inner_join;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 3
+  - SudoSkill{s=PbWS_Orbit_Shield_3_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+
+PbWS_Orbit_Shield_3_Return_mmocore:
+  Skills:
+  - skill{s=PbWS_Orbit_Shield_3_Return}
+  #- skill{s=PbWS_Resonance_mmocore}
+
+PbWS_Orbit_Shield_4_Out:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_4_availability;value=1}
+  Skills:
+  - setvariable{var=caster.pbws_shield_4_availability;value=0} @caster
+  - variableadd{var=caster.pbws_shield_count;value=-1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Out_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=right_outter_leave;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 10
+  - SudoSkill{s=PbWS_Orbit_Shield_4_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+PbWS_Orbit_Shield_4_Return:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_4_availability;value=0}
+  Skills:
+  - setvariable{var=caster.pbws_shield_4_availability;value=1} @caster
+  - variableadd{var=caster.pbws_shield_count;value=1} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>} @caster
+  
+  - SudoSkill{s=[
+      - state{s=right_outter_join;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 3
+  - SudoSkill{s=PbWS_Orbit_Shield_4_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+
+PbWS_Orbit_Shield_4_Return_mmocore:
+  Skills:
+  - skill{s=PbWS_Orbit_Shield_4_Return}
+  #- skill{s=PbWS_Resonance_mmocore}
+
+PbWS_Oribt_Shield_All_Out:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_count;value=4}
+  Skills:
+  - setvariable{var=caster.pbws_shield_1_availability;value=0} @caster
+  - setvariable{var=caster.pbws_shield_2_availability;value=0} @caster
+  - setvariable{var=caster.pbws_shield_3_availability;value=0} @caster
+  - setvariable{var=caster.pbws_shield_4_availability;value=0} @caster
+  - setvariable{var=caster.pbws_shield_count;value=0} @caster
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>} @caster
+  - skill{s=PbWS_Orbit_Shield_Out_Sound_Multiple} 
+  
+  - SudoSkill{s=[
+      - state{s=ult_enter;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 17
+  - SudoSkill{s=PbWS_Orbit_Shield_1_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  - SudoSkill{s=PbWS_Orbit_Shield_2_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  - SudoSkill{s=PbWS_Orbit_Shield_3_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  - SudoSkill{s=PbWS_Orbit_Shield_4_Invisible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+
+PbWS_Oribt_Shield_All_Return:
+  Conditions:
+  - varEquals{var=caster.pbws_shield_count;value=0}
+  Skills:
+  - SudoSkill{s=[
+      - state{s=ult_return;li=0;lo=0}
+    ];setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  #- skill{s=PbWS_UI_Update_Manual}
+  - skill{s=PbWS_Orbit_Shield_Return_Sound_Multiple}
+  
+  - delay 3
+  - SudoSkill{s=PbWS_Orbit_Shield_1_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  - SudoSkill{s=PbWS_Orbit_Shield_2_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  - SudoSkill{s=PbWS_Orbit_Shield_3_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  - SudoSkill{s=PbWS_Orbit_Shield_4_Visible;setcasterastrigger=true} @Children{target=armorstands;conditions=[  - mythicmobtype{t=PbWS_Orbit_Entity_Shield_Gear} ]}
+  
+  - delay 17
+  - setvariable{var=caster.pbws_shield_1_availability;value=1} @caster
+  - setvariable{var=caster.pbws_shield_2_availability;value=1} @caster
+  - setvariable{var=caster.pbws_shield_3_availability;value=1} @caster
+  - setvariable{var=caster.pbws_shield_4_availability;value=1} @caster
+  - setvariable{var=caster.pbws_shield_count;value=4} @caster
+  #- skill{s=PbWS_UI_Update_Manual}
+
+
+
+PbWS_Oribt_Shield_All_Return_mmocore:
+  Skills:
+  - skill{s=PbWS_Oribt_Shield_All_Return}
+  #- skill{s=PbWS_Resonance_mmocore;repeat=3;repeatInterval=1}
+
+PbWS_Orbit_Shield_1_Visible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=left_outter_shield;v=true}
+  - partvis{m=pbws_shield_suit;p=right_horn;v=true}
+  - partvis{m=pbws_shield_suit;p=left_horn;v=true}
+  - partvis{m=pbws_shield_suit;p=left_blade2;v=true}
+
+PbWS_Orbit_Shield_1_Invisible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=left_outter_shield}
+  - partvis{m=pbws_shield_suit;p=right_horn}
+  - partvis{m=pbws_shield_suit;p=left_horn}
+  - partvis{m=pbws_shield_suit;p=left_blade2}
+
+PbWS_Orbit_Shield_2_Visible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=left_inner_shield;v=true}
+  - partvis{m=pbws_shield_suit;p=right_horn4;v=true}
+  - partvis{m=pbws_shield_suit;p=left_horn4;v=true}
+  - partvis{m=pbws_shield_suit;p=left_blade;v=true}
+
+PbWS_Orbit_Shield_2_Invisible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=left_inner_shield}
+  - partvis{m=pbws_shield_suit;p=right_horn4}
+  - partvis{m=pbws_shield_suit;p=left_horn4}
+  - partvis{m=pbws_shield_suit;p=left_blade}
+
+PbWS_Orbit_Shield_3_Visible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=right_inner_shield;v=true}
+  - partvis{m=pbws_shield_suit;p=right_horn3;v=true}
+  - partvis{m=pbws_shield_suit;p=left_horn3;v=true}
+  - partvis{m=pbws_shield_suit;p=right_blade;v=true}
+
+PbWS_Orbit_Shield_3_Invisible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=right_inner_shield}
+  - partvis{m=pbws_shield_suit;p=right_horn3}
+  - partvis{m=pbws_shield_suit;p=left_horn3}
+  - partvis{m=pbws_shield_suit;p=right_blade}
+
+PbWS_Orbit_Shield_4_Visible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=right_outter_shield;v=true}
+  - partvis{m=pbws_shield_suit;p=right_horn2;v=true}
+  - partvis{m=pbws_shield_suit;p=left_horn2;v=true}
+  - partvis{m=pbws_shield_suit;p=right_blade2;v=true}
+
+PbWS_Orbit_Shield_4_Invisible:
+  TriggerConditions:
+  - owner
+  Skills:
+  - partvis{m=pbws_shield_suit;p=right_outter_shield}
+  - partvis{m=pbws_shield_suit;p=right_horn2}
+  - partvis{m=pbws_shield_suit;p=left_horn2}
+  - partvis{m=pbws_shield_suit;p=right_blade2}
+
+## Sounds
+PbWS_Orbit_Shield_Out_Sound_1:
+  Skills:
+  - sound{s=entity.allay.hurt;p=0.5;v=0.3} 
+  - sound{s=item.trident.throw;p=0.5;v=2.5;delay=7} 
+
+PbWS_Orbit_Shield_Out_Sound_2:
+  Skills:
+  - sound{s=entity.allay.hurt;p=0.55;v=0.3} 
+  - sound{s=item.trident.throw;p=0.55;v=2.5;delay=7} 
+
+PbWS_Orbit_Shield_Out_Sound_3:
+  Skills:
+  - sound{s=entity.allay.hurt;p=0.6;v=0.3} 
+  - sound{s=item.trident.throw;p=0.6;v=2.5;delay=7} 
+
+PbWS_Orbit_Shield_Out_Sound_Multiple:
+  Skills:
+  - vskill{s=PbWS_Orbit_Shield_Out_Sound_<random.1to3>}
+  - vskill{s=PbWS_Orbit_Shield_Out_Sound_<random.1to3>;delay=1}
+  - vskill{s=PbWS_Orbit_Shield_Out_Sound_<random.1to3>;delay=2}
+
+PbWS_Orbit_Shield_Return_Sound_1:
+  Skills:
+  - sound{s=entity.ender_dragon.flap;p=0.5;v=0.4} 
+  - sound{s=entity.breeze.shoot;p=0.5;v=0.4} 
+  - sound{s=entity.camel.dash;p=0.5;v=0.6} 
+
+PbWS_Orbit_Shield_Return_Sound_2:
+  Skills:
+  - sound{s=entity.ender_dragon.flap;p=0.55;v=0.4} 
+  - sound{s=entity.breeze.shoot;p=0.55;v=0.4} 
+  - sound{s=entity.camel.dash;p=0.55;v=0.6} 
+
+PbWS_Orbit_Shield_Return_Sound_3:
+  Skills:
+  - sound{s=entity.ender_dragon.flap;p=0.6;v=0.4} 
+  - sound{s=entity.breeze.shoot;p=0.6;v=0.4} 
+  - sound{s=entity.camel.dash;p=0.6;v=0.6} 
+
+PbWS_Orbit_Shield_Return_Sound_Multiple:
+  Skills:
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>}
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>;delay=1}
+  - vskill{s=PbWS_Orbit_Shield_Return_Sound_<random.1to3>;delay=2}
+

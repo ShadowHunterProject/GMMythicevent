@@ -1,0 +1,400 @@
+
+######## created by samus2002 #########
+
+Changetarget:  
+  Cooldown: 0
+  Skills:
+  - runaitargetselector{target=clear}
+  - runaitargetselector{target=players}
+  
+Cancelattack:
+  Skills:
+  - CancelEvent
+
+# Orc Giant #
+
+Orc_Giant_Skill:
+  Cooldown: 0
+  Skills:
+  - randomskill{skills=Stone_Throw,Orc_Roar}
+
+# Orc Giant Punch #
+
+Orc_Giant_Attack:
+  Cooldown: 0
+  Skills:
+  - randomskill{skills=Orc_Giant_Attack1,Orc_Giant_Attack2,Ground_Smash}
+
+Orc_Giant_Attack1:
+  Conditions:
+  - offgcd
+  - targetwithin{d=5} true
+  Skills:
+  - gcd{ticks=50}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=50} @self
+  - potion{type=SLOW;duration=50;level=99;hasParticles=false} @self
+  - state{s=attack_left;li=3;lo=2} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_attack;volume=2;pitch=1;delay=7} @self
+  - delay 25
+  - totem{md=2;c=1;oH=Orc_Giant_Attack_DAMAGE_1;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_Giant_Attack2:
+  Conditions:
+  - offgcd
+  - targetwithin{d=5} true
+  Skills:
+  - gcd{ticks=50}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=50} @self
+  - potion{type=SLOW;duration=50;level=99;hasParticles=false} @self
+  - state{s=attack_right;li=3;lo=2} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_attack;volume=2;pitch=1;delay=7} @self
+  - delay 25
+  - totem{md=2;c=1;oH=Orc_Giant_Attack_DAMAGE_2;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_Giant_Attack_DAMAGE_1:
+  TargetConditions:
+  - isblocking false
+  Skills:
+  - damage{a=148;pkb=false;hnp=false;hp=true;ia=true}
+  - solo_throw{velocity=15;velocityY=1}
+  - effect:spin{duration=10;velocity=-30} 0.5
+  
+Orc_Giant_Attack_DAMAGE_2:
+  TargetConditions:
+  - isblocking false
+  Skills:
+  - damage{a=148;pkb=false;hnp=false;hp=true;ia=true}
+  - solo_throw{velocity=15;velocityY=1}
+  - effect:spin{duration=10;velocity=30} 0.5
+  
+# Stone Throw #
+
+Stone_Throw:
+  Conditions:
+  - offgcd
+  - targetwithin{d=30} true
+  Skills:
+  - gcd{ticks=88}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=88} @self
+  - potion{type=SLOW;duration=88;level=99;hasParticles=false} @self
+  - state{s=throw_ready;li=2;lo=2} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_attack;volume=2;pitch=1;delay=7} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_groundsmash;volume=2;pitch=1;delay=15} @self
+  - effect:particles{particle=block_crack;m=STONE;amount=30;y=0.2;hS=1.3;vS=0.1;speed=0;delay=20} @ModelPart{p=left_wrist}
+  - effect:sound{s=orc_sounds:samus.orc_giant_lift;volume=2;pitch=1;delay=25} @self
+  - effect:particles{particle=block_crack;m=STONE;amount=30;y=0.2;hS=1.3;vS=0.1;speed=0;delay=25} @ModelPart{p=left_wrist}
+  - partvisibility{m=orc_giant;p=stone;v=true;delay=20} @self
+  - delay 50
+  - state{s=throw_far} @self
+  - delay 6
+  - partvisibility{m=orc_giant;p=stone;v=false} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_throw;volume=2;pitch=1} @self
+  - projectile{bulletType=MOB;bulletSpin=15;mob=Orc_Stone;onEnd=Stone_Throw_END;onHit=Stone_Throw_DAMAGE;v=36;i=1;hR=1;vR=1;mr=40;hnp=false;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=3;tyo=2;g=0.6} @target
+  
+Stone_Throw_DAMAGE:
+  TargetConditions:
+  - isblocking false
+  Skills:
+  - damage{a=228;pkb=false;hnp=false;hp=true;ia=true}
+  - solo_throw{velocity=17;velocityY=1}
+  - effect:spin{duration=30;velocity=30;delay=1}
+  
+Stone_Throw_END:
+  Skills:
+  - effect:sound{s=entity.zombie.break_wooden_door;volume=2;pitch=0.6} @self
+  - effect:particles{particle=block_crack;m=STONE;amount=30;y=1;hS=1.3;vS=1.3;speed=0}
+  
+# Ground Smash #
+
+Ground_Smash:
+  Conditions:
+  - offgcd
+  - targetwithin{d=8} true
+  Skills:
+  - gcd{ticks=73}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=73} @self
+  - potion{type=SLOW;duration=73;level=99;hasParticles=false} @self
+  - state{s=ground_smash} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_attack;volume=2;pitch=1;delay=10} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_groundsmash;volume=2;pitch=1;delay=15} @self
+  - delay 35
+  - effect:particles{particle=block_crack;m=DIRT;amount=50;y=0.15;hS=2;vS=0.1;speed=0} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=100;y=0.15;hS=4;vS=0.1;speed=0} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=50;y=0.4;hS=3;vS=0.2;speed=0;delay=2} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=100;y=0.4;hS=5;vS=0.2;speed=0;delay=2} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=50;y=0.8;hS=3;vS=0.3;speed=0;delay=4} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=100;y=0.8;hS=5;vS=0.3;speed=0;delay=4} @self
+  - damage{a=228;pkb=false;hnp=false;hp=true;ia=true} @PIR{r=7}
+  - solo_throw{velocity=15;velocityY=10} @PIR{r=7}
+
+# Orc Roar #
+
+Orc_Roar:
+  Conditions:
+  - offgcd
+  - targetwithin{d=15} true
+  Skills:
+  - gcd{ticks=60}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=60} @self
+  - potion{type=SLOW;duration=60;level=99;hasParticles=false} @self
+  - state{s=roar} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_groundsmash;volume=2;pitch=1} @self
+  - delay 20
+  - effect:sound{s=orc_sounds:samus.orc_giant_roar;volume=3;pitch=0.9} @self
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=0;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=36;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=72;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=108;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=144;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=180;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=216;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=252;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=288;sE=false;sB=false;hs=true;hfs=0} @forward
+  - projectile{onTick=Orc_Roar_FX;onHit=Orc_Roar_DAMAGE;v=30;i=1;hR=1;vR=1;mr=30;hnp=false;hO=324;sE=false;sB=false;hs=true;hfs=0} @forward
+  
+Orc_Roar_DAMAGE:
+  Skills:
+  - damage{a=462;pkb=false;hnp=false;hp=true;ia=true} @PlayersNearOrigin{r=3}
+  - solo_throw{velocity=17;velocityY=5} @PlayersNearOrigin{r=3}
+  - effect:spin{duration=30;velocity=30;delay=1} @PlayersNearOrigin{r=3}
+  
+Orc_Roar_FX:
+  Skills:
+  - effect:particles{particle=explosion_large;amount=10;y=0.1;hS=0;vS=3;speed=0} @origin
+  
+Orc_Giant_Attack:
+  Cooldown: 0
+  Skills:
+  - randomskill{skills=Orc_Giant_Attack1,Orc_Giant_Attack2,Ground_Smash}
+
+Orc_Giant_Attack1:
+  Conditions:
+  - offgcd
+  - targetwithin{d=5} true
+  Skills:
+  - gcd{ticks=50}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=50} @self
+  - potion{type=SLOW;duration=50;level=99;hasParticles=false} @self
+  - state{s=attack_left;li=3;lo=2} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_attack;volume=2;pitch=1;delay=7} @self
+  - delay 25
+  - totem{md=2;c=1;oH=Orc_Giant_Attack_DAMAGE_1;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_Giant_Attack2:
+  Conditions:
+  - offgcd
+  - targetwithin{d=5} true
+  Skills:
+  - gcd{ticks=50}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=50} @self
+  - potion{type=SLOW;duration=50;level=99;hasParticles=false} @self
+  - state{s=attack_right;li=3;lo=2} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_attack;volume=2;pitch=1;delay=7} @self
+  - delay 25
+  - totem{md=2;c=1;oH=Orc_Giant_Attack_DAMAGE_2;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_Giant_Attack_DAMAGE_1:
+  TargetConditions:
+  - isblocking false
+  Skills:
+  - damage{a=462;pkb=false;hnp=false;hp=true;ia=true}
+  - solo_throw{velocity=15;velocityY=1}
+  - effect:spin{duration=10;velocity=-30} 0.5
+  
+  
+# Orc King #
+  
+Orc_King_Skill:
+  Cooldown: 0
+  Skills:
+  - randomskill{skills=Orc_King_Charge 50,Glaive_Throw 30}
+  
+# Glaive Attack #
+
+Orc_King_Attack:
+  Cooldown: 0
+  Skills:
+  - randomskill{skills=Orc_King_Attack1,Orc_King_Attack2,Orc_King_Attack3,Glaive_Smash}
+
+Orc_King_Attack1:
+  Conditions:
+  - offgcd
+  - targetwithin{d=5} true
+  Skills:
+  - gcd{ticks=30}
+  - state{s=attack1} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=2;pitch=1} @self
+  - delay 12
+  - effect:sound{s=orc_sounds:samus.orc_king_glaive;volume=1.5;pitch=1} @self
+  - totem{md=2;c=1;oH=Orc_King_Attack_DAMAGE;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_King_Attack2:
+  Conditions:
+  - offgcd
+  - targetwithin{d=5} true
+  Skills:
+  - gcd{ticks=30}
+  - state{s=attack2} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=2;pitch=1} @self
+  - delay 12
+  - effect:sound{s=orc_sounds:samus.orc_king_glaive;volume=1.5;pitch=1} @self
+  - totem{md=2;c=1;oH=Orc_King_Attack_DAMAGE;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+  
+Orc_King_Attack3:
+  Conditions:
+  - offgcd
+  - targetwithin{d=5} true
+  Skills:
+  - gcd{ticks=30}
+  - state{s=attack3} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=2;pitch=1} @self
+  - delay 12
+  - effect:sound{s=orc_sounds:samus.orc_king_glaive;volume=1.5;pitch=1} @self
+  - totem{md=2;c=1;oH=Orc_King_Attack_DAMAGE;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_King_Attack_DAMAGE:
+  TargetConditions:
+  - isblocking false
+  Skills:
+  - damage{a=812;pkb=false;hnp=false;hp=true;ia=true}
+  
+# Charge #
+
+Orc_King_Charge:
+  Conditions:
+  - offgcd
+  - targetwithin{d=30} true
+  Skills:
+  - gcd{ticks=125}
+  - state{s=charge_start} @self
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=30} @self
+  - potion{type=SLOW;duration=30;level=99;hasParticles=false} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_roar;volume=1.5;pitch=1} @self
+  - delay 43
+  - effect:sound{s=entity.horse.gallop;volume=1.5;pitch=1;repeat=4;repeatInterval=15} @self
+  - state{s=run} @self
+  - lunge{v=0.35;yv=-1.5;repeat=60;repeatInterval=1} @forward{f=1}
+  - skill{s=Orc_King_Charge_Attack;;delay=20}
+  - delay 60
+  - state{s=run;remove=true} @self
+  - state{s=charge_end} @self
+  - potion{type=SLOW;duration=22;level=99;hasParticles=false} @self
+  - lunge{v=0.1;yv=-1.5;repeat=22;repeatInterval=1} @forward{f=1}
+
+Orc_King_Charge_Attack:
+  Cooldown: 0
+  Skills:
+  - randomskill{skills=Orc_King_Charge_Attack1,Orc_King_Charge_Attack2,Orc_King_Charge_Attack3}
+
+Orc_King_Charge_Attack1:
+  Conditions:
+  - targetwithin{d=13} true
+  Skills:
+  - state{s=attack1} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=2;pitch=1} @self
+  - delay 12
+  - effect:sound{s=orc_sounds:samus.orc_king_glaive;volume=1.5;pitch=1} @self
+  - totem{md=2;c=1;oH=Orc_King_Charge_Attack_DAMAGE;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_King_Charge_Attack2:
+  Conditions:
+  - targetwithin{d=13} true
+  Skills:
+  - state{s=attack2} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=2;pitch=1} @self
+  - delay 12
+  - effect:sound{s=orc_sounds:samus.orc_king_glaive;volume=1.5;pitch=1} @self
+  - totem{md=2;c=1;oH=Orc_King_Charge_Attack_DAMAGE;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+  
+Orc_King_Charge_Attack3:
+  Conditions:
+  - targetwithin{d=13} true
+  Skills:
+  - state{s=attack3} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=2;pitch=1} @self
+  - delay 12
+  - effect:sound{s=orc_sounds:samus.orc_king_glaive;volume=1.5;pitch=1} @self
+  - totem{md=2;c=1;oH=Orc_King_Charge_Attack_DAMAGE;hnp=false;hp=true;hR=2;vR=2;i=1} @forward{f=3}
+
+Orc_King_Charge_Attack_DAMAGE:
+  TargetConditions:
+  - isblocking false
+  Skills:
+  - damage{a=903;pkb=false;hnp=false;hp=true;ia=true}
+
+# Glaive Throw #
+
+Glaive_Throw:
+  Conditions:
+  - offgcd
+  - targetwithin{d=30} true
+  Skills:
+  - gcd{ticks=45}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=34} @self
+  - potion{type=SLOW;duration=34;level=99;hasParticles=false} @self
+  - state{s=throw;li=2;lo=2} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=2;pitch=1;delay=7} @self
+  - delay 13
+  - effect:sound{s=orc_sounds:samus.orc_king_glaive;volume=2;pitch=1} @self
+  - projectile{bulletType=MOB;mob=Orc_Glaive;onHit=Glaive_Throw_DAMAGE;v=33;i=1;hR=1;vR=1;mr=35;hnp=false;hO=0;sE=true;sB=true;hs=false;hfs=0;syo=3;tyo=2;g=0.5} @target
+  - effect:sound{s=orc_sounds:samus.orc_giant_groundsmash;volume=2;pitch=1;delay=15} @self
+  - partvisibility{m=orc_king;p=weapon;v=false} @self
+  - delay 32
+  - effect:sound{s=orc_sounds:samus.orc_king_summon_sound;volume=1;pitch=1} @self
+  - partvisibility{m=orc_king;p=weapon;v=true} @self
+  - effect:particles{particle=soul_fire_flame;amount=25;y=0.6;hS=0.5;vS=0.5;speed=0} @ModelPart{p=weapon}
+  
+Glaive_Throw_DAMAGE:
+  TargetConditions:
+  - isblocking false
+  Skills:
+  - damage{a=903;pkb=false;hnp=false;hp=true;ia=true}
+  - solo_throw{velocity=6;velocityY=0;repeat=10;repeatInterval=1}
+  
+# Glaive Smash #
+
+Glaive_Smash:
+  Conditions:
+  - offgcd
+  - targetwithin{d=13} true
+  Skills:
+  - gcd{ticks=74}
+  - state{s=glaive_smash} @self
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=12} @self
+  - potion{type=SLOW;duration=12;level=99;hasParticles=false} @self
+  - delay 13
+  - effect:sound{s=orc_sounds:samus.orc_king_spin;volume=1.5;pitch=1;delay=9} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_spin;volume=1.5;pitch=0.95;delay=12} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_spin;volume=1.5;pitch=0.9;delay=15} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_spin;volume=1.5;pitch=0.85;delay=18} @self
+  - effect:sound{s=orc_sounds:samus.orc_king_spin;volume=1.5;pitch=0.8;delay=21} @self
+  - lunge{velocity=1;velocityY=1} @forward{f=1.5;y=1}
+  - effect:sound{s=orc_sounds:samus.orc_king_attack;volume=1.5;pitch=1;delay=16} @self
+  - effect:sound{s=orc_sounds:samus.orc_giant_groundsmash;volume=1.5;pitch=1;delay=8} @self
+  - delay 21
+  - lunge{velocity=1;velocityY=-1.3} @forward{f=2;y=-2}
+  - effect:sound{s=orc_sounds:samus.orc_king_heavyswing;volume=1.5;pitch=1} @self
+  - delay 5
+  - effect:particles{particle=block_crack;m=DIRT;amount=50;y=0.15;hS=2;vS=0.1;speed=0} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=100;y=0.15;hS=4;vS=0.1;speed=0} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=50;y=0.4;hS=3;vS=0.2;speed=0;delay=2} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=100;y=0.4;hS=5;vS=0.2;speed=0;delay=2} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=50;y=0.8;hS=3;vS=0.3;speed=0;delay=4} @self
+  - effect:particles{particle=block_crack;m=DIRT;amount=100;y=0.8;hS=5;vS=0.3;speed=0;delay=4} @self
+  - damage{a=1064;pkb=false;hnp=false;hp=true;ia=true} @PIR{r=5}
+  - solo_throw{velocity=1;velocityY=8} @PIR{r=5}
+  - setAI{ai=false} @self
+  - setAI{ai=true;delay=33} @self
+  - potion{type=SLOW;duration=33;level=99;hasParticles=false} @self
+
+# FORCED_SYNC_UPDATE639172407144863945

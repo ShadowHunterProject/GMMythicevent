@@ -1,0 +1,16 @@
+#THIS IS THE AGGRESSIVE VARIANT, WHICH WILL BE AGRESSIVE TO ALL PLAYERS/ATTACKERS.
+koboldWizard_em_aggressive:
+  Template: koboldWizard_em
+  AITargetSelectors:
+  - clear
+  - players
+  - attacker
+
+koboldWizard_em_summoned:
+  Template: koboldWizard_em
+  Health: 28
+  Damage: 4.5
+  Skills:
+  - signal{s=DIESUMMON} @Parent ~onDeath
+  Options:
+    FollowRange: 45

@@ -1,0 +1,175 @@
+LRD_WITHERSTORM_PROJECTILE_FX:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Options:
+    Marker: true
+    Invisible: true
+    Small: false
+    Collidable: false
+    NoAI: true
+    KnockbackResistance: 1
+    Gravity: false
+    Invincible: true
+  Skills:
+  - model{m=dark_mage_thorns;h=false;scale=1.3} @self ~onSpawn
+  - model{m=dark_mage_thorns;h=false;scale=1.3} @self ~onLoad
+  - brightness{b=15;s=15} @self ~onSpawn
+  - e:p{p=Large_Smoke;s=0.5;a=50} @self ~onTimer:40
+  #- bodyrotation{mh=0;mb=0;rde=0;rdu=0} @self ~onSpawn
+  #- setrotation{relative=true;pitch=<random.float.-90to90>;yaw=<random.float.-90to90>} @self ~onSpawn
+  - remove{delay=200} @self ~onSpawn
+  - fakelightning @selflocation{sso=1;sfo=1} ~onTimer:40
+  #- e:p{p=flash} @self ~onTimer:15
+  #- e:p{p=end_rod;s=0.5;a=50} @self ~onTimer:15
+
+LRD_WITHERSTORM_RIFT_PORTAL:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Options:
+    Marker: true
+    Invisible: true
+    Small: false
+    Collidable: false
+    NoAI: true
+    KnockbackResistance: 1
+    Gravity: false
+    Invincible: true
+  Skills:
+  - model{m=dark_mage_thorns;h=false;scale=1.3} @self ~onSpawn
+  - model{m=dark_mage_thorns;h=false;scale=1.3} @self ~onLoad
+  #- model{m=lrd_witherstorm_rift;h=false} @self ~onSpawn
+  #- model{m=lrd_witherstorm_rift;h=false} @self ~onLoad
+  - brightness{b=15;s=15} @self ~onSpawn
+  #- fakelightning @selflocation{sso=1;sfo=1} ~onTimer:20 .5
+  #- effect:blockmask{m=light;r=2;na=false;d=100} @origin{yo=-1} ~onSpawn
+  - bodyrotation{mh=0;mb=0;rde=0;rdu=0} @self ~onSpawn
+  - setrotation{relative=true;yaw=<random.float.-90to90>} @self ~onSpawn
+  - e:p{p=flash;delay=199} @self ~onSpawn
+  - e:p{p=end_rod;s=0.5;a=50;delay=199} @self ~onSpawn
+  #- partvis{pid=base;delay=200} @self ~onSpawn
+  - remove{delay=200} @self ~onSpawn
+  #- projectile{v=5;b=MOB;oE=skill_bongtoi2_vfx;mm=LRD_WITHERSTORM_RIFT_PORTAL_CHUNK;drawhitbox=false;delay=<random.10to20>;ot=[ - modifyProjectile{trait=VELOCITY;action=MULTIPLY;value=1.01}];sE=false;mr=666} @selflocation{yo=-48} ~onSpawn
+
+hv_mirabelle_mirror_top_ray:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Display: '&6Mirabelle'
+  Damage: 2
+  AITargetSelectors:
+  - 0 clear
+  AIGoalSelectors:
+  - 0 clear
+  Options:
+    NoAI: true
+    Marker: true
+    ApplyInvisibility: true
+    Invisible: true
+    Collidable: false
+  Skills:
+  - model{mid=dark_mage_mirror;save=true} @self ~onSpawn
+  - cullconfig{vc=false;bkc=false;blc=false;alod=CULLED} @self ~onSpawn
+  - sound{s=minecraft:event.mob_effect.trial_omen;p=1.4;v=5} @self ~onSpawn
+  - sound{s=minecraft:entity.illusioner.prepare_mirror;p=1.5;v=5;delay=5} @self ~onSpawn 
+  - state{s=top_ray} @self ~onSpawn
+  - remove{delay=22} @self ~onSpawn
+  - stun{g=false;d=30} @self ~onSpawn
+
+hv_mirabelle_mirror_spin_cards:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Options:
+    Marker: true
+    Invisible: true
+    Small: false
+    Collidable: false
+    NoAI: true
+    KnockbackResistance: 1
+    Gravity: false
+    Invincible: true
+  Skills:
+  - model{mid=dark_mage_mirror;save=true} @self ~onSpawn
+  - CancelEvent{sync=true} @self ~onAttack
+  - cullconfig{vc=false;bkc=false;blc=false;alod=CULLED} @self ~onSpawn
+  - sound{s=minecraft:entity.illusioner.prepare_mirror;p=1.8;v=5} @self ~onSpawn
+  - state{s=spin_cards} @self ~onSpawn
+  - sound{s=minecraft:item.book.page_turn;p=2;v=5} @self ~onTimer:5
+  - sound{s=minecraft:entity.illusioner.prepare_mirror;p=1.8;v=5;delay=243} @self ~onSpawn 
+  - remove{delay=249} @self ~onSpawn
+  - stun{g=false;d=250} @self ~onSpawn
+
+hv_mirabelle_mirror_spin_ray:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Options:
+    Marker: true
+    Invisible: true
+    Small: false
+    Collidable: false
+    NoAI: true
+    KnockbackResistance: 1
+    Gravity: false
+    Invincible: true
+  Skills:
+  - model{mid=dark_mage_mirror;save=true} @self ~onSpawn
+  - CancelEvent{sync=true} @self ~onAttack
+  - cullconfig{vc=false;bkc=false;blc=false;alod=CULLED} @self ~onSpawn
+  - sound{s=minecraft:entity.illusioner.prepare_mirror;p=1.8;v=5} @self ~onSpawn
+  - lockmodel{l=true} @self ~onSpawn
+  - state{s=spin_ray} @self ~onSpawn
+  - gcd{ticks=50;delay=230} @self ~onSpawn
+  - sound{s=minecraft:entity.illusioner.prepare_mirror;p=1.8;v=5;delay=243} @self ~onSpawn
+  - remove{delay=249} @self ~onSpawn
+  - stun{g=false;d=250} @self ~onSpawn
+
+
+BONGTOI_PUDDLE:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Options:
+    Marker: true
+    Invisible: true
+    Small: false
+    Collidable: false
+    NoAI: true
+    KnockbackResistance: 1
+    Gravity: false
+    Invincible: true
+  Skills:
+  - model{mid=dark_mage_puddle;save=true;h=false;scale=3.5} @self ~onSpawn
+  - model{mid=dark_mage_puddle;save=true;h=false;scale=3.5} @self ~onLoad
+  - remove{delay=160} @self ~onSpawn
+
+
+BONGTOI_MIRROR_ATTACK_1:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Options:
+    Marker: true
+    Invisible: true
+    Small: false
+    Collidable: false
+    NoAI: true
+    KnockbackResistance: 1
+    Gravity: false
+    Invincible: true
+  Skills:
+  - model{mid=dark_mage_mirror;save=true;h=false;scale=2} @self ~onSpawn
+  - state{s=top_ray} @self ~onSpawn
+  - remove{delay=22} @self ~onSpawn
+
+BONGTOI_MIRROR_ATTACK_2:
+  Type: ITEM_DISPLAY
+  Faction: darkmage
+  Options:
+    Marker: true
+    Invisible: true
+    Small: false
+    Collidable: false
+    NoAI: true
+    KnockbackResistance: 1
+    Gravity: false
+    Invincible: true
+  Skills:
+  - model{mid=dark_mage_mirror;save=true;h=false;scale=2} @self ~onSpawn
+  - state{s=spin_ray} @self ~onSpawn
+  - remove{delay=200} @self ~onSpawn

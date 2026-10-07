@@ -1,0 +1,658 @@
+#----------------------------------skill1------------------------#
+Cetus_DragonCharge:
+  Skills:
+  - potion{type=Speed;duration=150;level=3;hasParticles=false} @self
+  - effect:particles{p=end_rod;amount=8;speed=0.01;hS=0.2;vS=1.0} @self
+  - effect:particles{p=block_crack;m=WATER;amount=20;speed=0;hS=0.2;vS=1} @self
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=0.72} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.6;pitch=0.5} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.6;pitch=0.1} @self
+  - summon{type=FX_Cetus_Dragon1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=0;y=0;sideOffset=0;lockpitch=true}
+  - summon{type=FX_Cetus_DragonCharge_Point;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=6;y=0;sideOffset=0;lockpitch=true}
+  - setNoDamageTicks{ticks=35} @self ~onDamaged
+  - delay 25
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=1.6} @self
+  - effect:sound{s=entity.warden.sonic_boom;volume=1.0;pitch=1.3} @self
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_DragonCharge_DAMAGE_D;hnp=true;hp=true;hR=10;vR=10;i=1;repeat=9;repeatinterval=1} @self
+  - delay 5
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.6} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.8} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=1.6} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.7} @self
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE5_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash4_1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  - lunge{velocity=0.6;velocityY=0} @forward{f=13;y=3;lockpitch=true}
+  - summon{type=FX_Cetus_Slash4_2;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE5_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+  - potion{type=SLOW_FALLING;duration=60;level=2;p=false} @self
+  - delay 10
+  - skill{s=Cetus_Greatsword}
+
+Cetus_DragonCharge_DAMAGE_D:
+  Skills:
+  # r: 5 -> 10
+  - skill{s=Cetus_DragonCharge_DAMAGE} @EntitiesNearOrigin{r=10}
+
+Cetus_DragonCharge_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="200"} @target{ignore=players}
+  - solo_damage{a="200"} @target{target=players}
+  - solo_throw{velocity=1;velocityY=1}
+
+Cetus_DragonCharge_Point_Skills:
+  Skills:
+  - delay 25
+  - solo_throw{velocity=-25;velocityY=0.5} @Owner{conditions=[ - solo_is_my_summon false ]}
+
+
+#-----------------# Cetus_Greatsword:
+Cetus_Greatsword:
+  Skills:
+  - summon{type=fx_cetus_greatsword;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=5;y=0;sideOffset=0;lockpitch=true}
+  # projectile hR/vR: 0.5 -> 1.0
+  - projectile{onEnd=cetus_greatsword_E;v=50;i=1;hR=1.0;vR=1.0;mr=5;hnp=false;hO=0;sE=false;sB=true;hs=true;hfs=0;sfo=0.1;syo=2;tyo=2;sso=0} @Forward{f=50;y=0}
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=1.9} @self
+  - effect:sound{s=entity.illusioner.prepare_mirror;volume=1.0;pitch=0.9} @self
+  - delay 60
+  - summon{type=fx_cetus_greatsword;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=5;y=0;sideOffset=0;lockpitch=true}
+  - projectile{onEnd=cetus_greatsword_E;v=50;i=1;hR=1.0;vR=1.0;mr=5;hnp=false;hO=0;sE=false;sB=true;hs=true;hfs=0;sfo=0.1;syo=2;tyo=2;sso=0} @Forward{f=50;y=0}
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=1.9} @self
+  - effect:sound{s=entity.illusioner.prepare_mirror;volume=1.0;pitch=0.9} @self
+  - delay 60
+  - summon{type=fx_cetus_greatsword;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=5;y=0;sideOffset=0;lockpitch=true}
+  - projectile{onEnd=cetus_greatsword_E;v=50;i=1;hR=1.0;vR=1.0;mr=5;hnp=false;hO=0;sE=false;sB=true;hs=true;hfs=0;sfo=0.1;syo=2;tyo=2;sso=0} @Forward{f=50;y=0}
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=1.9} @self
+  - effect:sound{s=entity.illusioner.prepare_mirror;volume=1.0;pitch=0.9} @self
+
+cetus_greatsword_E:
+  Skills:
+  - delay 8
+  - effect:sound{s=entity.player.attack.sweep;volume=1.0;pitch=0.1} @origin
+  - effect:sound{s=item.trident.throw;volume=1.0;pitch=0.2} @origin
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.2} @origin
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=0.3} @origin
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_GreatSword_DAMAGE_D;hnp=true;hp=true;hR=10;vR=10;i=1} @origin
+  - delay 32
+  - effect:sound{s=ambient.underwater.enter;volume=2.0;pitch=0.2} @origin
+  - effect:sound{s=ambient.underwater.exit;volume=2.0;pitch=0.3} @origin
+  - effect:sound{s=item.bucket.fil;volume=2.0;pitch=0.3} @origin
+  - effect:sound{s=entity.generic.explode;volume=1.0;pitch=1.6} @origin
+  # hR/vR: 6 -> 12
+  - totem{md=2;c=1;oH=Cetus_GreatSword_DAMAGE2_D;hnp=true;hp=true;hR=12;vR=12;i=1} @origin
+  # hR/vR: 6 -> 12
+  - totem{md=2;c=1;oH=Cetus_GreatSword_Aura_D;hnp=true;hp=true;hR=12;vR=12;i=1;repeat=19;repeatinterval=10} @origin
+
+Cetus_GreatSword_DAMAGE_D:
+  Skills:
+  # r: 6 -> 12
+  - skill{s=Cetus_GreatSword_DAMAGE} @EntitiesNearOrigin{r=12}
+
+Cetus_GreatSword_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="100"} @target{ignore=players}
+  - solo_damage{a="100"} @target{target=players}
+  - solo_throw{velocity=4;velocityY=2}
+
+Cetus_GreatSword_DAMAGE2_D:
+  Skills:
+  # r: 6 -> 12
+  - skill{s=Cetus_GreatSword_DAMAGE2} @EntitiesNearOrigin{r=12}
+
+Cetus_GreatSword_DAMAGE2:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="100"} @target{ignore=players}
+  - solo_damage{a="100"} @target{target=players}
+  - solo_throw{velocity=0;velocityY=5}
+
+Cetus_GreatSword_Aura_D:
+  Skills:
+  # r: 6 -> 12
+  - skill{s=Cetus_GreatSword_Aura} @EntitiesNearOrigin{r=12}
+
+Cetus_GreatSword_Aura:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - potion{type=SLOW;duration="5 * 20";level=2;p=false} @Targeted ?!gm_is_immune
+  - effect:particles{particle=redstone;size=2;color=#4d65b4;amount=3;speed=0;hS=0.3;vS=0.3}
+  - effect:particles{particle=redstone;size=2;color=#8fd3ff;amount=3;speed=0;hS=0.3;vS=0.3}
+  - effect:particles{particle=redstone;size=2;color=#ffffff;amount=3;speed=0;hS=0.3;vS=0.3}
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.9} @self
+
+
+#----------------------------------skill2------------------------#
+Cetus_DragonWhirl:
+  Skills:
+  # projectile hR/vR: 0.5 -> 1.0
+  - projectile{onEnd=Cetus_DragonWhirl_E;v=50;i=1;hR=1.0;vR=1.0;mr=10;hnp=false;hO=0;sE=false;sB=true;hs=true;hfs=0;sfo=0.1;syo=2;tyo=2;sso=0} @Forward{f=50;y=0}
+  - summon{type=FX_Cetus_Dragon3;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=10;y=0.2;sideOffset=0;lockpitch=true}
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=0.1} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.6;pitch=0.2} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.6;pitch=0.1} @self
+
+Cetus_DragonWhirl_E:
+  Skills:
+  - delay 10
+  # hR/vR: 9 -> 18
+  - totem{md=2;c=1;oH=Cetus_DragonWhirl_DAMAGE_D;hnp=true;hp=true;hR=18;vR=18;i=1;repeat=9;repeatinterval=1} @origin
+  - effect:sound{s=entity.warden.sonic_charge;volume=2.0;pitch=0.2} @origin
+  - delay 25
+  # hR/vR: 6 -> 12
+  - totem{md=2;c=1;oH=Cetus_DragonWhirlBeam_DAMAGE_D;hnp=true;hp=true;hR=12;vR=16;i=1;repeat=9;repeatinterval=1} @origin
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=0.3} @origin
+  - effect:sound{s=entity.warden.sonic_boom;volume=2.0;pitch=1.2} @origin
+  - effect:sound{s=entity.illusioner.prepare_mirror;volume=2.0;pitch=0.2} @origin
+  - effect:sound{s=block.beacon.power_select;volume=2.0;pitch=0.7} @origin
+  - effect:sound{s=block.bell.resonate;volume=2.0;pitch=1.5} @origin
+  - delay 30
+  # hR/vR: 10 -> 20
+  - totem{md=2;c=1;oH=Cetus_DragonWhirlBurst_DAMAGE_D;hnp=true;hp=true;hR=20;vR=20;i=1} @origin
+  - effect:sound{s=entity.ender_dragon.growl;volume=2.0;pitch=0.1} @origin
+  - effect:sound{s=entity.ender_dragon.flap;volume=2.0;pitch=0.2} @origin
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=0.1} @origin
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @origin
+  - effect:sound{s=entity.generic.explode;volume=2.0;pitch=1.6} @origin
+  - effect:particles{particle=explosion_large;amount=100;hS=6;vS=0;y=1.0;speed=0.1;forwardOffset=0;sideOffset=0} @origin
+
+Cetus_DragonWhirl_DAMAGE_D:
+  Skills:
+  # r: 9 -> 18
+  - skill{s=Cetus_DragonWhirl_DAMAGE} @EntitiesNearOrigin{r=18}
+
+Cetus_DragonWhirl_DAMAGE:
+  TargetConditions:
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="185"} @target{ignore=players}
+  - solo_damage{a="185"} @target{target=players}
+  - solo_throw{velocity=-8;velocityY=2} @origin{conditions=[ - solo_is_my_summon false ]}
+
+Cetus_DragonWhirlBeam_DAMAGE_D:
+  Skills:
+  # r: 6 -> 12
+  - skill{s=Cetus_DragonWhirlBeam_DAMAGE} @EntitiesNearOrigin{r=12}
+
+Cetus_DragonWhirlBeam_DAMAGE:
+  TargetConditions:
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="185"} @target{ignore=players}
+  - solo_damage{a="185"} @target{target=players}
+  - solo_throw{velocity=2;velocityY=1} @origin{conditions=[ - solo_is_my_summon false ]}
+
+Cetus_DragonWhirlBurst_DAMAGE_D:
+  Skills:
+  # r: 10 -> 20
+  - skill{s=Cetus_DragonWhirlBurst_DAMAGE} @EntitiesNearOrigin{r=20}
+
+Cetus_DragonWhirlBurst_DAMAGE:
+  TargetConditions:
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="185"} @target{ignore=players}
+  - solo_damage{a="185"} @target{target=players}
+  - solo_throw{velocity=4;velocityY=7} @origin{conditions=[ - solo_is_my_summon false ]}
+
+
+#----------------------------------skill3------------------------#
+Cetus_Dragon_Surge:
+  Skills:
+  - potion{type=NIGHT_VISION;duration=200;level=4} @self
+  - potion{type=INCREASE_DAMAGE;duration=200;level=6} @self
+  - potion{type=LUCK;duration=200;level=4} @self
+  - potion{type=SPEED;duration=200;level=4} @self
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=0.1} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.6;pitch=1.5} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.6;pitch=1.5} @self
+  - delay 20
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.2} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.5} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.8} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=0.9} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=0.72} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.6;pitch=0.5} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.6;pitch=0.1} @self
+  # hR/vR: 6 -> 12
+  - totem{md=2;c=1;oH=Cetus_Surge_Slash_DAMAGE1_D;hnp=true;hp=true;hR=12;vR=12;i=1;repeat=4;repeatinterval=2} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  - summon{type=FX_Cetus_DragonSurge_slash1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=4;y=0.2;sideOffset=0;lockpitch=true}
+  - delay 20
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.3} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.6} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=1.4} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.9} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=0.82} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.6;pitch=0.6} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.6;pitch=0.2} @self
+  # hR/vR: 7 -> 14
+  - totem{md=2;c=1;oH=Cetus_Surge_Slash_DAMAGE2_D;hnp=true;hp=true;hR=14;vR=14;i=1;repeat=4;repeatinterval=2} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash2;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  - summon{type=FX_Cetus_DragonSurge_slash2;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=4;y=0.2;sideOffset=0;lockpitch=true}
+  - delay 20
+  - skill{s=Cetus_Water_Wave} @forward{f=6;y=0;sideOffset=0;lockpitch=true}
+  - summon{type=FX_Cetus_Dragon2;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=6;y=0;sideOffset=0;lockpitch=true}
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.1} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.2} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.2} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=0.3} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.3;pitch=0.62} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.3;pitch=0.4} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.3;pitch=0.1} @self
+  # hR/vR: 7 -> 14
+  - totem{md=2;c=1;oH=Cetus_Surge_Slash_DAMAGE3_D;hnp=true;hp=true;hR=14;vR=14;i=1} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash3;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  - lunge{velocity=0.5;velocityY=1} @forward{f=6;y=3;lockpitch=true}
+  - potion{type=SLOW_FALLING;duration=60;level=2;p=false} @self
+  - delay 30
+  - lunge{velocity=1;velocityY=-1.6} @forward{f=6;y=-3;lockpitch=true}
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.3} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.6} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.8} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.0} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.3;pitch=0.5} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.3;pitch=0.1} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.3;pitch=0.1} @self
+  - summon{type=FX_Cetus_Slash5;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=-2.1;sideOffset=0;lockpitch=true}
+  - delay 5
+  # hR/vR: 6 -> 12
+  - totem{md=2;c=1;oH=Cetus_Surge_Slash_DAMAGE4_D;hnp=true;hp=true;hR=12;vR=12;i=1} @forward{f=1;lockpitch=true}
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.2} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=0.3} @self
+  - effect:sound{s=item.bucket.fill;volume=1.0;pitch=0.3} @self
+  - effect:sound{s=entity.generic.explode;volume=0.5;pitch=1.6} @self
+  - delay 2
+  - effect:particles{particle=falling_dripstone_water;amount=50;hS=1;vS=0;y=1.0;speed=0.1;forwardOffset=0;sideOffset=0} @forward{f=3;lockpitch=true;y=-0.5}
+  - effect:particles{particle=cloud;amount=50;hS=1;vS=0;y=1.0;speed=0.1;forwardOffset=0;sideOffset=0} @forward{f=3;lockpitch=true;y=-0.5}
+  - delay 20
+  - auraremove{aura=Cetus_Surge_Slash_Stack;delay=1} @self
+  - auraremove{aura=Cetus_Dragon_Surge;delay=1} @self
+  - effect:particles{p=end_rod;amount=8;speed=0.01;hS=0.2;vS=1.0} @self
+  - effect:particles{p=block_crack;m=WATER;amount=20;speed=0;hS=0.2;vS=1} @self
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=0.72} @self
+  - effect:sound{s=entity.ender_dragon.flap;volume=0.6;pitch=0.5} @self
+  - effect:sound{s=entity.ender_dragon.hurt;volume=0.6;pitch=0.1} @self
+  - summon{type=FX_Cetus_Dragon1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=0;y=0;sideOffset=0;lockpitch=true}
+  - summon{type=FX_Cetus_DragonCharge_Point;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=6;y=0;sideOffset=0;lockpitch=true}
+  - stun{d=25;f=false} @self
+  - setNoDamageTicks{ticks=35} @self ~onDamaged
+  - delay 25
+  - effect:sound{s=entity.ender_dragon.growl;volume=0.6;pitch=1.6} @self
+  - effect:sound{s=entity.warden.sonic_boom;volume=1.0;pitch=1.3} @self
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Surge_DragonCharge_DAMAGE_D;hnp=true;hp=true;hR=10;vR=10;i=1;repeat=9;repeatinterval=1} @self
+
+  # (water wave projectile hitbox hR/vR: 1 -> 2)
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave3;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=-1;hO=90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave4;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=1;hO=-90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave3;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=2;syo=1.5;tyo=1.5;sso=-1;hO=90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave4;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=2;syo=1.5;tyo=1.5;sso=1;hO=-90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave3;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=4;syo=1.5;tyo=1.5;sso=-1;hO=90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave4;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=4;syo=1.5;tyo=1.5;sso=1;hO=-90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave3;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=6;syo=1.5;tyo=1.5;sso=-1;hO=90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave4;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=6;syo=1.5;tyo=1.5;sso=1;hO=-90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave3;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=8;syo=1.5;tyo=1.5;sso=-1;hO=90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave4;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=8;syo=1.5;tyo=1.5;sso=1;hO=-90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave3;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=10;syo=1.5;tyo=1.5;sso=-1;hO=90} @forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave4;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=10;syo=1.5;tyo=1.5;sso=1;hO=-90} @forward{f=20;y=0;lockpitch=true}
+
+  - delay 5
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.6} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.8} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=1.6} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.7} @self
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Surge_Slash_DAMAGE5_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash4_1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  - lunge{velocity=0.6;velocityY=0} @forward{f=13;y=3;lockpitch=true}
+  - summon{type=FX_Cetus_Slash4_2;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Surge_Slash_DAMAGE5_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+
+Cetus_Water_Wave:
+  Skills:
+  - summon{type=fx_cetus_water_wavecharge;amount=1;radius=0;yRadius=0;onSurface=true} @origin
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=1.9} @self
+  - effect:sound{s=entity.illusioner.cast_spell;volume=1.0;pitch=0.6} @self
+  - effect:sound{s=entity.illusioner.prepare_blindness;volume=1.0;pitch=1.2} @self
+  # projectile hitbox hR/vR: 1 -> 2 (để khớp model lớn)
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0} @Forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave2;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0;hO=180} @Forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave3;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0;hO=90} @Forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave4;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0;hO=-90} @Forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave5;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0;hO=-45} @Forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave6;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0;hO=45} @Forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave7;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0;hO=225} @Forward{f=20;y=0;lockpitch=true}
+  - projectile{bulletType=MOB;mob=fx_cetus_water_wave8;onHit=Cetus_Waterwave_Hit;onTick=Cetus_Waterwave_Tick;v=7;i=1;hR=2;vR=2;mr=12;hnp=true;sE=false;sB=true;hs=false;hfs=0;sfo=0;syo=1.5;tyo=1.5;sso=0;hO=-225} @Forward{f=20;y=0;lockpitch=true}
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.enter;volume=1.0;pitch=1.9} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=0.1} @self
+  - effect:sound{s=ambient.underwater.exit;volume=1.0;pitch=1.9} @self
+
+# ---- Surge Damage wrappers (r x2) ----
+Cetus_Surge_Slash_DAMAGE1_D:
+  Skills:
+  # r: 6 -> 12
+  - skill{s=Cetus_Surge_Slash_DAMAGE1} @EntitiesNearOrigin{r=12}
+
+Cetus_Surge_Slash_DAMAGE1:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="200"} @target{ignore=players}
+  - solo_damage{a="200"} @target{target=players}
+  - solo_throw{velocity=3;velocityY=0.3}
+
+Cetus_Surge_Slash_DAMAGE2_D:
+  Skills:
+  # r: 7 -> 14
+  - skill{s=Cetus_Surge_Slash_DAMAGE2} @EntitiesNearOrigin{r=14}
+
+Cetus_Surge_Slash_DAMAGE2:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="200"} @target{ignore=players}
+  - solo_damage{a="200"} @target{target=players}
+  - solo_throw{velocity=3;velocityY=0.3}
+
+Cetus_Surge_Slash_DAMAGE3_D:
+  Skills:
+  # r: 7 -> 14
+  - skill{s=Cetus_Surge_Slash_DAMAGE3} @EntitiesNearOrigin{r=14}
+
+Cetus_Surge_Slash_DAMAGE3:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="200"} @target{ignore=players}
+  - solo_damage{a="200"} @target{target=players}
+  - solo_throw{velocity=3;velocityY=8}
+
+Cetus_Surge_Slash_DAMAGE4_D:
+  Skills:
+  # r: 6 -> 12
+  - skill{s=Cetus_Surge_Slash_DAMAGE4} @EntitiesNearOrigin{r=12}
+
+Cetus_Surge_Slash_DAMAGE4:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="200"} @target{ignore=players}
+  - solo_damage{a="200"} @target{target=players}
+  - solo_throw{velocity=8;velocityY=6}
+
+Cetus_Surge_Slash_DAMAGE5_D:
+  Skills:
+  # r: 5 -> 10
+  - skill{s=Cetus_Surge_Slash_DAMAGE5} @EntitiesNearOrigin{r=10}
+
+Cetus_Surge_Slash_DAMAGE5:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="200"} @target{ignore=players}
+  - solo_damage{a="200"} @target{target=players}
+  - solo_throw{velocity=5;velocityY=5}
+
+Cetus_Surge_DragonCharge_DAMAGE_D:
+  Skills:
+  # r: 5 -> 10
+  - skill{s=Cetus_Surge_DragonCharge_DAMAGE} @EntitiesNearOrigin{r=10}
+
+Cetus_Surge_DragonCharge_DAMAGE:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="200"} @target{ignore=players}
+  - solo_damage{a="200"} @target{target=players}
+  - solo_throw{velocity=2;velocityY=2}
+
+
+#---------------------------------------------------------------#
+#  Cetus_Slash chain (r & hR/vR x2)
+Cetus_Slash:
+  Conditions:
+  - hasaura{n=Cetus_DragonChargeTiming} false
+  - hasaura{n=Cetus_Dragon_Surge} false
+  Skills:
+  - skill{s=Cetus_Slash_1}
+  - skill{s=Cetus_Slash_2}
+  - skill{s=Cetus_Slash_3}
+  - skill{s=Cetus_Slash_4}
+  - skill{s=Cetus_Slash_5}
+
+Cetus_Slash_1:
+  Conditions:
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=1} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=2} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=3} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=4} false
+  Skills:
+  - Aura{auraName=Cetus_Slash_Stack;duration=60;maxStacks=4;delay=1} @self
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.2} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.5} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.8} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=0.9} @self
+  # hR/vR: 4 -> 8
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE1_D;hnp=true;hp=true;hR=8;vR=8;i=1} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+
+Cetus_Slash_2:
+  Conditions:
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=1} true
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=2} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=3} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=4} false
+  Skills:
+  - Aura{auraName=Cetus_Slash_Stack;duration=60;maxStacks=4;delay=1} @self
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.3} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.6} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=1.4} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.9} @self
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE2_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash2;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+
+Cetus_Slash_3:
+  Conditions:
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=1} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=2} true
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=3} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=4} false
+  Skills:
+  - Aura{auraName=Cetus_Slash_Stack;duration=60;maxStacks=4;delay=1} @self
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.1} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.2} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.2} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=0.3} @self
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE3_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash3;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  - lunge{velocity=0.5;velocityY=0.6} @forward{f=6;y=3;lockpitch=true}
+
+Cetus_Slash_4:
+  Conditions:
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=1} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=2} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=3} true
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=4} false
+  Skills:
+  - lunge{velocity=0.5;velocityY=-1.6} @forward{f=6;y=-3;lockpitch=true}
+  - Aura{auraName=Cetus_Slash_Stack;duration=60;maxStacks=4;delay=1} @self
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.3} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.6} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.8} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.0} @self
+  - summon{type=FX_Cetus_Slash5;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=-2.1;sideOffset=0;lockpitch=true}
+  - delay 2
+  # hR/vR: 4 -> 8
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE4_D;hnp=true;hp=true;hR=8;vR=8;i=1} @forward{f=1;lockpitch=true}
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=0.2} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=0.3} @self
+  - effect:sound{s=item.bucket.fil;volume=1.0;pitch=0.3} @self
+  - effect:sound{s=entity.generic.explode;volume=0.5;pitch=1.6} @self
+  - delay 2
+  - effect:particles{particle=falling_dripstone_water;amount=50;hS=1;vS=0;y=1.0;speed=0.1;forwardOffset=0;sideOffset=0} @forward{f=3;lockpitch=true;y=-0.5}
+  - effect:particles{particle=cloud;amount=50;hS=1;vS=0;y=1.0;speed=0.1;forwardOffset=0;sideOffset=0} @forward{f=3;lockpitch=true;y=-0.5}
+
+Cetus_Slash_5:
+  Conditions:
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=1} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=2} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=3} false
+  - hasaurastacks{auraName=Cetus_Slash_Stack;stacks=4} true
+  Skills:
+  - auraremove{aura=Cetus_Slash_Stack;delay=1} @self
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.4} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.6} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=1.4} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.5} @self
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE5_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+  - summon{type=FX_Cetus_Slash4_1;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  - lunge{velocity=0.6;velocityY=0} @forward{f=13;y=3;lockpitch=true}
+  - delay 2
+  - effect:sound{s=entity.player.attack.sweep;volume=0.7;pitch=0.5} @self
+  - effect:sound{s=item.trident.throw;volume=0.7;pitch=0.7} @self
+  - effect:sound{s=ambient.underwater.enter;volume=0.5;pitch=1.9} @self
+  - effect:sound{s=ambient.underwater.exit;volume=0.5;pitch=1.9} @self
+  - summon{type=FX_Cetus_Slash4_2;amount=1;radius=0;yRadius=0;onSurface=true} @forward{f=1;y=0.2;sideOffset=0;lockpitch=true}
+  # hR/vR: 5 -> 10
+  - totem{md=2;c=1;oH=Cetus_Slash_DAMAGE5_D;hnp=true;hp=true;hR=10;vR=10;i=1} @forward{f=1;lockpitch=true}
+
+# ---- Slash Damage wrappers (r x2) ----
+Cetus_Slash_DAMAGE1_D:
+  Skills:
+  # r: 4 -> 8
+  - skill{s=Cetus_Slash_DAMAGE1} @EntitiesNearOrigin{r=8}
+
+Cetus_Slash_DAMAGE1:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="100"} @target{ignore=players}
+  - solo_damage{a="100"} @target{target=players}
+
+Cetus_Slash_DAMAGE2_D:
+  Skills:
+  # r: 5 -> 10
+  - skill{s=Cetus_Slash_DAMAGE2} @EntitiesNearOrigin{r=10}
+
+Cetus_Slash_DAMAGE2:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="100"} @target{ignore=players}
+  - solo_damage{a="100"} @target{target=players}
+
+Cetus_Slash_DAMAGE3_D:
+  Skills:
+  # r: 5 -> 10
+  - skill{s=Cetus_Slash_DAMAGE3} @EntitiesNearOrigin{r=10}
+
+Cetus_Slash_DAMAGE3:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="100"} @target{ignore=players}
+  - solo_damage{a="100"} @target{target=players}
+  - solo_throw{velocity=3;velocityY=8}
+
+Cetus_Slash_DAMAGE4_D:
+  Skills:
+  # r: 4 -> 8
+  - skill{s=Cetus_Slash_DAMAGE4} @EntitiesNearOrigin{r=8}
+
+Cetus_Slash_DAMAGE4:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="100"} @target{ignore=players}
+  - solo_damage{a="100"} @target{target=players}
+  - solo_throw{velocity=8;velocityY=6}
+
+Cetus_Slash_DAMAGE5_D:
+  Skills:
+  # r: 5 -> 10
+  - skill{s=Cetus_Slash_DAMAGE5} @EntitiesNearOrigin{r=10}
+
+Cetus_Slash_DAMAGE5:
+  TargetConditions:
+  - solo_is_my_summon false
+  - entitytype{t=ARMOR_STAND} false
+  - solo_can_target{interaction=OFFENSE_ACTION} true
+  Skills:
+  - effect:sound{s=entity.warden.attack_impact;volume=0.7;pitch=1.4} @self
+  - solo_damage{a="100"} @target{ignore=players}
+  - solo_damage{a="100"} @target{target=players}
+  - solo_throw{velocity=5;velocityY=5}
+

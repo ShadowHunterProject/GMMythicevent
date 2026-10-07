@@ -1,0 +1,45 @@
+crowspike:
+  Type: chicken
+  Display: 'crowspike'
+  Health: 1000
+  Faction: ravenbosses
+  AiTargetSelectors:
+  - players
+  Skills:
+   - model{mid=crowspike;n=false;h=true;sync=true} @self ~onSpawn
+   - setNoDamageTicks{ticks=500} @self ~onSpawn
+   - partvis{m=crowspike;p=dustparticles;child=true;v=false} @self ~onSpawn 
+   - lockmodel{l=true;sync=true} @self ~onSpawn
+   - damage{a=0}
+   - skill{s=spikedeath;sync=true} @self ~onSpawn
+
+  Options:
+    MovementSpeed: 0
+    MaxCombatDistance: 20 
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    Silent: true   
+    
+    
+crowfog:
+  Type: chicken
+  Display: 'crowfog'
+  Health: 1000
+  Faction: ravenbosses
+  Skills:
+   - model{mid=crowfog;n=false;h=true;sync=true} @self ~onSpawn
+   - setNoDamageTicks{ticks=500} @self ~onSpawn
+   - skill{s=crowfogaction;sync=true} @self ~onSpawn
+   - lockmodel{l=true;sync=true} @self ~onSpawn
+
+  Options:
+    MovementSpeed: 0
+    MaxCombatDistance: 20 
+    PreventOtherDrops: true
+    Collidable: false
+    Persistent: false
+    KnockbackResistance: 1
+    PreventVanillaDamage: true
+    Silent: true   

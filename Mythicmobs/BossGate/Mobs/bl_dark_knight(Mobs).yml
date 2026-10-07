@@ -1,0 +1,78 @@
+
+bl_dark_knight:
+  Type: HUSK
+  Display: 'Igris'
+  Faction: bl_dark_knight
+  Health: 200
+  Damage: 0
+  DamageModifiers:
+  - SUFFOCATION 0
+  - FALL 0
+  - PROJECTILE 0.25
+  - FIRE -0.1
+  - FIRE_TICK -0.1
+  - FREEZE -0.1
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  - lookatplayers
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  Modules:
+    ThreatTable: true
+  Options:
+    MovementSpeed: 0.32
+    FollowRange: 32
+    KnockbackResistance: 1
+    Silent: true
+    Despawn: true
+    Invincible: false
+    PreventSunburn: true
+    PreventBlockInfection: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventJockeyMounts: true
+    Collidable: true
+  BossBar:
+    Enabled: true
+    Title: "&cPhn nh Igris"
+    Range: 50
+    Color: RED
+    Style: SOLID
+  Skills:
+  - model{mid=bl_dark_knight;n=false;step=1;usm=true;save=true;d=true} @self ~onSpawn
+  - model{mid=bl_dark_knight;n=false;step=1;usm=true;save=true;d=true} @self ~onLoad
+  - CancelEvent{sync=true} @self ~onAttack
+  - skill{s=bl_dark_knight_active} @target ~onTimer:20
+  - skill{s=bl_dark_knight_spawn} ~onSpawn
+  - skill{s=bl_dark_knight_death} @self ~onDeath
+  - skill{s=bl_dark_knight_jump_back} @self ~onDamaged
+  - skill{s=bl_dark_knight_step} @self ~onTimer:30
+  - skill{s=bl_dark_knight_hurt} @self ~onDamaged
+  - skill{s=bl_dark_knight_skills} @target ~onTimer:40
+
+bl_dark_knight_stones:
+  Type: ARMOR_STAND
+  AITargetSelectors:
+  - 0 clear
+  AIGoalSelectors:
+  - 0 clear
+  Options:
+    NoAI: true
+    Marker: true
+    ApplyInvisibility: true
+    Invisible: true
+    KnockbackResistance: 1
+    Gravity: false
+    Collidable: false
+  Skills:
+  - model{mid=bl_dark_knight_stones;n=false;usm=true} @self ~onSpawn
+  - aura{auraName=bl_dark_knight_stones_totem;onTick=bl_dark_knight_stones_totem_tick;interval=1;duration=70;delay=5} @self ~onSpawn
+  - sound{s=bl_dark_knight.stones;v=3;p=0.8} @self ~onSpawn
+  - state{s=spawn} @self ~onSpawn
+  - state{s=idle;delay=50} @self ~onSpawn
+  - state{s=end;delay=70} @self ~onSpawn
+  - remove{delay=95} @self ~onSpawn

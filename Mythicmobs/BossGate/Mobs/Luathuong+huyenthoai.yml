@@ -1,0 +1,60 @@
+lostassetsanime_firekatana_lc1:
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - model{mid=lostassetsanime_firekatana_slash;usm=true;lockpitch=true;hitboxscale=0;scale=1.3;sync=true} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_slash;b=15;s=15} @self ~onSpawn
+  - state{s=slash1} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+lostassetsanime_firekatana_lc2:
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - model{mid=lostassetsanime_firekatana_slash;usm=true;lockpitch=true;hitboxscale=0;scale=1.3;sync=true} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_slash;b=15;s=15} @self ~onSpawn
+  - state{s=slash2} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+lostassetsanime_firekatana_lc3:
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - model{mid=lostassetsanime_firekatana_slash;usm=true;lockpitch=true;hitboxscale=0;scale=1.3;sync=true} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_slash;b=15;s=15} @self ~onSpawn
+  - state{s=slash3} @self ~onSpawn
+  - remove{delay=20} @self ~onSpawn
+
+
+lostassetsanime_firekatana_rc:
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - model{mid=lostassetsanime_firekatana_skill;usm=true;lockpitch=true;hitboxscale=0;scale=1.3;sync=true} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_skill;b=15;s=15} @self ~onSpawn
+  - state{s=skill1} @self ~onSpawn
+  - remove{delay=30} @self ~onSpawn
+
+
+lostassetsanime_firekatana_slc:
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - model{mid=lostassetsanime_firekatana_skill;usm=true;lockpitch=true;hitboxscale=0;scale=1.3;sync=true} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_skill;b=15;s=15} @self ~onSpawn
+  - state{s=skill2} @self ~onSpawn
+  - remove{delay=50} @self ~onSpawn
+
+
+lostassetsanime_firekatana_src:
+  Type: ITEM_DISPLAY
+  Options:
+    KnockbackResistance: 1
+  Skills:
+  - model{mid=lostassetsanime_firekatana_skill;usm=true;lockpitch=true;hitboxscale=0;scale=1.3;sync=true} @self ~onSpawn
+  - brightness{mid=lostassetsanime_firekatana_skill;b=15;s=15} @self ~onSpawn
+  - state{s=skill3} @self ~onSpawn
+  - remove{delay=37} @self ~onSpawn

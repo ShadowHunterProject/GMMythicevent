@@ -1,0 +1,15 @@
+# Danh sách ID (Internal Name) của các con quái MythicMobs sẽ được miễn nhiễm với kỹ năng solo_pull và solo_push
+immune-skill-mobs:
+- Frost_Shield_Shield
+- black_hole
+- crowaxe
+- crowswarm
+- reaperspikes
+- ice_mist
+- ice_sprite
+- ice_thorns
+- ice_wall
+- ice_elemental_spikes
+- crowspike
+- crowfog
+- crowswarm_Pet
